@@ -4,6 +4,8 @@
 #include "ModuleWindow.h"
 #include "ModuleCamera3D.h"
 
+#include "Primitive.h"
+
 #include "OpenGL.h"
 
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
@@ -98,7 +100,7 @@ bool ModuleRenderer3D::Init()
 
 		// Blend for transparency
 		//glBlendEquation(GL_FUNC_ADD);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 
 		GLfloat LightModelAmbient[] = { 0.0f, 0.0f, 0.0f, 1.0f };
@@ -121,11 +123,13 @@ bool ModuleRenderer3D::Init()
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
-		glEnable(GL_TEXTURE_2D);
+		//glEnable(GL_TEXTURE_2D);
 
-		glShadeModel(GL_SMOOTH);		 // Enables Smooth Shading
+		//glShadeModel(GL_SMOOTH);		 // Enables Smooth Shading
+		
 	}
 
+	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	return ret;
 }
 
@@ -150,6 +154,17 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
+	//GRID
+	P_Plane grid(0.f, 1.f, 0.f, 0.f);
+	grid.axis = true;
+	//grid.wire = true;
+	grid.color.Set(255, 255, 255);
+	grid.Render();
+
+
+
+
+
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }
