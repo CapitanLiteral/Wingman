@@ -4,6 +4,13 @@
 #include "ModuleFBXImporter.h"
 
 
+
+#include "OpenGL.h"
+
+#pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
+#pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
+#pragma comment (lib, "Glew/libx86/glew32.lib") /* link Microsoft OpenGL lib   */
+
 TestScene1::TestScene1(Application* app, bool start_enabled) : Module (app, start_enabled)
 {
 }
@@ -30,6 +37,25 @@ update_status TestScene1::PreUpdate(float dt)
 }
 update_status TestScene1::Update(float dt)
 { 
+
+	////Drawing a line in direct mode
+	//glLineWidth(2.0f);
+
+	//glBegin(GL_LINES);
+	//glVertex3f(0.f, 0.f, 0.f);
+	//glVertex3f(0.f, 10.f, 0.f);
+	//glEnd();
+	//glLineWidth(1.0f);
+
+	////Draw a quad in direct mode
+	//glBegin(GL_QUADS);
+	//glVertex3f(0.f, 0.f, 0.f);
+	//glVertex3f(0.f, 10.f, 0.f);
+	//glVertex3f(-10.0f, 10.f, 0.f);
+	//glVertex3f(-10.0f, 0.f, 0.f);
+	//glEnd();
+
+	App->fbxImporter->drawMeshes(App->fbxImporter->meshes);
 	
 	return UPDATE_CONTINUE;
 }

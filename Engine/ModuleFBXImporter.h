@@ -4,13 +4,13 @@
 
 struct VramVertex
 {
-	uint32_t idVertices = 0;
-	uint32_t numVertices = 0;
+	uint idVertices = 0;
+	uint numVertices = 0;
 	float* vertices = nullptr;
 
-	uint32_t idIndices = 0;
-	uint32_t numIndices = 0;
-	uint32_t* indices = nullptr;
+	uint idIndices = 0;
+	uint numIndices = 0;
+	uint* indices = nullptr;
 };
 
 
@@ -28,6 +28,9 @@ public:
 	virtual ~ModuleFBXImporter();
 
 	void loadFBX(char* full_path);
+	void drawMeshes(std::vector<VramVertex*>);
+
+
 	std::vector<VramVertex*> meshes;
 };
 
