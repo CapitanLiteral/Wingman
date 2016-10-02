@@ -14,22 +14,25 @@ class ModuleEditor;
 class ModuleTests;
 class ModulePhysics3D;
 class ModuleScene;
-
+class ModuleFBXImporter;
+class TestScene1;
 #include "MathGeoLib\include\MathGeoLibFwd.h"
 
 class Application
 {
 public:
-	ModuleWindow* window;
-	ModuleInput* input;
-	ModuleAudio* audio;
+	ModuleWindow* window = NULL;
+	ModuleInput* input = NULL;
+	ModuleAudio* audio = NULL;
 
-	ModuleRenderer3D* renderer3D;
-	ModuleCamera3D* camera;
+	ModuleRenderer3D* renderer3D = NULL;
+	ModuleCamera3D* camera = NULL;
 
-	ModuleEditor* editor;
-	ModulePhysics3D* physics;
+	ModuleEditor* editor = NULL;
+	ModulePhysics3D* physics = NULL;
+	ModuleFBXImporter* fbxImporter = NULL;
 
+	TestScene1* test1 = NULL;
 
 	float ms_frame[EDITOR_FRAME_SAMPLES];
 	float framerate[EDITOR_FRAME_SAMPLES];

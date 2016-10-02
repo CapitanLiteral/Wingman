@@ -43,6 +43,11 @@
     <Filter Include="Sources\Scenes">
       <UniqueIdentifier>{cd86892a-2f6a-49fa-a8d8-50beaddca8bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Scenes\Test">
+      <UniqueIdentifier>{6c182a61-9264-49c8-a6d7-2c082462347f}</UniqueIdentifier>
+      <Extensions>
+      </Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -312,6 +317,9 @@
     <ClInclude Include="ModuleFBXImporter.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="TestScene1.h">
+      <Filter>Sources\Scenes\Test</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -472,6 +480,9 @@
     </ClCompile>
     <ClCompile Include="ModuleFBXImporter.cpp">
       <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="TestScene1.cpp">
+      <Filter>Sources\Scenes\Test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

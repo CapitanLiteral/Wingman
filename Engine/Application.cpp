@@ -9,6 +9,8 @@
 #include "ModuleCamera3D.h"
 #include "ModulePhysics3D.h"
 #include "ModuleEditor.h"
+#include "ModuleFBXImporter.h"
+#include "TestScene1.h"
 
 Application::Application()
 {
@@ -21,6 +23,9 @@ Application::Application()
 	physics = new ModulePhysics3D(this);
 	editor = new ModuleEditor(this);
 
+	fbxImporter = new ModuleFBXImporter(this);
+
+	test1 = new TestScene1(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -30,12 +35,13 @@ Application::Application()
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
+	AddModule(fbxImporter);
 	AddModule(audio);
 	AddModule(physics);
 	AddModule(editor);
 	
 	// Scenes
-
+	AddModule(test1);
 
 	// Renderer last!
 	AddModule(renderer3D);

@@ -1,5 +1,6 @@
 #pragma once
 #include "Module.h"
+#include <vector>
 
 struct VramVertex
 {
@@ -27,6 +28,6 @@ public:
 	virtual ~ModuleFBXImporter();
 
 	void loadFBX(char* full_path);
-	VramVertex* meshes = NULL;
+	std::vector<VramVertex*> meshes;
 };
 
