@@ -27,7 +27,8 @@ bool TestScene1::Init()
 bool TestScene1::Start()
 { 
 	//This is absolute route... We should change it // ERROR!!
-	App->fbxImporter->loadFBX("C:/Users/anara/Documents/GitHub/Wingman/Engine/Assimp/warrior.fbx");
+	App->fbxImporter->loadFBX("../DLL/warrior.FBX");
+	id = App->fbxImporter->loadTextures();
 	return true;
 }
 update_status TestScene1::PreUpdate(float dt)
@@ -55,7 +56,77 @@ update_status TestScene1::Update(float dt)
 	//glVertex3f(-10.0f, 0.f, 0.f);
 	//glEnd();
 
-	App->fbxImporter->drawMeshes(App->fbxImporter->meshes);
+
+	
+
+
+	////Draw a quad in direct mode
+	
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, id);
+	glBegin(GL_TRIANGLES);
+
+	float s = 1.f * 2;
+
+	//----------------------- Front
+	
+	glTexCoord2f(1.f, 1.f);
+	glVertex3d(s, s, s);	
+	glTexCoord2f(0.f, 0.f);
+	glVertex3d(-s, -s, s);	
+	glTexCoord2f(0.f, 1.f);
+	glVertex3d(s, -s, s);
+
+	glTexCoord2f(1.f, 0.f);
+	glVertex3d(-s, s, s);	
+	glTexCoord2f(0.f, 0.f);
+	glVertex3d(-s, -s, s);	
+	glTexCoord2f(1.f, 1.f);
+	glVertex3d(s, s, s);
+	//----------------------- Top
+	glVertex3d(-s, s, s);
+	glVertex3d(s, s, s);
+	glVertex3d(s, s, -s);
+
+	glVertex3d(-s, s, s);
+	glVertex3d(s, s, -s);
+	glVertex3d(-s, s, -s);
+	//----------------------- Right
+	glVertex3d(s, s, s);
+	glVertex3d(s, -s, s);
+	glVertex3d(s, s, -s);
+
+	glVertex3d(s, -s, s);
+	glVertex3d(s, -s, -s);
+	glVertex3d(s, s, -s);
+	//----------------------- Left
+	glVertex3d(-s, s, -s);
+	glVertex3d(-s, -s, s);
+	glVertex3d(-s, s, s);
+
+	glVertex3d(-s, s, -s);
+	glVertex3d(-s, -s, -s);
+	glVertex3d(-s, -s, s);
+	//----------------------- Bottom
+	glVertex3d(-s, -s, s);
+	glVertex3d(s, -s, -s);
+	glVertex3d(s, -s, s);
+
+	glVertex3d(-s, -s, s);
+	glVertex3d(-s, -s, -s);
+	glVertex3d(s, -s, -s);
+	//----------------------- Behind
+	glVertex3d(s, s, -s);
+	glVertex3d(s, -s, -s);
+	glVertex3d(-s, s, -s);
+
+	glVertex3d(s, -s, -s);
+	glVertex3d(-s, -s, -s);
+	glVertex3d(-s, s, -s);
+
+	glEnd();
+	glBindTexture(GL_TEXTURE_2D, 0);
+	//App->fbxImporter->drawMeshes(App->fbxImporter->meshes);
 	
 	return UPDATE_CONTINUE;
 }

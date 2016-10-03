@@ -28,6 +28,7 @@ public:
 	virtual ~ModuleFBXImporter();
 
 	void loadFBX(char* full_path);
+	uint loadTextures();
 	void drawMeshes(std::vector<VramVertex*>);
 
 
