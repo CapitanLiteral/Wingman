@@ -56,8 +56,13 @@ void ModuleFBXImporter::loadFBX(char* full_path)
 
 			mesh->numVertices = new_mesh->mNumVertices;
 			mesh->vertices = new float[mesh->numVertices * 3];
+			mesh->numFaces = new_mesh->mNumFaces;
+			mesh->numNormals = new_mesh->mNumFaces;
+			mesh->normals = new float[mesh->numFaces * 3];
 
 			memcpy(mesh->vertices, new_mesh->mVertices, sizeof(float)*  mesh->numVertices * 3);
+			memcpy(mesh->normals, new_mesh->mNormals, sizeof(float) * mesh->numFaces * 3);
+
 			SDL_Log("New mesh with %d vertices", mesh->numVertices);
 
 			if (scene->mMeshes[i]->mNumFaces * 3)
@@ -81,10 +86,17 @@ void ModuleFBXImporter::loadFBX(char* full_path)
 
 			//Generating GL Buffers
 
+			//vertices
 			glGenBuffers(1, (GLuint*) &(meshes[i]->idVertices));
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i]->idVertices);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t)*meshes[i]->numVertices, meshes[i]->vertices, GL_STATIC_DRAW);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*meshes[i]->numVertices * 3, meshes[i]->vertices, GL_STATIC_DRAW);
 
+			//normals
+			glGenBuffers(1, (GLuint*) &(meshes[i]->idNormals));
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i]->idNormals);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*meshes[i]->numNormals, meshes[i]->normals, GL_STATIC_DRAW);
+
+			//indices
 			glGenBuffers(1, (GLuint*) &(meshes[i]->idIndices));
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i]->idIndices);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t)*meshes[i]->numIndices, meshes[i]->indices, GL_STATIC_DRAW);
@@ -105,14 +117,25 @@ void ModuleFBXImporter::drawMeshes(std::vector<VramVertex*> drawMeshes)
 		VramVertex* m = drawMeshes.at(i);
 
 		glEnableClientState(GL_VERTEX_ARRAY);
+		glEnableClientState(GL_NORMAL_ARRAY);
 
+		//vertices
 		glBindBuffer(GL_ARRAY_BUFFER, m->idVertices);
-		glVertexPointer(3, GL_FLOAT, 0, NULL);
+		glVertexPointer(3, GL_FLOAT, 0, NULL);		
+		
+		//normals
+		glBindBuffer(GL_ARRAY_BUFFER, m->idNormals);
+		glNormalPointer(GL_FLOAT, 0, NULL);
 
+		//indices
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->idIndices);
+
 		glDrawElements(GL_TRIANGLES, m->numIndices, GL_UNSIGNED_INT, NULL);
 
+		glDisableClientState(GL_NORMAL_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
+
+		//glEnable(GL_LIGHTING);
 	}
 }
 

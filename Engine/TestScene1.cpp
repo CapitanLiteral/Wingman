@@ -27,7 +27,8 @@ bool TestScene1::Init()
 bool TestScene1::Start()
 { 
 	//This is absolute route... We should change it // ERROR!!
-	App->fbxImporter->loadFBX("../DLL/warrior.FBX");
+	App->fbxImporter->loadFBX("../DLL/MechaT.FBX");
+	//App->fbxImporter->loadFBX("../DLL/Warrior.FBX");
 	id = App->fbxImporter->loadTextures();
 	return true;
 }
@@ -126,7 +127,7 @@ update_status TestScene1::Update(float dt)
 
 	glEnd();
 	glBindTexture(GL_TEXTURE_2D, 0);
-	//App->fbxImporter->drawMeshes(App->fbxImporter->meshes);
+	App->fbxImporter->drawMeshes(App->fbxImporter->meshes);
 	
 	return UPDATE_CONTINUE;
 }

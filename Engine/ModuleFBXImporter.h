@@ -11,6 +11,12 @@ struct VramVertex
 	uint idIndices = 0;
 	uint numIndices = 0;
 	uint* indices = nullptr;
+
+	uint numFaces = 0;
+
+	uint idNormals = 0;
+	uint numNormals = 0;
+	float* normals = nullptr;
 };
 
 
