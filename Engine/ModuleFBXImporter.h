@@ -2,6 +2,9 @@
 #include "Module.h"
 #include <vector>
 
+class GameObject;
+
+
 struct VramVertex
 {
 	uint idVertices = 0;
@@ -31,7 +34,12 @@ public:
 
 	virtual ~ModuleFBXImporter();
 
-	void loadFBX(char* full_path);
+	void loadFBX(const char* full_path);
+	GameObject* loadScene(const char* full_path);
+
+	GameObject* loadNode(const aiNode* node);
+
+
 	uint loadTextures();
 	void drawMeshes(std::vector<VramVertex*>);
 

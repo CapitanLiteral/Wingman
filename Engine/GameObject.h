@@ -23,5 +23,7 @@ public:
 
 	std::string name;
 
+	void addChild(GameObject*);
+
 };
 

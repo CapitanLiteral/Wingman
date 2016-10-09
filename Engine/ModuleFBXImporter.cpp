@@ -10,6 +10,9 @@
 #include "Assimp\Assimp\include\cimport.h"
 #include "Assimp\Assimp\include\postprocess.h"
 
+
+#include "GameObject.h"
+
 #pragma comment (lib, "Assimp/Assimp/libx86/assimp.lib")
 
 #include "OpenGL.h"
@@ -39,7 +42,7 @@ ModuleFBXImporter::~ModuleFBXImporter()
 }
 
 
-void ModuleFBXImporter::loadFBX(char* full_path)
+void ModuleFBXImporter::loadFBX(const char* full_path)
 {
 	const aiScene* scene = aiImportFile(full_path, aiProcessPreset_TargetRealtime_MaxQuality);
 
@@ -109,6 +112,35 @@ void ModuleFBXImporter::loadFBX(char* full_path)
 		SDL_Log("Error loading Scene %s", full_path);
 
 }
+
+GameObject* ModuleFBXImporter::loadScene(const char* full_path)
+{
+	GameObject* retScene = new GameObject();
+
+	//Import Scene
+	const aiScene* scene = aiImportFile(full_path, aiProcessPreset_TargetRealtime_MaxQuality);
+	aiNode* actualNode;
+
+	actualNode = scene->mRootNode;
+
+
+	
+	return retScene;
+}
+
+GameObject* ModuleFBXImporter::loadNode(const aiNode* node)
+{
+	GameObject* retNode = NULL;
+
+	if (node->mNumChildren == 0)
+	{
+		loadNode(node);
+	}
+
+
+	return retNode;
+}
+
 
 void ModuleFBXImporter::drawMeshes(std::vector<VramVertex*> drawMeshes)
 {
