@@ -56,12 +56,12 @@ void ModuleFBXImporter::loadFBX(char* full_path)
 
 			mesh->numVertices = new_mesh->mNumVertices;
 			mesh->vertices = new float[mesh->numVertices * 3];
-			mesh->numFaces = new_mesh->mNumFaces;
-			mesh->numNormals = new_mesh->mNumFaces;
-			mesh->normals = new float[mesh->numFaces * 3];
+
+			mesh->numNormals = new_mesh->mNumVertices;
+			mesh->normals = new float[mesh->numNormals * 3];
 
 			memcpy(mesh->vertices, new_mesh->mVertices, sizeof(float)*  mesh->numVertices * 3);
-			memcpy(mesh->normals, new_mesh->mNormals, sizeof(float) * mesh->numFaces * 3);
+			memcpy(mesh->normals, new_mesh->mNormals, sizeof(float) * mesh->numNormals * 3);
 
 			SDL_Log("New mesh with %d vertices", mesh->numVertices);
 
@@ -94,7 +94,7 @@ void ModuleFBXImporter::loadFBX(char* full_path)
 			//normals
 			glGenBuffers(1, (GLuint*) &(meshes[i]->idNormals));
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i]->idNormals);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*meshes[i]->numNormals, meshes[i]->normals, GL_STATIC_DRAW);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*meshes[i]->numNormals * 3, meshes[i]->normals, GL_STATIC_DRAW);
 
 			//indices
 			glGenBuffers(1, (GLuint*) &(meshes[i]->idIndices));
@@ -119,9 +119,10 @@ void ModuleFBXImporter::drawMeshes(std::vector<VramVertex*> drawMeshes)
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glEnableClientState(GL_NORMAL_ARRAY);
 
+
 		//vertices
 		glBindBuffer(GL_ARRAY_BUFFER, m->idVertices);
-		glVertexPointer(3, GL_FLOAT, 0, NULL);		
+		glVertexPointer(3, GL_FLOAT, 0, NULL);
 		
 		//normals
 		glBindBuffer(GL_ARRAY_BUFFER, m->idNormals);
@@ -135,7 +136,6 @@ void ModuleFBXImporter::drawMeshes(std::vector<VramVertex*> drawMeshes)
 		glDisableClientState(GL_NORMAL_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
 
-		//glEnable(GL_LIGHTING);
 	}
 }
 
