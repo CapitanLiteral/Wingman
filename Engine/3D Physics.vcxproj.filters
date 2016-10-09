@@ -48,6 +48,15 @@
       <Extensions>
       </Extensions>
     </Filter>
+    <Filter Include="Sources\Editor">
+      <UniqueIdentifier>{98b83779-af06-4a56-8585-e488f892fdcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Editor\UI">
+      <UniqueIdentifier>{d8c25329-1905-44c4-ab3d-5e8f36659c94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Editor\Decoupling">
+      <UniqueIdentifier>{1dfbd010-c7d8-45c3-8114-0bca325fde0a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -311,13 +320,31 @@
     <ClInclude Include="Math.h">
       <Filter>Sources\Math</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleEditor.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleFBXImporter.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="TestScene1.h">
+      <Filter>Sources\Scenes\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleEditor.h">
+      <Filter>Sources\Editor\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Sources\Editor\Decoupling</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentMaterial.h">
+      <Filter>Sources\Editor\Decoupling</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentMesh.h">
+      <Filter>Sources\Editor\Decoupling</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentTransform.h">
+      <Filter>Sources\Editor\Decoupling</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Sources\Editor\Decoupling</Filter>
+    </ClInclude>
+    <ClInclude Include="TestScene2.h">
       <Filter>Sources\Scenes\Test</Filter>
     </ClInclude>
   </ItemGroup>
@@ -475,13 +502,29 @@
     <ClCompile Include="MathGeoLib\include\Algorithm\Random\LCG.cpp">
       <Filter>Sources\Math\MathGeoLib\Algorithm\Random</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleEditor.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleFBXImporter.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="TestScene1.cpp">
+      <Filter>Sources\Scenes\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleEditor.cpp">
+      <Filter>Sources\Editor\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentMaterial.cpp">
+      <Filter>Sources\Editor\Decoupling</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentMesh.cpp">
+      <Filter>Sources\Editor\Decoupling</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentTransform.cpp">
+      <Filter>Sources\Editor\Decoupling</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Sources\Editor\Decoupling</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="TestScene2.cpp">
       <Filter>Sources\Scenes\Test</Filter>
     </ClCompile>
   </ItemGroup>

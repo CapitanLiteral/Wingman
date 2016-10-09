@@ -16,6 +16,7 @@ class ModulePhysics3D;
 class ModuleScene;
 class ModuleFBXImporter;
 class TestScene1;
+class TestScene2;
 #include "MathGeoLib\include\MathGeoLibFwd.h"
 
 class Application
@@ -33,6 +34,7 @@ public:
 	ModuleFBXImporter* fbxImporter = NULL;
 
 	TestScene1* test1 = NULL;
+	TestScene2* test2 = NULL;
 
 	float ms_frame[EDITOR_FRAME_SAMPLES];
 	float framerate[EDITOR_FRAME_SAMPLES];

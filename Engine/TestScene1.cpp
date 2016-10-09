@@ -3,8 +3,6 @@
 #include "TestScene1.h"
 #include "ModuleFBXImporter.h"
 
-
-
 #include "OpenGL.h"
 
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
@@ -126,7 +124,8 @@ update_status TestScene1::Update(float dt)
 	glVertex3d(-s, s, -s);
 
 	glEnd();
-	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
 	App->fbxImporter->drawMeshes(App->fbxImporter->meshes);
 	
 	return UPDATE_CONTINUE;
