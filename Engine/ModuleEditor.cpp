@@ -57,7 +57,32 @@ update_status ModuleEditor::PreUpdate(float dt)
 
 update_status ModuleEditor::Update(float dt)
 {
-	ImGui::ShowTestWindow();
+	//ImGui::ShowTestWindow();
+	bool showAbout = true;
+
+
+	if (ImGui::BeginMainMenuBar())
+	{
+		if (ImGui::BeginMenu("File"))
+		{
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("View"))
+		{
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("Help"))
+		{
+			ImGui::EndMenu();
+		}
+		ImGui::EndMainMenuBar();
+	}
+
+	ImGui::Begin("About", &showAbout, ImGuiWindowFlags_AlwaysAutoResize);
+	ImGui::Text("This is a 3D game engine programmed for educational purposes as a university project.");
+	ImGui::End();
 	return UPDATE_CONTINUE;
 }
 

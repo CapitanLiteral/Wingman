@@ -1,7 +1,10 @@
 #pragma once
-#include "Module.h"
+
 #include <vector>
 
+#include "Module.h"
+
+class aiNode;
 class GameObject;
 
 
