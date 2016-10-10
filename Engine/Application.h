@@ -39,7 +39,7 @@ public:
 	float ms_frame[EDITOR_FRAME_SAMPLES];
 	float framerate[EDITOR_FRAME_SAMPLES];
 	int maxFPS = 0;
-
+	bool quit;
 private:
 
 	Timer	ms_timer;
@@ -49,6 +49,7 @@ private:
 	Timer	FPS_Timer;
 	float FrameTime = -1.0f;
 	int previous_maxFPS = maxFPS;
+	
 
 public:
 

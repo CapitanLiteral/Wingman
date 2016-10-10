@@ -42,8 +42,8 @@ Application::Application()
 	AddModule(editor);
 	
 	// Scenes
-	//AddModule(test1);
-	AddModule(test2);
+	AddModule(test1);
+	//AddModule(test2);
 
 	// Renderer last!
 	AddModule(renderer3D);
