@@ -10,6 +10,7 @@
 #include "ModulePhysics3D.h"
 #include "ModuleEditor.h"
 #include "ModuleFBXImporter.h"
+#include "ModuleTexture.h"
 #include "TestScene1.h"
 #include "TestScene2.h"
 
@@ -25,6 +26,7 @@ Application::Application()
 	editor = new ModuleEditor(this);
 
 	fbxImporter = new ModuleFBXImporter(this);
+	texture = new ModuleTexture(this);
 
 	test1 = new TestScene1(this);
 	test2 = new TestScene2(this);
@@ -37,6 +39,7 @@ Application::Application()
 	AddModule(camera);
 	AddModule(input);
 	AddModule(fbxImporter);
+	AddModule(texture);
 	AddModule(audio);
 	AddModule(physics);
 	AddModule(editor);

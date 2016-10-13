@@ -15,6 +15,8 @@ class ModuleTests;
 class ModulePhysics3D;
 class ModuleScene;
 class ModuleFBXImporter;
+class ModuleTexture;
+
 class TestScene1;
 class TestScene2;
 #include "MathGeoLib\include\MathGeoLibFwd.h"
@@ -32,6 +34,7 @@ public:
 	ModuleEditor* editor = NULL;
 	ModulePhysics3D* physics = NULL;
 	ModuleFBXImporter* fbxImporter = NULL;
+	ModuleTexture* texture = NULL;
 
 	TestScene1* test1 = NULL;
 	TestScene2* test2 = NULL;

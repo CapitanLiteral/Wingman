@@ -347,6 +347,10 @@
     <ClInclude Include="TestScene2.h">
       <Filter>Sources\Scenes\Test</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="ModuleTexture.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -527,6 +531,9 @@
     <ClCompile Include="TestScene2.cpp">
       <Filter>Sources\Scenes\Test</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleTexture.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\include\Math\Matrix.inl">
@@ -547,5 +554,8 @@
     <None Include="MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_SSE.inl">
       <Filter>Sources\Math\MathGeoLib\Geometry</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Wingman.rc" />
   </ItemGroup>
 </Project>

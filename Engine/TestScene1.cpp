@@ -2,6 +2,7 @@
 #include "Globals.h"
 #include "TestScene1.h"
 #include "ModuleFBXImporter.h"
+#include "ModuleTexture.h"
 
 #include "OpenGL.h"
 
@@ -27,7 +28,8 @@ bool TestScene1::Start()
 	//This is absolute route... We should change it // ERROR!!
 	App->fbxImporter->loadFBX("../DLL/MechaT.FBX");
 	//App->fbxImporter->loadFBX("../DLL/Warrior.FBX");
-	id = App->fbxImporter->loadTextures();
+	//id = App->fbxImporter->loadTextures();
+	id = App->texture->loadTexture("../../lena.png");
 	return true;
 }
 update_status TestScene1::PreUpdate(float dt)
@@ -73,54 +75,89 @@ update_status TestScene1::Update(float dt)
 	glVertex3d(s, s, s);	
 	glTexCoord2f(0.f, 0.f);
 	glVertex3d(-s, -s, s);	
-	glTexCoord2f(0.f, 1.f);
+	glTexCoord2f(1.f, 0.f);
 	glVertex3d(s, -s, s);
 
-	glTexCoord2f(1.f, 0.f);
+	glTexCoord2f(0.f, 1.f);
 	glVertex3d(-s, s, s);	
 	glTexCoord2f(0.f, 0.f);
 	glVertex3d(-s, -s, s);	
 	glTexCoord2f(1.f, 1.f);
 	glVertex3d(s, s, s);
 	//----------------------- Top
+
+	glTexCoord2f(0.f, 1.f);
 	glVertex3d(-s, s, s);
+	glTexCoord2f(1.f, 1.f);
 	glVertex3d(s, s, s);
+	glTexCoord2f(1.f, 0.f);
 	glVertex3d(s, s, -s);
 
+	glTexCoord2f(0.f, 1.f);
 	glVertex3d(-s, s, s);
+	glTexCoord2f(1.f, 0.f);
 	glVertex3d(s, s, -s);
+	glTexCoord2f(0.f, 0.f);
 	glVertex3d(-s, s, -s);
 	//----------------------- Right
+
+	glTexCoord2f(1.f, 1.f);
 	glVertex3d(s, s, s);
+	glTexCoord2f(0.f, 1.f);
 	glVertex3d(s, -s, s);
+	glTexCoord2f(1.f, 0.f);
 	glVertex3d(s, s, -s);
 
+	glTexCoord2f(0.f, 1.f);
 	glVertex3d(s, -s, s);
+	glTexCoord2f(0.f, 0.f);
 	glVertex3d(s, -s, -s);
+	glTexCoord2f(1.f, 0.f);
 	glVertex3d(s, s, -s);
 	//----------------------- Left
+
+	glTexCoord2f(1.f, 0.f);
 	glVertex3d(-s, s, -s);
+	glTexCoord2f(0.f, 1.f);
 	glVertex3d(-s, -s, s);
+	glTexCoord2f(1.f, 1.f);
 	glVertex3d(-s, s, s);
 
+	glTexCoord2f(1.f, 0.f);
 	glVertex3d(-s, s, -s);
+	glTexCoord2f(0.f, 0.f);
 	glVertex3d(-s, -s, -s);
+	glTexCoord2f(0.f, 1.f);
 	glVertex3d(-s, -s, s);
 	//----------------------- Bottom
+	
+	glTexCoord2f(0.f, 1.f);
 	glVertex3d(-s, -s, s);
+	glTexCoord2f(1.f, 0.f);
 	glVertex3d(s, -s, -s);
+	glTexCoord2f(1.f, 1.f);
 	glVertex3d(s, -s, s);
 
+	glTexCoord2f(0.f, 1.f);
 	glVertex3d(-s, -s, s);
+	glTexCoord2f(0.f, 0.f);
 	glVertex3d(-s, -s, -s);
+	glTexCoord2f(1.f, 0.f);
 	glVertex3d(s, -s, -s);
 	//----------------------- Behind
+
+	glTexCoord2f(1.f, 1.f);
 	glVertex3d(s, s, -s);
+	glTexCoord2f(1.f, 0.f);
 	glVertex3d(s, -s, -s);
+	glTexCoord2f(0.f, 1.f);
 	glVertex3d(-s, s, -s);
 
+	glTexCoord2f(1.f, 0.f);
 	glVertex3d(s, -s, -s);
+	glTexCoord2f(0.f, 0.f);
 	glVertex3d(-s, -s, -s);
+	glTexCoord2f(0.f, 1.f);
 	glVertex3d(-s, s, -s);
 
 	glEnd();

@@ -21,6 +21,10 @@ struct VramVertex
 	uint idNormals = 0;
 	uint numNormals = 0;
 	float* normals = nullptr;
+
+	uint idUV = 0;
+	uint numUV = 0;
+	float* UV = nullptr;
 };
 
 
