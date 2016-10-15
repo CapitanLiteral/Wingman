@@ -64,7 +64,9 @@ update_status TestScene1::Update(float dt)
 	////Draw a quad in direct mode
 	
 	glEnable(GL_TEXTURE_2D);
+	id = App->texture->loadTexture("../DLL/Lenna.png");
 	glBindTexture(GL_TEXTURE_2D, id);
+	
 	glBegin(GL_TRIANGLES);
 
 	float s = 1.f * 2;
@@ -162,6 +164,7 @@ update_status TestScene1::Update(float dt)
 
 	glEnd();
 	glBindTexture(GL_TEXTURE_2D, 0);
+	id = App->texture->loadTexture("../DLL/Diffuse_Mech.png");
 	glBindTexture(GL_TEXTURE_2D, id);
 	App->fbxImporter->drawMeshes(App->fbxImporter->meshes);
 	glBindTexture(GL_TEXTURE_2D, 0);

@@ -25,7 +25,7 @@ ModuleTexture::~ModuleTexture()
 
 uint ModuleTexture::loadTexture(char* path)
 {
-	uint ImgID = ilutGLLoadImage("../../Lenna.png");
+	uint ImgID = ilutGLLoadImage(path);
 	uint ret;
 	if (ImgID != 0)
 	{
