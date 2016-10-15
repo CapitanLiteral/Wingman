@@ -91,7 +91,7 @@ update_status ModuleInput::PreUpdate(float dt)
 
 	mouse_x_motion = mouse_y_motion = 0;
 
-	bool quit = false;
+	App->quit = false;
 
 	SDL_Event e;
 	while(SDL_PollEvent(&e))
@@ -112,7 +112,7 @@ update_status ModuleInput::PreUpdate(float dt)
 			break;
 
 			case SDL_QUIT:
-			quit = true;
+			App->quit = true;
 			break;
 
 			case SDL_WINDOWEVENT:
@@ -125,7 +125,7 @@ update_status ModuleInput::PreUpdate(float dt)
 
 	SDL_PollEvent(&e);
 
-	if(quit == true/* || keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP*/)
+	if(App->quit == true/* || keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP*/)
 		return UPDATE_STOP;
 
 	return UPDATE_CONTINUE;

@@ -58,6 +58,66 @@ update_status ModuleEditor::PreUpdate(float dt)
 update_status ModuleEditor::Update(float dt)
 {
 	ImGui::ShowTestWindow();
+	static bool quitSelected = false;
+	static bool aboutSelected = false;
+	static bool openReleaseDirectory = false;
+	static bool openRepoDirectory = false;
+	static bool showfpsInfo = false;
+
+
+	if (aboutSelected)
+	{
+		ImGui::Begin("About", &aboutSelected, ImGuiWindowFlags_AlwaysAutoResize);
+		ImGui::Text("A game engine made for educational purposes by CapitanLiteral");
+		ImGui::End();
+	}
+	if (openReleaseDirectory)
+	{
+		App->OpenBrowser("https://github.com/CapitanLiteral/Wingman/releases");
+		openReleaseDirectory = false;
+	}
+	if (openRepoDirectory)
+	{
+		App->OpenBrowser("https://github.com/CapitanLiteral/Wingman");
+		openRepoDirectory = false;
+	}
+	if (showfpsInfo) ShowfpsInfo(showfpsInfo);
+
+
+	if (ImGui::BeginMainMenuBar())
+	{
+		if (ImGui::BeginMenu("File"))
+		{
+			ImGui::MenuItem("Quit", NULL, &quitSelected, true);
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Windows"))
+		{
+			ImGui::MenuItem("FPS info", NULL, &showfpsInfo, true);
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("View"))
+		{
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("Help"))
+		{
+			ImGui::MenuItem("About", NULL, &aboutSelected, true);
+			ImGui::MenuItem("Releases", NULL, &openReleaseDirectory, true);
+			ImGui::MenuItem("Repository", NULL, &openRepoDirectory, true);
+			ImGui::EndMenu();
+		}
+		ImGui::EndMainMenuBar();
+	}
+
+	
+	if (quitSelected) //Aplication closing
+	{
+		SDL_Log("Closing aplication from editor");
+		return UPDATE_STOP;
+	}
+
 	return UPDATE_CONTINUE;
 }
 
@@ -72,4 +132,18 @@ bool ModuleEditor::CleanUp()
 {
 	ImGui_ImplSdlGL3_Shutdown();
 	return true;
+}
+
+void ModuleEditor::ShowfpsInfo(bool &showfpsInfo)
+{
+	float values[5];
+	values[0] = 2;
+	values[1] = 5;
+	values[2] = 15;
+	values[3] = 5;
+	values[4] = 5;
+	ImGui::Begin("Fps Window", &showfpsInfo, ImGuiWindowFlags_AlwaysAutoResize);
+	ImGui::Text("FPS");
+	ImGui::PlotHistogram("Histogram", values, 5, 0, NULL, 0.0f, 20.0f, ImVec2(0, 80));
+	ImGui::End();
 }

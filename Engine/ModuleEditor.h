@@ -31,6 +31,8 @@ public:
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
 
+	void ShowfpsInfo(bool &showfpsInfo);
+
 	bool CleanUp();
 
 };

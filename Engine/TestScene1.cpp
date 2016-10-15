@@ -2,8 +2,7 @@
 #include "Globals.h"
 #include "TestScene1.h"
 #include "ModuleFBXImporter.h"
-
-
+#include "ModuleTexture.h"
 
 #include "OpenGL.h"
 
@@ -29,7 +28,8 @@ bool TestScene1::Start()
 	//This is absolute route... We should change it // ERROR!!
 	App->fbxImporter->loadFBX("../DLL/MechaT.FBX");
 	//App->fbxImporter->loadFBX("../DLL/Warrior.FBX");
-	id = App->fbxImporter->loadTextures();
+	//id = App->fbxImporter->loadTextures();
+	id = App->texture->loadTexture("../../lena.png");
 	return true;
 }
 update_status TestScene1::PreUpdate(float dt)
@@ -64,7 +64,9 @@ update_status TestScene1::Update(float dt)
 	////Draw a quad in direct mode
 	
 	glEnable(GL_TEXTURE_2D);
+	id = App->texture->loadTexture("../DLL/Lenna.png");
 	glBindTexture(GL_TEXTURE_2D, id);
+	
 	glBegin(GL_TRIANGLES);
 
 	float s = 1.f * 2;
@@ -75,60 +77,97 @@ update_status TestScene1::Update(float dt)
 	glVertex3d(s, s, s);	
 	glTexCoord2f(0.f, 0.f);
 	glVertex3d(-s, -s, s);	
-	glTexCoord2f(0.f, 1.f);
+	glTexCoord2f(1.f, 0.f);
 	glVertex3d(s, -s, s);
 
-	glTexCoord2f(1.f, 0.f);
+	glTexCoord2f(0.f, 1.f);
 	glVertex3d(-s, s, s);	
 	glTexCoord2f(0.f, 0.f);
 	glVertex3d(-s, -s, s);	
 	glTexCoord2f(1.f, 1.f);
 	glVertex3d(s, s, s);
 	//----------------------- Top
+
+	glTexCoord2f(0.f, 1.f);
 	glVertex3d(-s, s, s);
+	glTexCoord2f(1.f, 1.f);
 	glVertex3d(s, s, s);
+	glTexCoord2f(1.f, 0.f);
 	glVertex3d(s, s, -s);
 
+	glTexCoord2f(0.f, 1.f);
 	glVertex3d(-s, s, s);
+	glTexCoord2f(1.f, 0.f);
 	glVertex3d(s, s, -s);
+	glTexCoord2f(0.f, 0.f);
 	glVertex3d(-s, s, -s);
 	//----------------------- Right
+
+	glTexCoord2f(1.f, 1.f);
 	glVertex3d(s, s, s);
+	glTexCoord2f(0.f, 1.f);
 	glVertex3d(s, -s, s);
+	glTexCoord2f(1.f, 0.f);
 	glVertex3d(s, s, -s);
 
+	glTexCoord2f(0.f, 1.f);
 	glVertex3d(s, -s, s);
+	glTexCoord2f(0.f, 0.f);
 	glVertex3d(s, -s, -s);
+	glTexCoord2f(1.f, 0.f);
 	glVertex3d(s, s, -s);
 	//----------------------- Left
+
+	glTexCoord2f(1.f, 0.f);
 	glVertex3d(-s, s, -s);
+	glTexCoord2f(0.f, 1.f);
 	glVertex3d(-s, -s, s);
+	glTexCoord2f(1.f, 1.f);
 	glVertex3d(-s, s, s);
 
+	glTexCoord2f(1.f, 0.f);
 	glVertex3d(-s, s, -s);
+	glTexCoord2f(0.f, 0.f);
 	glVertex3d(-s, -s, -s);
+	glTexCoord2f(0.f, 1.f);
 	glVertex3d(-s, -s, s);
 	//----------------------- Bottom
+	
+	glTexCoord2f(0.f, 1.f);
 	glVertex3d(-s, -s, s);
+	glTexCoord2f(1.f, 0.f);
 	glVertex3d(s, -s, -s);
+	glTexCoord2f(1.f, 1.f);
 	glVertex3d(s, -s, s);
 
+	glTexCoord2f(0.f, 1.f);
 	glVertex3d(-s, -s, s);
+	glTexCoord2f(0.f, 0.f);
 	glVertex3d(-s, -s, -s);
+	glTexCoord2f(1.f, 0.f);
 	glVertex3d(s, -s, -s);
 	//----------------------- Behind
+
+	glTexCoord2f(1.f, 1.f);
 	glVertex3d(s, s, -s);
+	glTexCoord2f(1.f, 0.f);
 	glVertex3d(s, -s, -s);
+	glTexCoord2f(0.f, 1.f);
 	glVertex3d(-s, s, -s);
 
+	glTexCoord2f(1.f, 0.f);
 	glVertex3d(s, -s, -s);
+	glTexCoord2f(0.f, 0.f);
 	glVertex3d(-s, -s, -s);
+	glTexCoord2f(0.f, 1.f);
 	glVertex3d(-s, s, -s);
 
 	glEnd();
-	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	id = App->texture->loadTexture("../DLL/Diffuse_Mech.png");
+	glBindTexture(GL_TEXTURE_2D, id);
 	App->fbxImporter->drawMeshes(App->fbxImporter->meshes);
-	
+	glBindTexture(GL_TEXTURE_2D, 0);
 	return UPDATE_CONTINUE;
 }
 update_status TestScene1::PostUpdate(float dt)

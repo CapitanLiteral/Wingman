@@ -15,7 +15,10 @@ class ModuleTests;
 class ModulePhysics3D;
 class ModuleScene;
 class ModuleFBXImporter;
+class ModuleTexture;
+
 class TestScene1;
+class TestScene2;
 #include "MathGeoLib\include\MathGeoLibFwd.h"
 
 class Application
@@ -31,13 +34,15 @@ public:
 	ModuleEditor* editor = NULL;
 	ModulePhysics3D* physics = NULL;
 	ModuleFBXImporter* fbxImporter = NULL;
+	ModuleTexture* texture = NULL;
 
 	TestScene1* test1 = NULL;
+	TestScene2* test2 = NULL;
 
 	float ms_frame[EDITOR_FRAME_SAMPLES];
 	float framerate[EDITOR_FRAME_SAMPLES];
 	int maxFPS = 0;
-
+	bool quit;
 private:
 
 	Timer	ms_timer;
@@ -47,6 +52,7 @@ private:
 	Timer	FPS_Timer;
 	float FrameTime = -1.0f;
 	int previous_maxFPS = maxFPS;
+	
 
 public:
 

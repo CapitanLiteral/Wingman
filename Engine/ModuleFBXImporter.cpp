@@ -10,6 +10,9 @@
 #include "Assimp\Assimp\include\cimport.h"
 #include "Assimp\Assimp\include\postprocess.h"
 
+
+#include "GameObject.h"
+
 #pragma comment (lib, "Assimp/Assimp/libx86/assimp.lib")
 
 #include "OpenGL.h"
@@ -39,7 +42,7 @@ ModuleFBXImporter::~ModuleFBXImporter()
 }
 
 
-void ModuleFBXImporter::loadFBX(char* full_path)
+void ModuleFBXImporter::loadFBX(const char* full_path)
 {
 	const aiScene* scene = aiImportFile(full_path, aiProcessPreset_TargetRealtime_MaxQuality);
 
@@ -53,35 +56,58 @@ void ModuleFBXImporter::loadFBX(char* full_path)
 			//Todo
 			VramVertex* mesh = new VramVertex();
 			aiMesh* new_mesh = scene->mMeshes[i];		
-
+			
 			mesh->numVertices = new_mesh->mNumVertices;
 			mesh->vertices = new float[mesh->numVertices * 3];
 
-			mesh->numNormals = new_mesh->mNumVertices;
-			mesh->normals = new float[mesh->numNormals * 3];
-
 			memcpy(mesh->vertices, new_mesh->mVertices, sizeof(float)*  mesh->numVertices * 3);
-			memcpy(mesh->normals, new_mesh->mNormals, sizeof(float) * mesh->numNormals * 3);
 
-			SDL_Log("New mesh with %d vertices", mesh->numVertices);
-
-			if (scene->mMeshes[i]->mNumFaces * 3)
+			//Normals
+			if (new_mesh->HasNormals())
 			{
-				mesh->numIndices = scene->mMeshes[i]->mNumFaces * 3;
-				mesh->indices = new uint[mesh->numIndices]; // Asume all are triangles
-				for (uint j = 0; j < scene->mMeshes[i]->mNumFaces; j++)
+				mesh->numNormals = new_mesh->mNumVertices;
+				mesh->normals = new float[mesh->numNormals * 3];
+
+				memcpy(mesh->normals, new_mesh->mNormals, sizeof(float) * mesh->numNormals * 3);
+			}
+
+			if (new_mesh->HasFaces())
+			{
+				SDL_Log("New mesh with %d vertices", mesh->numVertices);
+
+				if (scene->mMeshes[i]->mNumFaces * 3)
 				{
-					if (scene->mMeshes[i]->mFaces[j].mNumIndices != 3)
+					mesh->numIndices = scene->mMeshes[i]->mNumFaces * 3;
+					mesh->indices = new uint[mesh->numIndices]; // Asume all are triangles
+					for (uint j = 0; j < scene->mMeshes[i]->mNumFaces; j++)
 					{
-						SDL_Log("WARNING, geometry face with != 3 indices!");
-					}
-					else
-					{
-						memcpy(&mesh->indices[j * 3], scene->mMeshes[i]->mFaces[j].mIndices, sizeof(uint) * 3);
+						if (scene->mMeshes[i]->mFaces[j].mNumIndices != 3)
+						{
+							SDL_Log("WARNING, geometry face with != 3 indices!");
+						}
+						else
+						{
+							memcpy(&mesh->indices[j * 3], scene->mMeshes[i]->mFaces[j].mIndices, sizeof(uint) * 3);
+						}
 					}
 				}
 			}
-		
+
+			//UV
+			//if (new_mesh->HasTextureCoords(0))
+			//{
+			//	mesh->UV = new float[mesh->numVertices * 3];
+			//	for (uint i = 0; i < mesh->numVertices*2; i++)
+			//	{
+			//		memcpy(&mesh->UV[i*2], &new_mesh->mTextureCoords[0][i*2+i], sizeof(float) * mesh->numVertices * 2);
+			//	}				
+			//}
+			if (new_mesh->HasTextureCoords(0))
+			{
+				mesh->UV = new float[mesh->numVertices * 3];
+				memcpy(mesh->UV, new_mesh->mTextureCoords[0], sizeof(float) * mesh->numVertices * 3);
+			}
+
 			meshes.push_back(mesh);
 
 			//Generating GL Buffers
@@ -92,15 +118,24 @@ void ModuleFBXImporter::loadFBX(char* full_path)
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*meshes[i]->numVertices * 3, meshes[i]->vertices, GL_STATIC_DRAW);
 
 			//normals
-			glGenBuffers(1, (GLuint*) &(meshes[i]->idNormals));
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i]->idNormals);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*meshes[i]->numNormals * 3, meshes[i]->normals, GL_STATIC_DRAW);
-
+			if (mesh->normals != nullptr)
+			{
+				glGenBuffers(1, (GLuint*) &(meshes[i]->idNormals));
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i]->idNormals);
+				glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*meshes[i]->numNormals * 3, meshes[i]->normals, GL_STATIC_DRAW);
+			}
 			//indices
 			glGenBuffers(1, (GLuint*) &(meshes[i]->idIndices));
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i]->idIndices);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t)*meshes[i]->numIndices, meshes[i]->indices, GL_STATIC_DRAW);
 
+			//UV
+			if (mesh->UV != nullptr)
+			{
+				glGenBuffers(1, (GLuint*) &(meshes[i]->idUV));
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshes[i]->idUV);
+				glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t)*meshes[i]->numVertices * 3, meshes[i]->UV, GL_STATIC_DRAW);
+			}
 			
 		}
 		aiReleaseImport(scene);
@@ -110,6 +145,35 @@ void ModuleFBXImporter::loadFBX(char* full_path)
 
 }
 
+GameObject* ModuleFBXImporter::loadScene(const char* full_path)
+{
+	GameObject* retScene = new GameObject();
+
+	//Import Scene
+	const aiScene* scene = aiImportFile(full_path, aiProcessPreset_TargetRealtime_MaxQuality);
+	aiNode* actualNode;
+
+	actualNode = scene->mRootNode;
+
+
+	
+	return retScene;
+}
+
+GameObject* ModuleFBXImporter::loadNode(const aiNode* node)
+{
+	GameObject* retNode = NULL;
+
+	if (node->mNumChildren == 0)
+	{
+		loadNode(node);
+	}
+
+
+	return retNode;
+}
+
+
 void ModuleFBXImporter::drawMeshes(std::vector<VramVertex*> drawMeshes)
 {
 	for (uint i = 0; i < drawMeshes.size(); i++)
@@ -118,7 +182,7 @@ void ModuleFBXImporter::drawMeshes(std::vector<VramVertex*> drawMeshes)
 
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glEnableClientState(GL_NORMAL_ARRAY);
-
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 		//vertices
 		glBindBuffer(GL_ARRAY_BUFFER, m->idVertices);
@@ -131,8 +195,14 @@ void ModuleFBXImporter::drawMeshes(std::vector<VramVertex*> drawMeshes)
 		//indices
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->idIndices);
 
+		//UV
+		glBindBuffer(GL_ARRAY_BUFFER, m->idUV);
+		glTexCoordPointer(3, GL_FLOAT, 0, NULL);
+		
+		
 		glDrawElements(GL_TRIANGLES, m->numIndices, GL_UNSIGNED_INT, NULL);
-
+		
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_NORMAL_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
 

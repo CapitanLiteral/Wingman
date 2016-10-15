@@ -1,6 +1,12 @@
 #pragma once
-#include "Module.h"
+
 #include <vector>
+
+#include "Module.h"
+
+class aiNode;
+class GameObject;
+
 
 struct VramVertex
 {
@@ -15,6 +21,10 @@ struct VramVertex
 	uint idNormals = 0;
 	uint numNormals = 0;
 	float* normals = nullptr;
+
+	uint idUV = 0;
+	uint numUV = 0;
+	float* UV = nullptr;
 };
 
 
@@ -31,7 +41,12 @@ public:
 
 	virtual ~ModuleFBXImporter();
 
-	void loadFBX(char* full_path);
+	void loadFBX(const char* full_path);
+	GameObject* loadScene(const char* full_path);
+
+	GameObject* loadNode(const aiNode* node);
+
+
 	uint loadTextures();
 	void drawMeshes(std::vector<VramVertex*>);
 
