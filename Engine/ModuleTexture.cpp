@@ -25,19 +25,18 @@ ModuleTexture::~ModuleTexture()
 
 uint ModuleTexture::loadTexture(char* path)
 {
-	ILuint ImgID = 0;
-	ilGenImages(1, &ImgID);
-	ilBindImage(ImgID);
-	ilLoadImage(path);
+	uint ImgID = ilutGLLoadImage("../../Lenna.png");
+	uint ret;
+	if (ImgID != 0)
+	{
+		textures.push_back(ImgID);
+		ret = ImgID;
+	}
+	else
+	{
+		SDL_Log("Error loading texture %s", path);
+		ret = 0;
+	}
 
-	int width = ilGetInteger(IL_IMAGE_WIDTH);
-	int height = ilGetInteger(IL_IMAGE_HEIGHT);
-	BYTE* pixmap = new BYTE[width * height * 3];
-	ilCopyPixels(0, 0, 0, width, height, 1, IL_RGB,
-				 IL_UNSIGNED_BYTE, pixmap);
-
-	ilBindImage(0);
-	ilDeleteImage(ImgID);
-
-	return ImgID;
+	return ret;
 }

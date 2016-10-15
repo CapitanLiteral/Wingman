@@ -162,9 +162,9 @@ update_status TestScene1::Update(float dt)
 
 	glEnd();
 	glBindTexture(GL_TEXTURE_2D, 0);
-
+	glBindTexture(GL_TEXTURE_2D, id);
 	App->fbxImporter->drawMeshes(App->fbxImporter->meshes);
-	
+	glBindTexture(GL_TEXTURE_2D, 0);
 	return UPDATE_CONTINUE;
 }
 update_status TestScene1::PostUpdate(float dt)

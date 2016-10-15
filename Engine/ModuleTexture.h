@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+
 #include "Module.h"
 class ModuleTexture :
 	public Module
@@ -8,5 +10,8 @@ public:
 	virtual ~ModuleTexture();
 
 	uint loadTexture(char* path);
+
+	std::vector<uint> textures;
+
 };
 
