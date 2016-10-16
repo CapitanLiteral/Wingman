@@ -11,6 +11,7 @@ public:
 
 	uint loadTexture(char* path);
 
+	//Array of loaded textures
 	std::vector<uint> textures;
 
 };
