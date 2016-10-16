@@ -21,10 +21,23 @@ GameObjectManager::~GameObjectManager()
 {
 }
 
+
 bool GameObjectManager::Start()
 {
-
+	float3 position(0, 0, 0);
+	float3 scale(0,0,0);
+	Quat rotation(0,0,0,0);
+	root = new GameObject(NULL, position, scale, rotation, "ROOT");
 	return true;
+}
+
+update_status GameObjectManager::Update(float dt)
+{
+
+	root->update();
+
+
+	return UPDATE_CONTINUE;
 }
 
 GameObject* GameObjectManager::LoadFBX(const char * path)
@@ -62,7 +75,6 @@ void GameObjectManager::LoadScene(const aiScene * scene, const aiNode * node, Ga
 	Quat rotation(ai_rotation.x, ai_rotation.y, ai_rotation.z, ai_rotation.w);
 	
 	GameObject* gameObject = new GameObject(parent, position, scale, rotation, "NoName");
-	GameObject* childGameObject = NULL;
 
 	float4x4 matrix(rotation, position);
 	matrix.Scale(scale);
@@ -70,25 +82,15 @@ void GameObjectManager::LoadScene(const aiScene * scene, const aiNode * node, Ga
 	for (uint i = 0; i < node->mNumMeshes; i++)
 	{
 		const aiMesh* ai_mesh = scene->mMeshes[node->mMeshes[i]];
-		
-		if (node->mNumMeshes > 1)
-		{
-			gameObjectName = ai_mesh->mName.C_Str();
-			if (gameObjectName.length() == 0)
-			{
-				gameObjectName = node->mName.C_Str();
-				gameObjectName += "_submesh";
-			}
-			childGameObject = new GameObject(gameObject, position, scale, rotation, gameObjectName.c_str());
-		}
-		else
-		{
-			childGameObject = gameObject;
-		}
 
+		ComponentMesh* mesh = (ComponentMesh*)gameObject->createComponent(MESH);
+		mesh->load(ai_mesh);
 
-
-
+		int iii = mesh->idVertices;
 	}
+
+
+	for (uint i = 0; i < node->mNumChildren; ++i)
+		LoadScene(scene, node->mChildren[i], gameObject);
 
 }
