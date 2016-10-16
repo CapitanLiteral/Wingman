@@ -5,6 +5,11 @@
 
 #include "OpenGL.h"
 
+#include "Assimp\Assimp\include\scene.h"
+#include "Assimp\Assimp\include\cfileio.h"
+#include "Assimp\Assimp\include\cimport.h"
+#include "Assimp\Assimp\include\postprocess.h"
+
 ComponentMesh::ComponentMesh(GameObject* parent)
 {
 	this->parent = parent;
@@ -61,6 +66,77 @@ void ComponentMesh::Update()
 	{
 		draw();
 	}
+}
+
+void ComponentMesh::load(const aiMesh* mesh)
+{
+	numVertices = mesh->mNumVertices;
+	vertices = new float[numVertices * 3];
+
+	memcpy(vertices, mesh->mVertices, sizeof(float)*  numVertices * 3);
+
+	//Normals
+	if (mesh->HasNormals())
+	{
+		numNormals = mesh->mNumVertices;
+		normals = new float[numNormals * 3];
+
+		memcpy(normals, mesh->mNormals, sizeof(float) * numNormals * 3);
+	}
+
+	if (mesh->HasFaces())
+	{
+		SDL_Log("New mesh with %d vertices", numVertices);
+
+		numIndices = mesh->mNumFaces * 3;
+		indices = new uint[numIndices]; // Asume all are triangles
+		for (uint j = 0; j < mesh->mNumFaces; j++)
+		{
+			if (mesh->mFaces[j].mNumIndices != 3)
+			{
+				SDL_Log("WARNING, geometry face with != 3 indices!");
+			}
+			else
+			{
+				memcpy(&indices[j * 3], mesh->mFaces[j].mIndices, sizeof(uint) * 3);
+			}
+		}
+	}
+
+	if (mesh->HasTextureCoords(0))
+	{
+		UV = new float[numVertices * 3];
+		memcpy(UV, mesh->mTextureCoords[0], sizeof(float) * numVertices * 3);
+	}
+
+	//Generating GL Buffers
+
+	//vertices
+	glGenBuffers(1, (GLuint*) &(idVertices));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idVertices);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*numVertices * 3, vertices, GL_STATIC_DRAW);
+
+	//normals
+	if (normals != nullptr)
+	{
+		glGenBuffers(1, (GLuint*) &(idNormals));
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idNormals);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*numNormals * 3, normals, GL_STATIC_DRAW);
+	}
+	//indices
+	glGenBuffers(1, (GLuint*) &(idIndices));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIndices);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t)*numIndices, indices, GL_STATIC_DRAW);
+
+	//UV
+	if (UV != nullptr)
+	{
+		glGenBuffers(1, (GLuint*) &(idUV));
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idUV);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t)*numVertices * 3, UV, GL_STATIC_DRAW);
+	}
+
+
 }
 
 void ComponentMesh::draw()

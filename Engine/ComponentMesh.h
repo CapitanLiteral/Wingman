@@ -3,7 +3,7 @@
 
 #include "Component.h"
 class GameObject;
-
+class aiMesh;
 class ComponentMesh : public Component
 {
 public:
@@ -34,6 +34,7 @@ public:
 	~ComponentMesh();
 
 	void Update();
+	void load(const aiMesh* mesh);
 	void draw();
 	void drawUI();
 
