@@ -44,6 +44,22 @@ Component* GameObject::createComponent(ComponentType type)
 
 void GameObject::update()
 {
+	for (std::vector<Component*>::iterator it = components.begin();
+		 it != components.end(); it++)
+	{
+		if ((*it)->type == MESH)
+		{
+			ComponentMesh* component = (ComponentMesh*)(*it);
+			component->Update();
+		}
+	}
+	for (std::vector<GameObject*>::iterator it = children.begin();
+			it != children.end(); it++)
+	{
+		(*it)->update();
+	}
+
+	
 }
 
 Component * GameObject::findComponent(ComponentType)
