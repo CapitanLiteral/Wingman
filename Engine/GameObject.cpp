@@ -1,5 +1,7 @@
 #include "SDL\include\SDL.h"
 #include "GameObject.h"
+#include "ComponentMaterial.h"
+#include "ComponentMesh.h"
 
 
 GameObject::GameObject(GameObject* parent, const float3 translation, const float3 scale, const Quat rotation, const char* name)
@@ -16,10 +18,29 @@ GameObject::GameObject(GameObject* parent, const float3 translation, const float
 	}
 }
 
-
 GameObject::~GameObject()
 {
 }
+
+Component* GameObject::createComponent(ComponentType type)
+{
+	Component* ret;
+	if (type == MESH)
+	{
+		ComponentMesh* mesh = new ComponentMesh(this);
+		mesh->type = type;
+		components.push_back(mesh);
+		return mesh;
+	}
+	else if (type == MATERIAL)
+	{
+
+	}
+
+
+	return ret;
+}
+
 
 void GameObject::update()
 {
