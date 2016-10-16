@@ -16,6 +16,7 @@ class ModulePhysics3D;
 class ModuleScene;
 class ModuleFBXImporter;
 class ModuleTexture;
+class GameObjectManager;
 
 class TestScene1;
 class TestScene2;
@@ -35,6 +36,7 @@ public:
 	ModulePhysics3D* physics = NULL;
 	ModuleFBXImporter* fbxImporter = NULL;
 	ModuleTexture* texture = NULL;
+	GameObjectManager* goManager = NULL;
 
 	TestScene1* test1 = NULL;
 	TestScene2* test2 = NULL;

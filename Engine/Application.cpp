@@ -11,6 +11,7 @@
 #include "ModuleEditor.h"
 #include "ModuleFBXImporter.h"
 #include "ModuleTexture.h"
+#include "GameObjectManager.h"
 #include "TestScene1.h"
 #include "TestScene2.h"
 
@@ -27,6 +28,7 @@ Application::Application()
 
 	fbxImporter = new ModuleFBXImporter(this);
 	texture = new ModuleTexture(this);
+	goManager = new GameObjectManager(this);
 
 	test1 = new TestScene1(this);
 	test2 = new TestScene2(this);
@@ -40,6 +42,7 @@ Application::Application()
 	AddModule(input);
 	AddModule(fbxImporter);
 	AddModule(texture);
+	AddModule(goManager);
 	AddModule(audio);
 	AddModule(physics);
 	AddModule(editor);
