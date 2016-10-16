@@ -10,6 +10,10 @@ GameObject::GameObject(GameObject* parent, const float3 translation, const float
 	this->rotation		= rotation;
 	this->parent		= parent;
 
+	if (parent != NULL)
+	{
+		parent->addChild(this);
+	}
 }
 
 
