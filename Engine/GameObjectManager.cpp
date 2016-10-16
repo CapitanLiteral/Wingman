@@ -27,6 +27,27 @@ bool GameObjectManager::Start()
 	return true;
 }
 
+GameObject* GameObjectManager::LoadFBX(const char * path)
+{
+	if (path == NULL)
+	{
+		SDL_Log("No path");
+		return NULL; //If path is NULL dont do nothing
+	}
+
+	const aiScene* scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
+
+	if (scene, scene->HasMeshes())
+	{
+		SDL_Log("FBX path: %s.", path);
+		LoadScene(scene, scene->mRootNode, root);		
+	}
+
+	aiReleaseImport(scene);
+
+	return root;
+}
+
 void GameObjectManager::LoadScene(const aiScene * scene, const aiNode * node, GameObject * parent)
 {
 	aiVector3D ai_translation;

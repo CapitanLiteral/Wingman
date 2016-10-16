@@ -17,9 +17,10 @@ public:
 
 	bool Start();
 
+	GameObject* LoadFBX(const char* path);
 	void LoadScene(const aiScene* scene, const aiNode* node, GameObject* parent);
 
-	std::vector<GameObject*> entities;
+	GameObject* root = NULL;
 
 };
 
