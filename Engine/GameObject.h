@@ -30,6 +30,8 @@ public:
 	float3	translation = float3::zero;
 	float3	scale = float3::zero;
 	Quat	rotation = Quat::identity;
+
+	float4x4 getTransform();
 	
 };
 

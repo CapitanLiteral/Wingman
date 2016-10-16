@@ -141,10 +141,12 @@ void ComponentMesh::load(const aiMesh* mesh)
 
 void ComponentMesh::draw()
 {
+	glPushMatrix();
+	glMultMatrixf(parent->getTransform().ptr());
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
+	
 	//vertices
 	glBindBuffer(GL_ARRAY_BUFFER, idVertices);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
@@ -170,9 +172,11 @@ void ComponentMesh::draw()
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
+	glPopMatrix();
 }
 
 void ComponentMesh::drawUI()
 {
 	//TODO
 }
+

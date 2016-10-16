@@ -80,3 +80,11 @@ void GameObject::addChild(GameObject* child)
 	}
 	
 }
+
+float4x4 GameObject::getTransform()
+{
+	float4x4 ret;
+	ret = float4x4::FromTRS(translation, rotation, scale);
+	ret.Transpose();
+	return ret;
+}
