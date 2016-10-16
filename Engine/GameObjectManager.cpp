@@ -13,7 +13,7 @@
 #include "Assimp\Assimp\include\postprocess.h"
 
 
-GameObjectManager::GameObjectManager(Application app, bool start_enabled) : Module(app, start_enabled)
+GameObjectManager::GameObjectManager(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 }
 
@@ -24,7 +24,7 @@ GameObjectManager::~GameObjectManager()
 bool GameObjectManager::Start()
 {
 
-
+	return true;
 }
 
 void GameObjectManager::LoadScene(const aiScene * scene, const aiNode * node, GameObject * parent)
@@ -32,6 +32,7 @@ void GameObjectManager::LoadScene(const aiScene * scene, const aiNode * node, Ga
 	aiVector3D ai_translation;
 	aiVector3D ai_scaling;
 	aiQuaternion ai_rotation;
+	std::string gameObjectName;
 
 	node->mTransformation.Decompose(ai_scaling, ai_rotation, ai_translation);
 
@@ -40,6 +41,7 @@ void GameObjectManager::LoadScene(const aiScene * scene, const aiNode * node, Ga
 	Quat rotation(ai_rotation.x, ai_rotation.y, ai_rotation.z, ai_rotation.w);
 	
 	GameObject* gameObject = new GameObject(parent, position, scale, rotation, "NoName");
+	GameObject* childGameObject = NULL;
 
 	float4x4 matrix(rotation, position);
 	matrix.Scale(scale);
@@ -47,6 +49,25 @@ void GameObjectManager::LoadScene(const aiScene * scene, const aiNode * node, Ga
 	for (uint i = 0; i < node->mNumMeshes; i++)
 	{
 		const aiMesh* ai_mesh = scene->mMeshes[node->mMeshes[i]];
+		
+		if (node->mNumMeshes > 1)
+		{
+			gameObjectName = ai_mesh->mName.C_Str();
+			if (gameObjectName.length() == 0)
+			{
+				gameObjectName = node->mName.C_Str();
+				gameObjectName += "_submesh";
+			}
+			childGameObject = new GameObject(gameObject, position, scale, rotation, gameObjectName.c_str());
+		}
+		else
+		{
+			childGameObject = gameObject;
+		}
+
+
+
+
 	}
 
 }
