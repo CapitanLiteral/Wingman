@@ -5,7 +5,6 @@
 enum ComponentType
 {
 	MESH,
-	TRANSFORM,
 	MATERIAL
 };
 
