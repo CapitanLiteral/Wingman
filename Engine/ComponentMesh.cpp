@@ -93,4 +93,8 @@ void ComponentMesh::draw()
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
+
+void ComponentMesh::drawUI()
+{
+	//TODO
 }
