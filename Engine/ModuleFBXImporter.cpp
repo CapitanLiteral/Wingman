@@ -145,20 +145,20 @@ void ModuleFBXImporter::loadFBX(const char* full_path)
 
 }
 
-GameObject* ModuleFBXImporter::loadScene(const char* full_path)
-{
-	GameObject* retScene = new GameObject();
-
-	//Import Scene
-	const aiScene* scene = aiImportFile(full_path, aiProcessPreset_TargetRealtime_MaxQuality);
-	aiNode* actualNode;
-
-	actualNode = scene->mRootNode;
-
-
-	
-	return retScene;
-}
+//GameObject* ModuleFBXImporter::loadScene(const char* full_path)
+//{
+//	GameObject* retScene = new GameObject();
+//
+//	//Import Scene
+//	const aiScene* scene = aiImportFile(full_path, aiProcessPreset_TargetRealtime_MaxQuality);
+//	aiNode* actualNode;
+//
+//	actualNode = scene->mRootNode;
+//
+//
+//	
+//	return retScene;
+//}
 
 GameObject* ModuleFBXImporter::loadNode(const aiNode* node)
 {
