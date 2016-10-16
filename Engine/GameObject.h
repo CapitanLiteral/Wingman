@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include "Component.h"
+#include "MathGeoLib\include\MathGeoLib.h"
 
 class GameObject
 {
@@ -25,5 +26,9 @@ public:
 
 	void addChild(GameObject*);
 
+	float3	translation = float3::zero;
+	float3	scale = float3::zero;
+	Quat	rotation = Quat::identity;
+	
 };
 
