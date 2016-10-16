@@ -14,6 +14,7 @@ public:
 	void update();
 
 	Component* findComponent(ComponentType);
+	Component* createComponent(ComponentType);
 
 public:
 	//Redundant information for a faster and easier way to find objects on the tree
