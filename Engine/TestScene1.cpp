@@ -3,6 +3,7 @@
 #include "TestScene1.h"
 #include "ModuleFBXImporter.h"
 #include "ModuleTexture.h"
+#include "GameObjectManager.h"
 
 #include "OpenGL.h"
 
@@ -28,10 +29,16 @@ bool TestScene1::Start()
 	//This is absolute route... We should change it // ERROR!!
 	//App->fbxImporter->loadFBX("../DLL/MechaT.FBX");
 	//App->fbxImporter->loadFBX("../DLL/Brute.fbx");
-	App->fbxImporter->loadFBX("../DLL/Town/Street environment_V01.fbx");
+	//App->fbxImporter->loadFBX("../DLL/Town/Street environment_V01.fbx");
 	//App->fbxImporter->loadFBX("../DLL/Warrior.FBX");
 	//id = App->fbxImporter->loadTextures();
 	//id = App->texture->loadTexture("../../lena.png");
+
+
+	App->goManager->LoadFBX("../DLL/Town/Street environment_V01.fbx");
+
+	GameObject* go = App->goManager->root;
+
 	return true;
 }
 update_status TestScene1::PreUpdate(float dt)
@@ -65,7 +72,7 @@ update_status TestScene1::Update(float dt)
 
 	////Draw a quad in direct mode
 	
-	glEnable(GL_TEXTURE_2D);
+	//glEnable(GL_TEXTURE_2D);
 	//id = App->texture->loadTexture("../DLL/Lenna.png");
 	//glBindTexture(GL_TEXTURE_2D, id);
 	//
@@ -167,10 +174,19 @@ update_status TestScene1::Update(float dt)
 	//glEnd();
 	//glBindTexture(GL_TEXTURE_2D, 0);
 	//
-	id = App->texture->loadTexture("../DLL/Diffuse_Mech.png");
-	glBindTexture(GL_TEXTURE_2D, id);
-	App->fbxImporter->drawMeshes(App->fbxImporter->meshes);
-	glBindTexture(GL_TEXTURE_2D, 0);
+
+
+
+	//id = App->texture->loadTexture("../DLL/Diffuse_Mech.png");
+	//glBindTexture(GL_TEXTURE_2D, id);
+	//App->fbxImporter->drawMeshes(App->fbxImporter->meshes);
+	//glBindTexture(GL_TEXTURE_2D, 0);
+
+
+
+
+
+
 	return UPDATE_CONTINUE;
 }
 update_status TestScene1::PostUpdate(float dt)
