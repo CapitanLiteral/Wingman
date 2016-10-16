@@ -1,11 +1,13 @@
 #include "Application.h"
 
 #include "ComponentMesh.h"
+#include "GameObject.h"
 
+#include "OpenGL.h"
 
-
-ComponentMesh::ComponentMesh()
+ComponentMesh::ComponentMesh(GameObject* parent)
 {
+	this->parent = parent;
 }
 
 
