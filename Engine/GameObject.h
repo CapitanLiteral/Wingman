@@ -7,7 +7,7 @@
 class GameObject
 {
 public:
-	GameObject();
+	GameObject(GameObject* parent, const float3 translation, const float3 scale, const Quat rotation, const char* name);
 	virtual ~GameObject();
 
 	void update();

@@ -2,9 +2,14 @@
 #include "GameObject.h"
 
 
-
-GameObject::GameObject()
+GameObject::GameObject(GameObject* parent, const float3 translation, const float3 scale, const Quat rotation, const char* name)
 {
+	this->name			= name;
+	this->translation	= translation;
+	this->scale			= scale;
+	this->rotation		= rotation;
+	this->parent		= parent;
+
 }
 
 
