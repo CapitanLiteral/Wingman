@@ -99,6 +99,7 @@
     <ClInclude Include="imGUI\stb_rect_pack.h" />
     <ClInclude Include="imGUI\stb_textedit.h" />
     <ClInclude Include="imGUI\stb_truetype.h" />
+    <ClInclude Include="Inspector.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="MathGeoLib\include\Algorithm\Random\LCG.h" />
@@ -182,6 +183,8 @@
     <ClInclude Include="TestScene1.h" />
     <ClInclude Include="TestScene2.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="UI_Item.h" />
+    <ClInclude Include="WindowMenus.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -197,6 +200,7 @@
     <ClCompile Include="imGUI\imgui_demo.cpp" />
     <ClCompile Include="imGUI\imgui_draw.cpp" />
     <ClCompile Include="imGUI\imgui_impl_sdl_gl3.cpp" />
+    <ClCompile Include="Inspector.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -247,6 +251,7 @@
     <ClCompile Include="TestScene1.cpp" />
     <ClCompile Include="TestScene2.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="WindowMenus.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\include\Geometry\KDTree.inl" />
