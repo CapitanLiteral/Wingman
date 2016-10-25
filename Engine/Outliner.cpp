@@ -3,6 +3,9 @@
 
 #include "Outliner.h"
 #include "imGUI\imgui.h"
+#include "Imgui/imgui_impl_sdl_gl3.h"
+#include "OpenGL.h"
+
 #include "GameObjectManager.h"
 #include "GameObject.h"
 
@@ -17,29 +20,44 @@ Outliner::~Outliner()
 
 void Outliner::draw()
 {
-	ImGui::SetNextWindowContentSize(ImVec2(200.f, 600.f));
-	if (ImGui::Begin("Outliner", &active));
+	////////////////////////////////////////////////////////////////////////////////////////////////
+
+	ImGuiWindowFlags outilnerWindowFlags = 0;
+	outilnerWindowFlags |= ImGuiWindowFlags_AlwaysHorizontalScrollbar;
+
+	ImGui::SetNextWindowSize(ImVec2(300, 600), ImGuiSetCond_FirstUseEver);
+	if (!ImGui::Begin("New Outliner", &active, outilnerWindowFlags))
 	{
-		const GameObject* root = App->goManager->root;
-
-		ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnDoubleClick;
-
-		if (ImGui::TreeNodeEx("MainNode", flags))
-		{
-			if (root)
-			{
-				std::vector<GameObject*> children = root->children;
-				for (std::vector<GameObject*>::iterator it = children.begin(); 
-					 it != children.end(); it++)
-				{
-					treeNodes((*it));
-				}
-			}
-
-			ImGui::TreePop();
-		}
+		// Early out if the window is collapsed, as an optimization.
 		ImGui::End();
+		return;
 	}
+	ImGui::Spacing();
+
+	const GameObject* root = App->goManager->root;
+
+	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnDoubleClick;
+	flags |= ImGuiTreeNodeFlags_OpenOnArrow;
+
+	if (ImGui::TreeNodeEx("MainNode", flags))
+	{
+		if (root)
+		{
+			std::vector<GameObject*> children = root->children;
+			for (std::vector<GameObject*>::iterator it = children.begin();
+				 it != children.end(); it++)
+			{
+				treeNodes((*it));
+			}
+		}
+
+		ImGui::TreePop();
+	}
+	
+
+	ImGui::End();
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 void Outliner::treeNodes(GameObject* node)
@@ -48,6 +66,7 @@ void Outliner::treeNodes(GameObject* node)
 	if (node->children.size() > 0)
 	{
 		nodeFlags |= ImGuiTreeNodeFlags_OpenOnDoubleClick;
+		nodeFlags |= ImGuiTreeNodeFlags_OpenOnArrow;
 	}
 	else
 		nodeFlags |= ImGuiTreeNodeFlags_Leaf;

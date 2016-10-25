@@ -57,6 +57,9 @@
     <Filter Include="Sources\Editor\Decoupling">
       <UniqueIdentifier>{1dfbd010-c7d8-45c3-8114-0bca325fde0a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Editor\UI\Elements">
+      <UniqueIdentifier>{3f401ef5-9a70-47f1-9aeb-07fb44280995}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -352,6 +355,15 @@
       <Filter>Sources\Editor\Decoupling</Filter>
     </ClInclude>
     <ClInclude Include="Outliner.h">
+      <Filter>Sources\Editor\UI\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowMenus.h">
+      <Filter>Sources\Editor\UI\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Inspector.h">
+      <Filter>Sources\Editor\UI\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Item.h">
       <Filter>Sources\Editor\UI</Filter>
     </ClInclude>
   </ItemGroup>
@@ -537,7 +549,13 @@
       <Filter>Sources\Editor\Decoupling</Filter>
     </ClCompile>
     <ClCompile Include="Outliner.cpp">
-      <Filter>Sources\Editor\UI</Filter>
+      <Filter>Sources\Editor\UI\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowMenus.cpp">
+      <Filter>Sources\Editor\UI\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Inspector.cpp">
+      <Filter>Sources\Editor\UI\Elements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

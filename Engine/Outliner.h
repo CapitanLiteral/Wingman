@@ -1,7 +1,9 @@
 #pragma once
+#include "UI_Item.h"
+#include "imGUI\imgui.h"
 
 class GameObject;
-class Outliner
+class Outliner : public UI_Item
 {
 public:
 	Outliner();
@@ -10,6 +12,6 @@ public:
 	void draw();
 	void treeNodes(GameObject* node);
 
-	bool active;
+	ImGuiWindowFlags outilnerWindowFlags = 0;
 };
 

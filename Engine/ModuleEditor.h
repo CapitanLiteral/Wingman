@@ -17,6 +17,8 @@ class PanelResources;
 class PanelQuickBar;
 class GameObject;
 class Outliner;
+class Inspector;
+class WindowMenus;
 
 class ModuleEditor : public Module
 {
@@ -37,7 +39,13 @@ public:
 	bool CleanUp();
 
 public:
+	WindowMenus* windowMenus = NULL;
 	Outliner* outliner = NULL;
+	Inspector* inspector = NULL;
+
+	bool show_inspector = false;
+	bool show_Window_Menus = false;
+	bool show_outliner = false;
 
 };
 
