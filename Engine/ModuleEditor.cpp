@@ -10,6 +10,8 @@
 #include "ModulePhysics3D.h"
 
 #include "Outliner.h"
+#include "WindowMenus.h"
+#include "Inspector.h"
 
 #include "Imgui/imgui.h"
 #include "Imgui/imgui_impl_sdl_gl3.h"
@@ -42,7 +44,14 @@ bool ModuleEditor::Init()
 
 bool ModuleEditor::Start()
 {
+	SDL_Log("Window Menus Created");
+	windowMenus = new WindowMenus();
+	SDL_Log("Outliner Created");
 	outliner = new Outliner();
+	SDL_Log("Inspector Created");
+	inspector = new Inspector();
+
+	show_Window_Menus = true;
 
 	return true;
 }
@@ -57,73 +66,15 @@ update_status ModuleEditor::PreUpdate(float dt)
 
 update_status ModuleEditor::Update(float dt)
 {
-	ImGui::ShowTestWindow();
-	static bool quitSelected = false;
-	static bool aboutSelected = false;
-	static bool openReleaseDirectory = false;
-	static bool openRepoDirectory = false;
-	static bool showfpsInfo = false;
+	update_status ret = UPDATE_CONTINUE;
+
+	if (show_Window_Menus) windowMenus->draw();
+	if (show_outliner) outliner->draw();
+	if (show_inspector) inspector->draw();
 
 
-	if (aboutSelected)
-	{
-		ImGui::Begin("About", &aboutSelected, ImGuiWindowFlags_AlwaysAutoResize);
-		ImGui::Text("A game engine made for educational purposes by CapitanLiteral");
-		ImGui::End();
-	}
-	if (openReleaseDirectory)
-	{
-		App->OpenBrowser("https://github.com/CapitanLiteral/Wingman/releases");
-		openReleaseDirectory = false;
-	}
-	if (openRepoDirectory)
-	{
-		App->OpenBrowser("https://github.com/CapitanLiteral/Wingman");
-		openRepoDirectory = false;
-	}
-	if (showfpsInfo) ShowfpsInfo(showfpsInfo);
-
-
-	if (ImGui::BeginMainMenuBar())
-	{
-		if (ImGui::BeginMenu("File"))
-		{
-			ImGui::MenuItem("Quit", NULL, &quitSelected, true);
-			ImGui::EndMenu();
-		}
-		if (ImGui::BeginMenu("Windows"))
-		{
-			ImGui::MenuItem("FPS info", NULL, &showfpsInfo, true);
-			ImGui::EndMenu();
-		}
-		if (ImGui::BeginMenu("View"))
-		{
-			ImGui::EndMenu();
-		}
-
-		if (ImGui::BeginMenu("Help"))
-		{
-			ImGui::MenuItem("About", NULL, &aboutSelected, true);
-			ImGui::MenuItem("Releases", NULL, &openReleaseDirectory, true);
-			ImGui::MenuItem("Repository", NULL, &openRepoDirectory, true);
-			ImGui::EndMenu();
-		}
-		ImGui::EndMainMenuBar();
-	}
-
-	
-	if (quitSelected) //Aplication closing
-	{
-		SDL_Log("Closing aplication from editor");
-		return UPDATE_STOP;
-	}
-
-	//Other Elements
-
-	outliner->draw();
-
-
-	return UPDATE_CONTINUE;
+	if (windowMenus->QUIT)	ret = UPDATE_STOP;
+	return ret;
 }
 
 update_status ModuleEditor::PostUpdate(float dt)
