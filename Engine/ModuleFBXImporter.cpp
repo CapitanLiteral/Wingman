@@ -145,20 +145,20 @@ void ModuleFBXImporter::loadFBX(const char* full_path)
 
 }
 
-GameObject* ModuleFBXImporter::loadScene(const char* full_path)
-{
-	GameObject* retScene = new GameObject();
-
-	//Import Scene
-	const aiScene* scene = aiImportFile(full_path, aiProcessPreset_TargetRealtime_MaxQuality);
-	aiNode* actualNode;
-
-	actualNode = scene->mRootNode;
-
-
-	
-	return retScene;
-}
+//GameObject* ModuleFBXImporter::loadScene(const char* full_path)
+//{
+//	GameObject* retScene = new GameObject();
+//
+//	//Import Scene
+//	const aiScene* scene = aiImportFile(full_path, aiProcessPreset_TargetRealtime_MaxQuality);
+//	aiNode* actualNode;
+//
+//	actualNode = scene->mRootNode;
+//
+//
+//	
+//	return retScene;
+//}
 
 GameObject* ModuleFBXImporter::loadNode(const aiNode* node)
 {
@@ -183,6 +183,8 @@ void ModuleFBXImporter::drawMeshes(std::vector<VramVertex*> drawMeshes)
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glEnableClientState(GL_NORMAL_ARRAY);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		
+
 
 		//vertices
 		glBindBuffer(GL_ARRAY_BUFFER, m->idVertices);
@@ -197,9 +199,13 @@ void ModuleFBXImporter::drawMeshes(std::vector<VramVertex*> drawMeshes)
 
 		//UV
 		glBindBuffer(GL_ARRAY_BUFFER, m->idUV);
-		glTexCoordPointer(3, GL_FLOAT, 0, NULL);
+		if (m->idUV != 0)
+		{
+			glTexCoordPointer(3, GL_FLOAT, 0, NULL);
+		}		
 		
-		
+		glColor4f(0.7f, 0.7f, 0.7f, 1.f);
+
 		glDrawElements(GL_TRIANGLES, m->numIndices, GL_UNSIGNED_INT, NULL);
 		
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);

@@ -338,9 +338,6 @@
     <ClInclude Include="ComponentMesh.h">
       <Filter>Sources\Editor\Decoupling</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentTransform.h">
-      <Filter>Sources\Editor\Decoupling</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Sources\Editor\Decoupling</Filter>
     </ClInclude>
@@ -350,6 +347,12 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="ModuleTexture.h">
       <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectManager.h">
+      <Filter>Sources\Editor\Decoupling</Filter>
+    </ClInclude>
+    <ClInclude Include="Outliner.h">
+      <Filter>Sources\Editor\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -521,18 +524,20 @@
     <ClCompile Include="ComponentMesh.cpp">
       <Filter>Sources\Editor\Decoupling</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentTransform.cpp">
-      <Filter>Sources\Editor\Decoupling</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Sources\Editor\Decoupling</Filter>
     </ClCompile>
-    <ClCompile Include="Component.cpp" />
     <ClCompile Include="TestScene2.cpp">
       <Filter>Sources\Scenes\Test</Filter>
     </ClCompile>
     <ClCompile Include="ModuleTexture.cpp">
       <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectManager.cpp">
+      <Filter>Sources\Editor\Decoupling</Filter>
+    </ClCompile>
+    <ClCompile Include="Outliner.cpp">
+      <Filter>Sources\Editor\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

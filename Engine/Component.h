@@ -5,7 +5,6 @@
 enum ComponentType
 {
 	MESH,
-	TRANSFORM,
 	MATERIAL
 };
 
@@ -13,6 +12,8 @@ enum ComponentType
 class Component
 {
 public:
+	bool enabled = true;
+
 	Component(){}
 	virtual ~Component(){}
 

@@ -16,6 +16,7 @@ class PanelAbout;
 class PanelResources;
 class PanelQuickBar;
 class GameObject;
+class Outliner;
 
 class ModuleEditor : public Module
 {
@@ -34,6 +35,9 @@ public:
 	void ShowfpsInfo(bool &showfpsInfo);
 
 	bool CleanUp();
+
+public:
+	Outliner* outliner = NULL;
 
 };
 
