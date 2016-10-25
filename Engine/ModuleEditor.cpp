@@ -9,7 +9,7 @@
 #include "ModuleCamera3D.h"
 #include "ModulePhysics3D.h"
 
-
+#include "Outliner.h"
 
 #include "Imgui/imgui.h"
 #include "Imgui/imgui_impl_sdl_gl3.h"
@@ -42,7 +42,7 @@ bool ModuleEditor::Init()
 
 bool ModuleEditor::Start()
 {
-	
+	outliner = new Outliner();
 
 	return true;
 }
@@ -118,6 +118,11 @@ update_status ModuleEditor::Update(float dt)
 		return UPDATE_STOP;
 	}
 
+	//Other Elements
+
+	outliner->draw();
+
+
 	return UPDATE_CONTINUE;
 }
 
@@ -130,6 +135,11 @@ update_status ModuleEditor::PostUpdate(float dt)
 // Called before quitting
 bool ModuleEditor::CleanUp()
 {
+	if (outliner != NULL)
+	{
+		delete outliner;
+	}
+
 	ImGui_ImplSdlGL3_Shutdown();
 	return true;
 }

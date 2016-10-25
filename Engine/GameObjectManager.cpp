@@ -69,12 +69,12 @@ void GameObjectManager::LoadScene(const aiScene * scene, const aiNode * node, Ga
 	std::string gameObjectName;
 
 	node->mTransformation.Decompose(ai_scaling, ai_rotation, ai_translation);
-
+	gameObjectName = node->mName.C_Str();
 	float3 position(ai_translation.x, ai_translation.y, ai_translation.z);
 	float3 scale(ai_scaling.x, ai_scaling.y, ai_scaling.z);
 	Quat rotation(ai_rotation.x, ai_rotation.y, ai_rotation.z, ai_rotation.w);
 	
-	GameObject* gameObject = new GameObject(parent, position, scale, rotation, "NoName");
+	GameObject* gameObject = new GameObject(parent, position, scale, rotation, gameObjectName.c_str());
 
 	float4x4 matrix(rotation, position);
 	matrix.Scale(scale);

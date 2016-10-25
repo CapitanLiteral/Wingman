@@ -351,6 +351,9 @@
     <ClInclude Include="GameObjectManager.h">
       <Filter>Sources\Editor\Decoupling</Filter>
     </ClInclude>
+    <ClInclude Include="Outliner.h">
+      <Filter>Sources\Editor\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -532,6 +535,9 @@
     </ClCompile>
     <ClCompile Include="GameObjectManager.cpp">
       <Filter>Sources\Editor\Decoupling</Filter>
+    </ClCompile>
+    <ClCompile Include="Outliner.cpp">
+      <Filter>Sources\Editor\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
