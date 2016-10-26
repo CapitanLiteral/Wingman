@@ -73,6 +73,10 @@ void Outliner::treeNodes(GameObject* node)
 
 	if (ImGui::TreeNodeEx(node->name.c_str(), nodeFlags))
 	{
+		if (ImGui::IsItemClicked())
+		{
+			App->goManager->setFocusGO(node);
+		}
 		for (uint i = 0; i < node->children.size(); ++i)
 		{
 			treeNodes(node->children[i]);

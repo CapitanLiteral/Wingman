@@ -21,7 +21,14 @@ public:
 	GameObject* LoadFBX(const char* path);
 	void LoadScene(const aiScene* scene, const aiNode* node, GameObject* parent);
 
-	GameObject* root = NULL;
+	GameObject* root = nullptr;
+
+	const GameObject* getFocusGO ();
+	void setFocusGO(GameObject* focusGO);
+
+private:
+	
+	GameObject* focusGO = nullptr;
 
 };
 

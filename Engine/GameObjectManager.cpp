@@ -79,6 +79,27 @@ void GameObjectManager::LoadScene(const aiScene * scene, const aiNode * node, Ga
 	float4x4 matrix(rotation, position);
 	matrix.Scale(scale);
 
+	//Hieracy transforms
+	float3 parentPos;
+	float3 parentScale;
+	Quat   parentRot;
+
+	float4x4 transformSum = float4x4::zero;
+
+	for (aiNode* tmp = node->mParent; tmp; tmp = tmp->mParent)
+	{
+		tmp->mTransformation.Decompose(ai_scaling, ai_rotation, ai_translation);
+		parentPos.Set(ai_translation.x, ai_translation.y, ai_translation.z);
+		parentScale.Set(ai_scaling.x, ai_scaling.y, ai_scaling.z);
+		parentRot.Set(parentRot.x, parentRot.y, parentRot.z, parentRot.w);
+
+		float4x4 parentTransform = float4x4::FromTRS(parentPos, parentRot, parentScale);
+		transformSum = parentTransform * transformSum;
+	}
+	gameObject->globalTransform = transformSum * gameObject->localTransform;
+	gameObject->globalTransform = gameObject->globalTransform.Transposed();
+
+
 	for (uint i = 0; i < node->mNumMeshes; i++)
 	{
 		const aiMesh* ai_mesh = scene->mMeshes[node->mMeshes[i]];
@@ -93,4 +114,14 @@ void GameObjectManager::LoadScene(const aiScene * scene, const aiNode * node, Ga
 	for (uint i = 0; i < node->mNumChildren; ++i)
 		LoadScene(scene, node->mChildren[i], gameObject);
 
+}
+
+const GameObject * GameObjectManager::getFocusGO()
+{
+	return focusGO;
+}
+
+void GameObjectManager::setFocusGO(GameObject * focusGO)
+{
+	this->focusGO = focusGO;
 }

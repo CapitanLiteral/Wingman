@@ -31,7 +31,12 @@ public:
 	float3	scale = float3::zero;
 	Quat	rotation = Quat::identity;
 
-	float4x4 getTransform();
+	float4x4 getLocalTransform();
+	float4x4 getGlobalTransform();
+
+	float4x4 globalTransform;
+	float4x4 localTransform;
+
 	
 };
 
