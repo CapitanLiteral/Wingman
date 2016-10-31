@@ -23,7 +23,7 @@ public:
 
 	GameObject* root = nullptr;
 
-	const GameObject* getFocusGO ();
+	GameObject* getFocusGO ();
 	void setFocusGO(GameObject* focusGO);
 
 private:

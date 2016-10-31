@@ -36,7 +36,45 @@ void Inspector::draw()
 	}
 	if (App->goManager->getFocusGO() != nullptr)
 	{
-		ImGui::DragFloat3("Position", (float*)App->goManager->getFocusGO()->translation.ptr(), 0.01f);
+		ImGui::Text("Local Transform");		
+		float3 position;
+		float3 scale;
+		Quat rot;
+		App->goManager->getFocusGO()->localTransform.Decompose(position, rot, scale);
+		float3 localEulerAngles = rot.ToEulerXYZ();
+				
+		if (ImGui::DragFloat3("Position", position.ptr(), 0.01f))
+			App->goManager->getFocusGO()->setPosition(position);
+		
+
+		if (ImGui::DragFloat3("Rotation", localEulerAngles.ptr(), 0.01f))
+		{			
+			rot = Quat::FromEulerXYZ(localEulerAngles.x, localEulerAngles.y, localEulerAngles.z);
+			App->goManager->getFocusGO()->setRotation(rot);
+		}
+
+		if (ImGui::DragFloat3("Scale", scale.ptr(), 0.01f))
+			App->goManager->getFocusGO()->setScale(scale);
+
+
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		ImGui::Text("Global Transform");
+
+		float3 Gposition;
+		float3 Gscale;
+		Quat Grot;
+
+		App->goManager->getFocusGO()->globalTransform.Decompose(Gposition, Grot, Gscale);
+
+		float3 eulerAngles = Grot.ToEulerXYZ();
+		ImGui::DragFloat3("GPosition", Gposition.ptr(), 0.01f);
+		ImGui::DragFloat3("GRotation", eulerAngles.ptr(), 0.01f);
+		ImGui::DragFloat3("GScale", Gscale.ptr(), 0.01f);
+
+		Grot = Quat::FromEulerXYZ(eulerAngles.x, eulerAngles.y, eulerAngles.z);
+
+		//App->goManager->getFocusGO()->setGlobalTransform(Gposition, Grot, Gscale);
+
 	}
 	
 	ImGui::Spacing();

@@ -16,6 +16,21 @@ public:
 	Component* findComponent(ComponentType);
 	Component* createComponent(ComponentType);
 
+	void addChild(GameObject*);
+
+	const float4x4 getLocalTransform();
+	const float4x4 getGlobalTransform();
+
+	void refreshTransform(float4x4 mat);
+
+	void setPosition(float3 position);
+	void setRotation(Quat rotation);
+	void setScale(float3 scale);
+
+
+	//Debug Things...
+	void setGlobalTransform(float3 pos, Quat rot, float3 scale);
+
 public:
 	//Redundant information for a faster and easier way to find objects on the tree
 	GameObject* parent = nullptr; // If its null this is the parent
@@ -25,17 +40,14 @@ public:
 
 	std::string name;
 
-	void addChild(GameObject*);
-
-	float3	translation = float3::zero;
-	float3	scale = float3::zero;
-	Quat	rotation = Quat::identity;
-
-	float4x4 getLocalTransform();
-	float4x4 getGlobalTransform();
-
-	float4x4 globalTransform;
-	float4x4 localTransform;
+	//Local parent base
+	//float3	position = float3::zero;
+	//float3	scale = float3::zero;
+	//Quat	rotation = Quat::identity;
+	float4x4 localTransform = float4x4::identity;
+	//global normal base
+	float4x4 globalTransform = float4x4::identity; 	
+	
 
 	
 };

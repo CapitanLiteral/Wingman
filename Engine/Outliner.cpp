@@ -39,7 +39,7 @@ void Outliner::draw()
 	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnDoubleClick;
 	flags |= ImGuiTreeNodeFlags_OpenOnArrow;
 
-	if (ImGui::TreeNodeEx("MainNode", flags))
+	if (ImGui::TreeNodeEx(App->goManager->root->name.c_str(), flags))
 	{
 		if (root)
 		{

@@ -25,7 +25,7 @@ GameObjectManager::~GameObjectManager()
 bool GameObjectManager::Start()
 {
 	float3 position(0, 0, 0);
-	float3 scale(0,0,0);
+	float3 scale(1,1,1);
 	Quat rotation(0,0,0,0);
 	root = new GameObject(NULL, position, scale, rotation, "ROOT");
 	return true;
@@ -84,20 +84,8 @@ void GameObjectManager::LoadScene(const aiScene * scene, const aiNode * node, Ga
 	float3 parentScale;
 	Quat   parentRot;
 
-	float4x4 transformSum = float4x4::zero;
-
-	for (aiNode* tmp = node->mParent; tmp; tmp = tmp->mParent)
-	{
-		tmp->mTransformation.Decompose(ai_scaling, ai_rotation, ai_translation);
-		parentPos.Set(ai_translation.x, ai_translation.y, ai_translation.z);
-		parentScale.Set(ai_scaling.x, ai_scaling.y, ai_scaling.z);
-		parentRot.Set(parentRot.x, parentRot.y, parentRot.z, parentRot.w);
-
-		float4x4 parentTransform = float4x4::FromTRS(parentPos, parentRot, parentScale);
-		transformSum = parentTransform * transformSum;
-	}
-	gameObject->globalTransform = transformSum * gameObject->localTransform;
-	gameObject->globalTransform = gameObject->globalTransform.Transposed();
+	gameObject->globalTransform = gameObject->parent->getGlobalTransform() * gameObject->getLocalTransform();
+	gameObject->globalTransform = gameObject->getGlobalTransform();
 
 
 	for (uint i = 0; i < node->mNumMeshes; i++)
@@ -116,7 +104,7 @@ void GameObjectManager::LoadScene(const aiScene * scene, const aiNode * node, Ga
 
 }
 
-const GameObject * GameObjectManager::getFocusGO()
+GameObject * GameObjectManager::getFocusGO()
 {
 	return focusGO;
 }
