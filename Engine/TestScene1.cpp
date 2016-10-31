@@ -4,6 +4,7 @@
 #include "ModuleFBXImporter.h"
 #include "ModuleTexture.h"
 #include "GameObjectManager.h"
+#include "GameObject.h"
 
 #include "OpenGL.h"
 

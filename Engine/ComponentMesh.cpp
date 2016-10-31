@@ -142,7 +142,8 @@ void ComponentMesh::load(const aiMesh* mesh)
 void ComponentMesh::draw()
 {
 	glPushMatrix();
-	glMultMatrixf(parent->getTransform().ptr());
+	//glMultMatrixf(parent->getLocalTransform().ptr());
+	glMultMatrixf(parent->getGlobalTransform().Transposed().ptr());
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);

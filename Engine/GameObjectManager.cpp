@@ -25,7 +25,7 @@ GameObjectManager::~GameObjectManager()
 bool GameObjectManager::Start()
 {
 	float3 position(0, 0, 0);
-	float3 scale(0,0,0);
+	float3 scale(1,1,1);
 	Quat rotation(0,0,0,0);
 	root = new GameObject(NULL, position, scale, rotation, "ROOT");
 	return true;
@@ -79,6 +79,15 @@ void GameObjectManager::LoadScene(const aiScene * scene, const aiNode * node, Ga
 	float4x4 matrix(rotation, position);
 	matrix.Scale(scale);
 
+	//Hieracy transforms
+	float3 parentPos;
+	float3 parentScale;
+	Quat   parentRot;
+
+	gameObject->globalTransform = gameObject->parent->getGlobalTransform() * gameObject->getLocalTransform();
+	gameObject->globalTransform = gameObject->getGlobalTransform();
+
+
 	for (uint i = 0; i < node->mNumMeshes; i++)
 	{
 		const aiMesh* ai_mesh = scene->mMeshes[node->mMeshes[i]];
@@ -93,4 +102,14 @@ void GameObjectManager::LoadScene(const aiScene * scene, const aiNode * node, Ga
 	for (uint i = 0; i < node->mNumChildren; ++i)
 		LoadScene(scene, node->mChildren[i], gameObject);
 
+}
+
+GameObject * GameObjectManager::getFocusGO()
+{
+	return focusGO;
+}
+
+void GameObjectManager::setFocusGO(GameObject * focusGO)
+{
+	this->focusGO = focusGO;
 }

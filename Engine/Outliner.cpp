@@ -39,7 +39,7 @@ void Outliner::draw()
 	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnDoubleClick;
 	flags |= ImGuiTreeNodeFlags_OpenOnArrow;
 
-	if (ImGui::TreeNodeEx("MainNode", flags))
+	if (ImGui::TreeNodeEx(App->goManager->root->name.c_str(), flags))
 	{
 		if (root)
 		{
@@ -73,6 +73,10 @@ void Outliner::treeNodes(GameObject* node)
 
 	if (ImGui::TreeNodeEx(node->name.c_str(), nodeFlags))
 	{
+		if (ImGui::IsItemClicked())
+		{
+			App->goManager->setFocusGO(node);
+		}
 		for (uint i = 0; i < node->children.size(); ++i)
 		{
 			treeNodes(node->children[i]);
