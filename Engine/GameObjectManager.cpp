@@ -20,6 +20,7 @@ GameObjectManager::GameObjectManager(Application* app, bool start_enabled) : Mod
 
 GameObjectManager::~GameObjectManager()
 {
+	if (root != nullptr) delete root;
 }
 
 

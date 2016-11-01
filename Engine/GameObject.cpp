@@ -22,6 +22,24 @@ GameObject::GameObject(GameObject* parent, const float3 translation, const float
 
 GameObject::~GameObject()
 {
+	for (std::vector<Component*>::iterator iterator = components.begin(); 
+	iterator != components.end(); iterator++)
+	{
+		if ((*iterator) != nullptr)
+		{
+			delete (*iterator);
+		}
+	}
+
+	for (std::vector<GameObject*>::iterator iterator = children.begin();
+		 iterator != children.end(); iterator++)
+	{
+		if ((*iterator) != nullptr)
+		{
+			delete (*iterator);
+		}
+	}
+
 }
 
 Component* GameObject::createComponent(ComponentType type)

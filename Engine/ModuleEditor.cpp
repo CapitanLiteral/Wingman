@@ -87,9 +87,11 @@ update_status ModuleEditor::PostUpdate(float dt)
 bool ModuleEditor::CleanUp()
 {
 	if (outliner != NULL)
-	{
 		delete outliner;
-	}
+	if (inspector != NULL)
+		delete inspector;
+	if (windowMenus != NULL)
+		delete windowMenus;
 
 	ImGui_ImplSdlGL3_Shutdown();
 	return true;
