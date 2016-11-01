@@ -9,6 +9,8 @@
 
 #include "GameObjectManager.h"
 #include "GameObject.h"
+#include "ComponentMesh.h"
+#include "ComponentMaterial.h"
 
 Inspector::Inspector()
 {
@@ -36,45 +38,9 @@ void Inspector::draw()
 	}
 	if (App->goManager->getFocusGO() != nullptr)
 	{
-		ImGui::Text("Local Transform");		
-		float3 position;
-		float3 scale;
-		Quat rot;
-		App->goManager->getFocusGO()->localTransform.Decompose(position, rot, scale);
-		float3 localEulerAngles = rot.ToEulerXYZ();
-				
-		if (ImGui::DragFloat3("Position", position.ptr(), 0.01f))
-			App->goManager->getFocusGO()->setPosition(position);
-		
-
-		if (ImGui::DragFloat3("Rotation", localEulerAngles.ptr(), 0.01f))
-		{			
-			rot = Quat::FromEulerXYZ(localEulerAngles.x, localEulerAngles.y, localEulerAngles.z);
-			App->goManager->getFocusGO()->setRotation(rot);
-		}
-
-		if (ImGui::DragFloat3("Scale", scale.ptr(), 0.01f))
-			App->goManager->getFocusGO()->setScale(scale);
-
-
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		ImGui::Text("Global Transform");
-
-		float3 Gposition;
-		float3 Gscale;
-		Quat Grot;
-
-		App->goManager->getFocusGO()->globalTransform.Decompose(Gposition, Grot, Gscale);
-
-		float3 eulerAngles = Grot.ToEulerXYZ();
-		ImGui::DragFloat3("GPosition", Gposition.ptr(), 0.01f);
-		ImGui::DragFloat3("GRotation", eulerAngles.ptr(), 0.01f);
-		ImGui::DragFloat3("GScale", Gscale.ptr(), 0.01f);
-
-		Grot = Quat::FromEulerXYZ(eulerAngles.x, eulerAngles.y, eulerAngles.z);
-
-		//App->goManager->getFocusGO()->setGlobalTransform(Gposition, Grot, Gscale);
-
+		transform();
+		mesh();
+		material();
 	}
 	
 	ImGui::Spacing();
@@ -86,4 +52,107 @@ void Inspector::draw()
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+}
+
+void Inspector::transform()
+{
+	ImGui::Text("Local Transform");
+	float3 position;
+	float3 scale;
+	Quat rot;
+	App->goManager->getFocusGO()->localTransform.Decompose(position, rot, scale);
+	float3 localEulerAngles = rot.ToEulerXYZ();
+
+	if (ImGui::DragFloat3("Position", position.ptr(), 0.01f))
+		App->goManager->getFocusGO()->setPosition(position);
+
+
+	if (ImGui::DragFloat3("Rotation", localEulerAngles.ptr(), 0.01f))
+	{
+		rot = Quat::FromEulerXYZ(localEulerAngles.x, localEulerAngles.y, localEulerAngles.z);
+		App->goManager->getFocusGO()->setRotation(rot);
+	}
+
+	if (ImGui::DragFloat3("Scale", scale.ptr(), 0.01f))
+		App->goManager->getFocusGO()->setScale(scale);
+
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	ImGui::Text("Global Transform");
+
+	float3 Gposition;
+	float3 Gscale;
+	Quat Grot;
+
+	App->goManager->getFocusGO()->globalTransform.Decompose(Gposition, Grot, Gscale);
+
+	float3 eulerAngles = Grot.ToEulerXYZ();
+	ImGui::DragFloat3("GPosition", Gposition.ptr(), 0.01f);
+	ImGui::DragFloat3("GRotation", eulerAngles.ptr(), 0.01f);
+	ImGui::DragFloat3("GScale", Gscale.ptr(), 0.01f);
+
+	Grot = Quat::FromEulerXYZ(eulerAngles.x, eulerAngles.y, eulerAngles.z);
+
+	//App->goManager->getFocusGO()->setGlobalTransform(Gposition, Grot, Gscale);
+	ImGui::Separator();
+}
+
+void Inspector::mesh()
+{
+	//Active
+	GameObject* go = App->goManager->getFocusGO();
+	for (std::vector<Component*>::iterator iterator = go->components.begin(); 
+		iterator != go->components.end(); iterator++)
+	{
+		if ((*iterator)->type == MESH)
+		{
+			ComponentMesh* mesh = (ComponentMesh*)(*iterator);
+			ImGui::Text("N vertex: ");
+			ImGui::SameLine();
+			ImGui::TextColored(ImColor(255, 80, 133), "%d", mesh->numVertices);
+
+			ImGui::Text("N indices: ");
+			ImGui::SameLine();
+			ImGui::TextColored(ImColor(255, 80, 133), "%d", mesh->numIndices);
+
+			ImGui::Text("N normals: ");
+			ImGui::SameLine();
+			ImGui::TextColored(ImColor(255, 80, 133), "%d", mesh->numNormals / 3);
+
+			ImGui::Text("N UV: ");
+			ImGui::SameLine();
+			ImGui::TextColored(ImColor(255, 80, 133), "%d", mesh->numVertices);
+
+			ImGui::Text("Tex ID: ");
+			ImGui::SameLine();
+			ImGui::TextColored(ImColor(255, 80, 133), "%d", mesh->associatedMaterial->diffuse);
+
+			ImGui::Separator();
+		}
+	}
+
+	
+}
+
+void Inspector::material()
+{
+
+
+	GameObject* go = App->goManager->getFocusGO();
+	for (std::vector<Component*>::iterator iterator = go->components.begin();
+		 iterator != go->components.end(); iterator++)
+	{
+		if ((*iterator)->type == MATERIAL)
+		{
+			ComponentMaterial* material = (ComponentMaterial*)(*iterator);
+			ImGui::ColorEdit4("Color:", (float*)&material->color, false);
+			glBindTexture(GL_TEXTURE_2D, material->diffuse);
+			ImTextureID texture = (void*)material->diffuse;
+			ImGui::Image(texture, ImVec2(150, 150));
+
+			ImGui::Separator();
+		}
+	}
+
+	
 }

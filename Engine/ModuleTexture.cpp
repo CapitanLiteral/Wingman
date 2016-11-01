@@ -23,9 +23,11 @@ ModuleTexture::~ModuleTexture()
 	ilShutDown();
 }
 
-uint ModuleTexture::loadTexture(char* path)
+uint ModuleTexture::loadTexture(const char* path)
 {
-	uint ImgID = ilutGLLoadImage(path);
+	char tmp_path[128];
+	strcpy_s(tmp_path, path);
+	uint ImgID = ilutGLLoadImage(tmp_path);
 	uint ret;
 	if (ImgID != 0)
 	{

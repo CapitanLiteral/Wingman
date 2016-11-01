@@ -1,10 +1,20 @@
 #pragma once
+#include "Globals.h"
 #include "Component.h"
-class ComponentMaterial :
-	public Component
+#include "Color.h"
+
+class GameObject;
+class ComponentMaterial : public Component
 {
 public:
-	ComponentMaterial();
+	ComponentMaterial(GameObject* parent);
 	virtual ~ComponentMaterial();
+
+	GameObject* parent;
+
+	uint loadTexture(const char* path);
+
+	uint diffuse;
+	Color color;
 };
 

@@ -10,6 +10,9 @@ public:
 	~Inspector();
 
 	void draw();
+	void transform();
+	void mesh();
+	void material();
 
 	ImGuiWindowFlags inspectorWindowFlags = 0;
 };

@@ -4,6 +4,7 @@
 #include "GameObjectManager.h"
 #include "GameObject.h"
 #include "ComponentMesh.h"
+#include "ComponentMaterial.h"
 
 #include "MathGeoLib\include\MathGeoLib.h"
 
@@ -68,6 +69,7 @@ void GameObjectManager::LoadScene(const aiScene * scene, const aiNode * node, Ga
 	aiQuaternion ai_rotation;
 	std::string gameObjectName;
 
+
 	node->mTransformation.Decompose(ai_scaling, ai_rotation, ai_translation);
 	gameObjectName = node->mName.C_Str();
 	float3 position(ai_translation.x, ai_translation.y, ai_translation.z);
@@ -92,11 +94,43 @@ void GameObjectManager::LoadScene(const aiScene * scene, const aiNode * node, Ga
 	{
 		const aiMesh* ai_mesh = scene->mMeshes[node->mMeshes[i]];
 
-		ComponentMesh* mesh = (ComponentMesh*)gameObject->createComponent(MESH);
+		ComponentMesh* mesh = (ComponentMesh*)gameObject->createComponent(MESH);	
+		
 		mesh->load(ai_mesh);
+		//PNG path && Filename
+		if (scene->HasMaterials())
+		{
+			aiColor4D color;
+			scene->mMaterials[scene->mMeshes[node->mMeshes[i]]->mMaterialIndex]->Get(AI_MATKEY_COLOR_DIFFUSE, color);
+			ComponentMaterial* material = (ComponentMaterial*)gameObject->createComponent(MATERIAL);
+			material->color.Set(color.r, color.g, color.b, color.a);
+			aiString ai_path;
+			std::string fileName;
+			scene->mMaterials[scene->mMeshes[node->mMeshes[i]]->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0, &ai_path);
+			int j = 0;
+			for (int i = ai_path.length - 1; i > 0; i--)
+			{
+				if (ai_path.data[i] != '/' && ai_path.data[i] != '\\')
+				{
+					j++;
+				}
+				else
+					break;
+			}
+			fileName.assign(ai_path.C_Str() + ai_path.length - j,
+							ai_path.C_Str() + ai_path.length);
+			SDL_Log("Texture path: %s", ai_path.C_Str());
+			SDL_Log("Texture name: %s", fileName.c_str());
+			std::string fullPath = "../DLL/Town/";
+			fullPath.append(fileName);
+			material->loadTexture(fullPath.c_str());
+			mesh->associatedMaterial = material;
+		}
+		
 
 		int iii = mesh->idVertices;
 	}
+
 
 
 	for (uint i = 0; i < node->mNumChildren; ++i)
