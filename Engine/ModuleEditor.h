@@ -43,9 +43,9 @@ public:
 	Outliner* outliner = NULL;
 	Inspector* inspector = NULL;
 
-	bool show_inspector = false;
+	bool show_inspector = true;
 	bool show_Window_Menus = false;
-	bool show_outliner = false;
+	bool show_outliner = true;
 
 };
 

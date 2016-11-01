@@ -36,7 +36,10 @@ Component* GameObject::createComponent(ComponentType type)
 	}
 	else if (type == MATERIAL)
 	{
-
+		ComponentMaterial* material = new ComponentMaterial(this);
+		material->type = type;
+		components.push_back(material);
+		return material;
 	}
 
 

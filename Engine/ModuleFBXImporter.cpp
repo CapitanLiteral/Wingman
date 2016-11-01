@@ -48,6 +48,7 @@ void ModuleFBXImporter::loadFBX(const char* full_path)
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
+		
 		// use scene->mNumMeshes to iterate on scene->mMeshes array
 		//meshes = new VramVertex[scene->mNumMeshes];
 
@@ -184,7 +185,7 @@ void ModuleFBXImporter::drawMeshes(std::vector<VramVertex*> drawMeshes)
 		glEnableClientState(GL_NORMAL_ARRAY);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		
-
+		//glBindTexture(GL_TEXTURE_2D, id);
 
 		//vertices
 		glBindBuffer(GL_ARRAY_BUFFER, m->idVertices);
@@ -208,6 +209,7 @@ void ModuleFBXImporter::drawMeshes(std::vector<VramVertex*> drawMeshes)
 
 		glDrawElements(GL_TRIANGLES, m->numIndices, GL_UNSIGNED_INT, NULL);
 		
+		//glBindTexture(GL_TEXTURE_2D, 0);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_NORMAL_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);

@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <map>
 
 #include "Module.h"
 
@@ -25,6 +26,8 @@ public:
 
 	GameObject* getFocusGO ();
 	void setFocusGO(GameObject* focusGO);
+
+	std::map<std::string, uint> textures;
 
 private:
 	

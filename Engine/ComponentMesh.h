@@ -4,6 +4,7 @@
 #include "Component.h"
 class GameObject;
 class aiMesh;
+class ComponentMaterial;
 class ComponentMesh : public Component
 {
 public:
@@ -25,8 +26,8 @@ public:
 
 	int textureIndex = -1; //I think this will be used on an array of textures and this will be used to bind it
 
-	GameObject* parent = NULL;
-
+	GameObject* parent = nullptr;
+	ComponentMaterial* associatedMaterial = nullptr;
 
 
 public:

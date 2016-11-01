@@ -2,7 +2,7 @@
 
 #include "ComponentMesh.h"
 #include "GameObject.h"
-
+#include "ComponentMaterial.h"
 #include "OpenGL.h"
 
 #include "Assimp\Assimp\include\scene.h"
@@ -74,7 +74,6 @@ void ComponentMesh::load(const aiMesh* mesh)
 	vertices = new float[numVertices * 3];
 
 	memcpy(vertices, mesh->mVertices, sizeof(float)*  numVertices * 3);
-
 	//Normals
 	if (mesh->HasNormals())
 	{
@@ -83,7 +82,7 @@ void ComponentMesh::load(const aiMesh* mesh)
 
 		memcpy(normals, mesh->mNormals, sizeof(float) * numNormals * 3);
 	}
-
+	
 	if (mesh->HasFaces())
 	{
 		SDL_Log("New mesh with %d vertices", numVertices);
@@ -102,7 +101,6 @@ void ComponentMesh::load(const aiMesh* mesh)
 			}
 		}
 	}
-
 	if (mesh->HasTextureCoords(0))
 	{
 		UV = new float[numVertices * 3];
@@ -147,7 +145,11 @@ void ComponentMesh::draw()
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnable(GL_TEXTURE_2D);
+	//Texture to draw
 	
+	glBindTexture(GL_TEXTURE_2D, associatedMaterial->diffuse);
+
 	//vertices
 	glBindBuffer(GL_ARRAY_BUFFER, idVertices);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
@@ -166,10 +168,13 @@ void ComponentMesh::draw()
 		glTexCoordPointer(3, GL_FLOAT, 0, NULL);
 	}
 
-	glColor4f(0.7f, 0.7f, 0.7f, 1.f); //I should get fbx color TODO
+	glColor4f(associatedMaterial->color.r, associatedMaterial->color.g, associatedMaterial->color.b, associatedMaterial->color.a); //I should get fbx color TODO
 
 	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, NULL);
 
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glDisable(GL_TEXTURE_2D);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
