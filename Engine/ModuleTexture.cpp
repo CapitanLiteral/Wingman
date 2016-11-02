@@ -27,6 +27,7 @@ uint ModuleTexture::loadTexture(const char* path)
 {
 	char tmp_path[128];
 	strcpy_s(tmp_path, path);
+	//TODO integrate with PhysFS
 	uint ImgID = ilutGLLoadImage(tmp_path);
 	uint ret;
 	if (ImgID != 0)

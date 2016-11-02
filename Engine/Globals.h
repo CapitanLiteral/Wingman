@@ -36,6 +36,14 @@ enum update_status
 #define VSYNC true
 #define TITLE "Wingman game editor"
 #define LIFES 5
+#define ORGANIZATION "UndistinguishedMan"
+#define LOCAL_SAVE_DIRECTORY "data"
+#define ASSETS_DIRECTORY "assets"
+#define CONFIG_DIRECTORY "config"
+#define MESHES_DIRECTORY "meshes"
+#define MATERIAL_DIRECTORY "material"
+#define ANIMATION_DIRECTORY "animation"
+
 
 #define RELEASE( x )\
     {\

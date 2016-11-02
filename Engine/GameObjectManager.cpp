@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
+#include "ModulePhysFS.h"
 
 #include "MathGeoLib\include\MathGeoLib.h"
 
@@ -49,8 +50,23 @@ GameObject* GameObjectManager::LoadFBX(const char * path)
 		SDL_Log("No path");
 		return NULL; //If path is NULL dont do nothing
 	}
+	
+	char* buffer;
+	uint fileSize = App->physFS->load(path, &buffer);
+	const aiScene* scene = NULL;
 
-	const aiScene* scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
+	if (buffer && fileSize > 0)
+	{
+		scene = aiImportFileFromMemory(buffer, fileSize, aiProcessPreset_TargetRealtime_MaxQuality, "fbx");
+	}
+	else
+	{
+		SDL_Log("Error while loading fbx.");
+		return NULL;
+	}
+
+
+	//const aiScene* scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
 
 	if (scene, scene->HasMeshes())
 	{
@@ -118,11 +134,13 @@ void GameObjectManager::LoadScene(const aiScene * scene, const aiNode * node, Ga
 				else
 					break;
 			}
+			//File name
 			fileName.assign(ai_path.C_Str() + ai_path.length - j,
 							ai_path.C_Str() + ai_path.length);
+
 			SDL_Log("Texture path: %s", ai_path.C_Str());
 			SDL_Log("Texture name: %s", fileName.c_str());
-			std::string fullPath = "../DLL/Town/";
+			std::string fullPath = "../data/assets/material/";
 			fullPath.append(fileName);
 			material->loadTexture(fullPath.c_str());
 			mesh->associatedMaterial = material;

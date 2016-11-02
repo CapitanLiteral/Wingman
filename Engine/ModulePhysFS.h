@@ -11,17 +11,15 @@ public:
 	ModulePhysFS(Application* app, bool start_enabled = true);
 	~ModulePhysFS();
 
-	bool init();
-	bool cleanUp();
+	bool Init();
+	bool CleanUp();
 
 	bool addPath(const char* pathOrZip, const char* mountPoint = NULL);
 	bool exist(const char* file);
 	bool isDirectory(const char* file);
 	bool makeDirectory(const char* dir, const char* mount = NULL);
-	const char* getSaveDirectory()const
-	{
-		return "save/";
-	}
+	const char* getSaveAppDataDirectory()const { return "saveAppData/";}
+	const char* getSaveLocalDirectory()const { return "saveLocal/"; }
 
 	const char* getBasePath();
 

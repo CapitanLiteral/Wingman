@@ -10,6 +10,8 @@
 #include "Assimp\Assimp\include\cimport.h"
 #include "Assimp\Assimp\include\postprocess.h"
 
+#pragma comment (lib, "Assimp/Assimp/libx86/assimp.lib")
+
 ComponentMesh::ComponentMesh(GameObject* parent)
 {
 	this->parent = parent;
@@ -181,8 +183,4 @@ void ComponentMesh::draw()
 	glPopMatrix();
 }
 
-void ComponentMesh::drawUI()
-{
-	//TODO
-}
 
