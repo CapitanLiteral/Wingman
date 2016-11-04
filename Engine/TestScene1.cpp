@@ -6,6 +6,8 @@
 #include "GameObjectManager.h"
 #include "GameObject.h"
 
+#include "Primitive.h"
+
 #include "OpenGL.h"
 
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
@@ -51,149 +53,16 @@ update_status TestScene1::PreUpdate(float dt)
 update_status TestScene1::Update(float dt)
 { 
 
-	////Drawing a line in direct mode
-	//glLineWidth(2.0f);
-
-	//glBegin(GL_LINES);
-	//glVertex3f(0.f, 0.f, 0.f);
-	//glVertex3f(0.f, 10.f, 0.f);
-	//glEnd();
-	//glLineWidth(1.0f);
-
-	////Draw a quad in direct mode
-	//glBegin(GL_QUADS);
-	//glVertex3f(0.f, 0.f, 0.f);
-	//glVertex3f(0.f, 10.f, 0.f);
-	//glVertex3f(-10.0f, 10.f, 0.f);
-	//glVertex3f(-10.0f, 0.f, 0.f);
-	//glEnd();
-
-
-	
-
-
-	////Draw a quad in direct mode
-	
-	//glEnable(GL_TEXTURE_2D);
-	//id = App->texture->loadTexture("../DLL/Lenna.png");
-	//glBindTexture(GL_TEXTURE_2D, id);
-	//
-	//glBegin(GL_TRIANGLES);
-
-	//float s = 1.f * 2;
-
-	////----------------------- Front
-	//
-	//glTexCoord2f(1.f, 1.f);
-	//glVertex3d(s, s, s);	
-	//glTexCoord2f(0.f, 0.f);
-	//glVertex3d(-s, -s, s);	
-	//glTexCoord2f(1.f, 0.f);
-	//glVertex3d(s, -s, s);
-
-	//glTexCoord2f(0.f, 1.f);
-	//glVertex3d(-s, s, s);	
-	//glTexCoord2f(0.f, 0.f);
-	//glVertex3d(-s, -s, s);	
-	//glTexCoord2f(1.f, 1.f);
-	//glVertex3d(s, s, s);
-	////----------------------- Top
-
-	//glTexCoord2f(0.f, 1.f);
-	//glVertex3d(-s, s, s);
-	//glTexCoord2f(1.f, 1.f);
-	//glVertex3d(s, s, s);
-	//glTexCoord2f(1.f, 0.f);
-	//glVertex3d(s, s, -s);
-
-	//glTexCoord2f(0.f, 1.f);
-	//glVertex3d(-s, s, s);
-	//glTexCoord2f(1.f, 0.f);
-	//glVertex3d(s, s, -s);
-	//glTexCoord2f(0.f, 0.f);
-	//glVertex3d(-s, s, -s);
-	////----------------------- Right
-
-	//glTexCoord2f(1.f, 1.f);
-	//glVertex3d(s, s, s);
-	//glTexCoord2f(0.f, 1.f);
-	//glVertex3d(s, -s, s);
-	//glTexCoord2f(1.f, 0.f);
-	//glVertex3d(s, s, -s);
-
-	//glTexCoord2f(0.f, 1.f);
-	//glVertex3d(s, -s, s);
-	//glTexCoord2f(0.f, 0.f);
-	//glVertex3d(s, -s, -s);
-	//glTexCoord2f(1.f, 0.f);
-	//glVertex3d(s, s, -s);
-	////----------------------- Left
-
-	//glTexCoord2f(1.f, 0.f);
-	//glVertex3d(-s, s, -s);
-	//glTexCoord2f(0.f, 1.f);
-	//glVertex3d(-s, -s, s);
-	//glTexCoord2f(1.f, 1.f);
-	//glVertex3d(-s, s, s);
-
-	//glTexCoord2f(1.f, 0.f);
-	//glVertex3d(-s, s, -s);
-	//glTexCoord2f(0.f, 0.f);
-	//glVertex3d(-s, -s, -s);
-	//glTexCoord2f(0.f, 1.f);
-	//glVertex3d(-s, -s, s);
-	////----------------------- Bottom
-	//
-	//glTexCoord2f(0.f, 1.f);
-	//glVertex3d(-s, -s, s);
-	//glTexCoord2f(1.f, 0.f);
-	//glVertex3d(s, -s, -s);
-	//glTexCoord2f(1.f, 1.f);
-	//glVertex3d(s, -s, s);
-
-	//glTexCoord2f(0.f, 1.f);
-	//glVertex3d(-s, -s, s);
-	//glTexCoord2f(0.f, 0.f);
-	//glVertex3d(-s, -s, -s);
-	//glTexCoord2f(1.f, 0.f);
-	//glVertex3d(s, -s, -s);
-	////----------------------- Behind
-
-	//glTexCoord2f(1.f, 1.f);
-	//glVertex3d(s, s, -s);
-	//glTexCoord2f(1.f, 0.f);
-	//glVertex3d(s, -s, -s);
-	//glTexCoord2f(0.f, 1.f);
-	//glVertex3d(-s, s, -s);
-
-	//glTexCoord2f(1.f, 0.f);
-	//glVertex3d(s, -s, -s);
-	//glTexCoord2f(0.f, 0.f);
-	//glVertex3d(-s, -s, -s);
-	//glTexCoord2f(0.f, 1.f);
-	//glVertex3d(-s, s, -s);
-
-	//glEnd();
-	//glBindTexture(GL_TEXTURE_2D, 0);
-	//
-
-
-
-	//id = App->texture->loadTexture("../DLL/Diffuse_Mech.png");
-	//glBindTexture(GL_TEXTURE_2D, id);
-	//App->fbxImporter->drawMeshes(App->fbxImporter->meshes);
-	//glBindTexture(GL_TEXTURE_2D, 0);
-
-
-
-
-
-
 	return UPDATE_CONTINUE;
 }
 update_status TestScene1::PostUpdate(float dt)
 {
-
+	//GRID
+	P_Plane grid(0.f, 1.f, 0.f, 0.f);
+	grid.axis = true;
+	//grid.wire = true;
+	grid.color.Set(255, 255, 255);
+	grid.Render();
 	return UPDATE_CONTINUE;
 }
 bool TestScene1::CleanUp()

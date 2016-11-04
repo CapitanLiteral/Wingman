@@ -37,7 +37,10 @@ void WindowMenus::draw()
 		App->OpenBrowser("https://github.com/CapitanLiteral/Wingman");
 		openRepoDirectory = false;
 	}
-
+	if (creditsSelected)
+	{
+		showCredits();
+	}
 
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -63,6 +66,7 @@ void WindowMenus::draw()
 			ImGui::MenuItem("About", NULL, &aboutSelected, true);
 			ImGui::MenuItem("Releases", NULL, &openReleaseDirectory, true);
 			ImGui::MenuItem("Repository", NULL, &openRepoDirectory, true);
+			ImGui::MenuItem("Credits", NULL, &creditsSelected, true);
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
@@ -74,4 +78,80 @@ void WindowMenus::draw()
 		SDL_Log("Closing aplication from editor");
 		QUIT = true;
 	}
+}
+
+void WindowMenus::showCredits()
+{
+	ImGuiWindowFlags outilnerWindowFlags = 0;
+	outilnerWindowFlags |= ImGuiWindowFlags_AlwaysHorizontalScrollbar;
+
+	ImGui::SetNextWindowSize(ImVec2(300, 600), ImGuiSetCond_FirstUseEver);
+	if (!ImGui::Begin("Credits", &credits, outilnerWindowFlags))
+	{
+		// Early out if the window is collapsed, as an optimization.
+		ImGui::End();
+		return;
+	}
+	ImVec4 acolor(128, 137, 237, 0);
+	ImColor color(84, 172, 255);
+	//SDL
+	ImGui::Text("SDL");
+	//Image
+	//Link
+	ImGui::PushStyleColor(ImGuiCol_Button, color);
+	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, color);
+	ImGui::PushStyleColor(ImGuiCol_ButtonActive, color);
+	if (ImGui::Button("Link"))
+	{
+		App->OpenBrowser("https://www.libsdl.org/");
+	}
+	ImGui::PopStyleColor(3);
+	//Tanks!
+	ImGui::Text("Thanks to SDL library to make this project possible");
+
+	ImGui::Separator();
+	//Jasoncpp
+	//Image
+	//Link
+	//Tanks!
+
+	ImGui::Separator();
+	//Bullet
+	//Image
+	//Link
+	//Tanks!
+
+	ImGui::Separator();
+	//MathGeoLib
+	//Image
+	//Link
+	//Tanks!
+
+	ImGui::Separator();
+	//Assimp
+	//Image
+	//Link
+	//Tanks!
+
+	ImGui::Separator();
+	//Devil
+	//Image
+	//Link
+	//Tanks!
+
+	ImGui::Separator();
+	//Glew
+	//Image
+	//Link
+	//Tanks!
+
+	ImGui::Separator();
+	//PhysFS
+	//Image
+	//Link
+	//Tanks!
+
+
+
+	ImGui::End();
 }

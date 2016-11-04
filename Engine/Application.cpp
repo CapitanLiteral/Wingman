@@ -48,15 +48,15 @@ Application::Application()
 	AddModule(goManager);
 	AddModule(audio);
 	AddModule(physics);
-	AddModule(editor);
+	
 	
 	// Scenes
 	AddModule(test1);
 	//AddModule(test2);
-
+	AddModule(editor);
 	// Renderer last!
 	AddModule(renderer3D);
-
+	
 	for (int n = 0; n < EDITOR_FRAME_SAMPLES; n++)
 	{
 		ms_frame[n] = 0;
