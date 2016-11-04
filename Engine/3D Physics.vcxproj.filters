@@ -366,6 +366,9 @@
     <ClInclude Include="UI_Item.h">
       <Filter>Sources\Editor\UI</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleFileSystem.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -556,6 +559,9 @@
     </ClCompile>
     <ClCompile Include="Inspector.cpp">
       <Filter>Sources\Editor\UI\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleFileSystem.cpp">
+      <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
