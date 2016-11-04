@@ -5,6 +5,8 @@
 #include "PhysFS\include\physfs.h"
 #include "SDL\include\SDL.h"
 
+#include <string>
+
 #pragma comment( lib, "PhysFS/libx86/physfs.lib")
 
 ModuleFileSystem::ModuleFileSystem(Application* app, bool start_enabled) : Module(App, start_enabled)
@@ -27,7 +29,7 @@ ModuleFileSystem::~ModuleFileSystem()
 }
 
 
-bool ModuleFileSystem::init()
+bool ModuleFileSystem::Init()
 {
 	SDL_Log("FileSystem: init.");
 	bool ret = true;
@@ -35,37 +37,61 @@ bool ModuleFileSystem::init()
 	/*for (pugi::xml_node path = config.child("path"); path; path = path.next_sibling("path"))
 	addPath(path.child_value());*/
 
-	/////////////////////////
-	//TODO
-	//char* writePath = SDL_GetPrefPath(App->getOrganitzation(), app->getTitle());
+#pragma region OldWriteDirectory
+	//std::string writeAppDataPath = SDL_GetPrefPath(App->getOrganization(), App->getTitle());
 
-	//if (PHYSFS_setWriteDir(writePath) == 0)
+	//if (PHYSFS_setWriteDir(writeAppDataPath.c_str()) == 0)
 	//{
 	//	SDL_Log("File System error while creating write dir: %s\n", PHYSFS_getLastError());
 	//}
 	//else
 	//{
-	//	SDL_Log("Writing directory is %s\n", writePath);
-	//	addPath(writePath, getSaveDirectory());
+	//	SDL_Log("Writing directory is %s\n", writeAppDataPath);
+	//	addPath(writeAppDataPath.c_str(), getSaveAppDataDirectory());
 	//}
-	//////////////////
+#pragma endregion
 
-	if (!exist("Library"))
-		makeDirectory("Library");
 
-	if (!exist("textures"))
-		makeDirectory("Meshes", "Library");
+	std::string writeLocalPath = SDL_GetBasePath();
+	writeLocalPath.append("..");
 
-	if (!exist("textures"))
-		makeDirectory("Material", "Library");
+	if (PHYSFS_setWriteDir(writeLocalPath.c_str()) == 0)
+	{
+		SDL_Log("File System error while creating write dir: %s\n", PHYSFS_getLastError());
+	}
+	else
+	{
+		SDL_Log("Writing directory is %s\n", writeLocalPath);
+		addPath(writeLocalPath.c_str(), getSaveLocalDirectory());
+	}
+	std::string path;
+	path.assign(LOCAL_SAVE_DIRECTORY);
+	if (!exist(path.c_str()))
+		makeDirectory(LOCAL_SAVE_DIRECTORY);
 
-	if (!exist("models"))
-		makeDirectory("Animation", "Library");
+	if (!exist(ASSETS_DIRECTORY))
+		makeDirectory(ASSETS_DIRECTORY, path.c_str());
+	if (!exist(CONFIG_DIRECTORY))
+		makeDirectory(CONFIG_DIRECTORY, path.c_str());
+
+	path.append("/");
+	path.append(ASSETS_DIRECTORY);
+
+	if (!exist(MESHES_DIRECTORY))
+		makeDirectory(MESHES_DIRECTORY, path.c_str());
+
+	if (!exist(MATERIAL_DIRECTORY))
+		makeDirectory(MATERIAL_DIRECTORY, path.c_str());
+
+	if (!exist(ANIMATION_DIRECTORY))
+		makeDirectory(ANIMATION_DIRECTORY, path.c_str());
+
+
 
 	return ret;
 }
 
-bool ModuleFileSystem::cleanUp()
+bool ModuleFileSystem::CleanUp()
 {
 	SDL_Log("FileSystem: CleanUp.");
 	return true;
