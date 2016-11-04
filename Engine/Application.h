@@ -17,7 +17,6 @@ class ModuleScene;
 class ModuleFBXImporter;
 class ModuleTexture;
 class GameObjectManager;
-class ModulePhysFS;
 
 class TestScene1;
 class TestScene2;
@@ -26,22 +25,21 @@ class TestScene2;
 class Application
 {
 public:
-	ModuleWindow* window = nullptr;
-	ModuleInput* input = nullptr;
-	ModuleAudio* audio = nullptr;
-	ModulePhysFS* physFS = nullptr;
+	ModuleWindow* window = NULL;
+	ModuleInput* input = NULL;
+	ModuleAudio* audio = NULL;
 
-	ModuleRenderer3D* renderer3D = nullptr;
-	ModuleCamera3D* camera = nullptr;
+	ModuleRenderer3D* renderer3D = NULL;
+	ModuleCamera3D* camera = NULL;
 
-	ModuleEditor* editor = nullptr;
-	ModulePhysics3D* physics = nullptr;
-	ModuleFBXImporter* fbxImporter = nullptr;
-	ModuleTexture* texture = nullptr;
-	GameObjectManager* goManager = nullptr;
+	ModuleEditor* editor = NULL;
+	ModulePhysics3D* physics = NULL;
+	ModuleFBXImporter* fbxImporter = NULL;
+	ModuleTexture* texture = NULL;
+	GameObjectManager* goManager = NULL;
 
-	TestScene1* test1 = nullptr;
-	TestScene2* test2 = nullptr;
+	TestScene1* test1 = NULL;
+	TestScene2* test2 = NULL;
 
 	float ms_frame[EDITOR_FRAME_SAMPLES];
 	float framerate[EDITOR_FRAME_SAMPLES];
@@ -70,9 +68,6 @@ public:
 
 	bool OpenBrowser(const char* link);
 	void Log(char* str);
-
-	char* getOrganization();
-	char* getTitle();
 
 private:
 

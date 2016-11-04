@@ -4,7 +4,6 @@
 #include "Module.h"
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
-#include "ModulePhysFS.h"
 #include "ModuleAudio.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
@@ -21,7 +20,6 @@ Application::Application()
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(this, true);
-	physFS = new ModulePhysFS(this, true);
 
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
@@ -39,7 +37,6 @@ Application::Application()
 	// They will CleanUp() in reverse order
 
 	// Main Modules
-	AddModule(physFS);
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
@@ -227,16 +224,6 @@ bool Application::OpenBrowser(const char* link)
 void Application::Log(char* str)
 {
 	
-}
-
-char * Application::getOrganization()
-{
-	return ORGANIZATION;
-}
-
-char * Application::getTitle()
-{
-	return TITLE;
 }
 
 void Application::AddModule(Module* mod)

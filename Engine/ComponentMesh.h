@@ -37,6 +37,9 @@ public:
 	void Update();
 	void load(const aiMesh* mesh);
 	void draw();
+	void drawUI();
+
+
 
 };
 

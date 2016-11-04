@@ -36,7 +36,7 @@ bool TestScene1::Start()
 	//id = App->texture->loadTexture("../../lena.png");
 
 
-	App->goManager->LoadFBX("saveLocal/data/assets/meshes/Street environment_V01.fbx");
+	App->goManager->LoadFBX("../DLL/Town/Street environment_V01.fbx");
 	//App->goManager->LoadFBX("../DLL/MechaT.FBX");
 
 	//GameObject* go = App->goManager->root;
