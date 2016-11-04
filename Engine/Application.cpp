@@ -28,7 +28,7 @@ Application::Application()
 	physics = new ModulePhysics3D(this);
 	editor = new ModuleEditor(this);
 
-	fbxImporter = new ModuleFBXImporter(this);
+	//fbxImporter = new ModuleFBXImporter(this);
 	texture = new ModuleTexture(this);
 	goManager = new GameObjectManager(this);
 
@@ -43,7 +43,7 @@ Application::Application()
 	AddModule(camera);
 	AddModule(input);
 	AddModule(fs);
-	AddModule(fbxImporter);
+	//AddModule(fbxImporter);
 	AddModule(texture);
 	AddModule(goManager);
 	AddModule(audio);
