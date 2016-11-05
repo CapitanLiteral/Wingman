@@ -8,6 +8,9 @@
 
 #include "OpenGL.h"
 
+#include "Imgui/imgui.h"
+#include "Imgui/imgui_impl_sdl_gl3.h"
+
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "Glew/libx86/glew32.lib") /* link Microsoft OpenGL lib   */

@@ -27,6 +27,8 @@ void Inspector::draw()
 
 	ImGuiWindowFlags outilnerWindowFlags = 0;
 	outilnerWindowFlags |= ImGuiWindowFlags_AlwaysHorizontalScrollbar;
+	outilnerWindowFlags |= ImGuiWindowFlags_NoMove;
+	//outilnerWindowFlags |= ImGuiWindowFlags_NoResize;
 
 	ImGui::SetNextWindowSize(ImVec2(App->window->screen_surface->w / 8 * 7, 600), ImGuiSetCond_FirstUseEver);
 	//ImGui::SetNextWindowPos(ImVec2(App->window->screen_surface->w / 8 * 7, 20));
@@ -38,6 +40,10 @@ void Inspector::draw()
 	}
 	if (App->goManager->getFocusGO() != nullptr)
 	{
+		ImGuiStyle style = ImGui::GetStyle();
+		ImVec4 color(0, 0, 0, 255);
+		ImGui::ColorEdit4("BGCOlor", (float*)&style.Colors[2], true);
+
 		transform();
 		mesh();
 		material();

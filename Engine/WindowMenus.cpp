@@ -54,6 +54,7 @@ void WindowMenus::draw()
 			ImGui::MenuItem("FPS info", NULL, &showfpsInfo, true);
 			ImGui::MenuItem("Outliner", NULL, &App->editor->show_outliner, true);
 			ImGui::MenuItem("Inspector", NULL, &App->editor->show_inspector, true);
+			ImGui::MenuItem("Settings", NULL, &App->editor->show_settings, true);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("View"))

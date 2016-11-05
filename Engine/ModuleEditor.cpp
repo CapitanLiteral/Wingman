@@ -12,6 +12,7 @@
 #include "Outliner.h"
 #include "WindowMenus.h"
 #include "Inspector.h"
+#include "WindowSettings.h"
 
 #include "Imgui/imgui.h"
 #include "Imgui/imgui_impl_sdl_gl3.h"
@@ -50,8 +51,62 @@ bool ModuleEditor::Start()
 	outliner = new Outliner();
 	SDL_Log("Inspector Created");
 	inspector = new Inspector();
+	SDL_Log("Settings Created");
+	settings = new WindowSettings();
 
 	show_Window_Menus = true;
+
+#pragma region WindowColorSetting
+	ImGuiStyle &style = ImGui::GetStyle();
+	ImVec4 colorin(0.1, 0.1, 0.1, 255);
+	style.Colors[2] = colorin;
+
+	colorin.x = 0;
+	colorin.y = 1;
+	colorin.z = 0;
+	style.Colors[0] = colorin;
+
+	colorin.x = 0;
+	colorin.y = 0;
+	colorin.z = 0;
+	colorin.w = 0.59;
+	style.Colors[7] = colorin;
+
+	colorin.x = 1;
+	colorin.y = 1;
+	colorin.z = 1;
+	colorin.w = 0.22;
+	style.Colors[8] = colorin;
+
+	colorin.x = 0;
+	colorin.y = 1;
+	colorin.z = 0;
+	colorin.w = 0.35;
+	style.Colors[9] = colorin;
+
+	colorin.x = 0.04;
+	colorin.y = 0.04;
+	colorin.z = 0.04;
+	colorin.w = 1;
+	style.Colors[10] = colorin;
+
+	colorin.x = 0.16;
+	colorin.y = 0.16;
+	colorin.z = 0.16;
+	style.Colors[11] = colorin;
+
+	colorin.x = 0.04;
+	colorin.y = 0.16;
+	colorin.z = 0.04;
+	style.Colors[12] = colorin;
+
+	colorin.x = 0.16;
+	colorin.y = 0.16;
+	colorin.z = 0.16;
+	style.Colors[13] = colorin;
+
+#pragma endregion
+
 
 	return true;
 }
@@ -71,7 +126,7 @@ update_status ModuleEditor::Update(float dt)
 	if (show_Window_Menus) windowMenus->draw();
 	if (show_outliner) outliner->draw();
 	if (show_inspector) inspector->draw();
-
+	if (show_settings) settings->draw();
 
 	if (windowMenus->QUIT)	ret = UPDATE_STOP;
 	return ret;

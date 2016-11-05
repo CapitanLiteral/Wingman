@@ -372,6 +372,9 @@
     <ClInclude Include="ModuleJson.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="WindowSettings.h">
+      <Filter>Sources\Editor\UI\Elements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -568,6 +571,9 @@
     </ClCompile>
     <ClCompile Include="ModuleJson.cpp">
       <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowSettings.cpp">
+      <Filter>Sources\Editor\UI\Elements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

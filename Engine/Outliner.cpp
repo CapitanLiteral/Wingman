@@ -24,6 +24,8 @@ void Outliner::draw()
 
 	ImGuiWindowFlags outilnerWindowFlags = 0;
 	outilnerWindowFlags |= ImGuiWindowFlags_AlwaysHorizontalScrollbar;
+	outilnerWindowFlags |= ImGuiWindowFlags_NoMove;
+	//outilnerWindowFlags |= ImGuiWindowFlags_NoResize;
 
 	ImGui::SetNextWindowSize(ImVec2(300, 600), ImGuiSetCond_FirstUseEver);
 	if (!ImGui::Begin("New Outliner", &active, outilnerWindowFlags))
