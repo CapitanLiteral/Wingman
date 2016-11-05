@@ -40,6 +40,8 @@ public:
 
 	std::string name;
 
+	bool selected = false;
+
 	//Local parent base
 	//float3	position = float3::zero;
 	//float3	scale = float3::zero;

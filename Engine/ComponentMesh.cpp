@@ -12,9 +12,8 @@
 
 #pragma comment (lib, "Assimp/Assimp/libx86/assimp.lib")
 
-ComponentMesh::ComponentMesh(GameObject* parent)
+ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 {
-	this->parent = parent;
 }
 
 
@@ -173,6 +172,25 @@ void ComponentMesh::draw()
 	glColor4f(associatedMaterial->color.r, associatedMaterial->color.g, associatedMaterial->color.b, associatedMaterial->color.a); //I should get fbx color TODO
 
 	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, NULL);
+	if (parent->selected)
+	{
+		glDisable(GL_LIGHTING);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glColor4f(0.f, 0.8f, 0.8f, 1.f);
+
+		if (parent->selected)
+		{
+			glLineWidth(5.f);
+			glColor4f(0.f, 1.f, 0.f, 1.f);
+		}
+		else
+		{
+			glLineWidth(1.f);
+			glDisable(GL_CULL_FACE);
+		}
+		
+		glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, NULL);
+	}
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -181,6 +199,10 @@ void ComponentMesh::draw()
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glPopMatrix();
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_CULL_FACE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 

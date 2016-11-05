@@ -1,5 +1,5 @@
 #pragma once
-
+class GameObject;
 
 
 enum ComponentType
@@ -14,10 +14,11 @@ class Component
 public:
 	bool enabled = true;
 
-	Component(){}
+	Component(GameObject* parent){this->parent = parent;}
 	virtual ~Component(){}
 
 	ComponentType type;
+	GameObject* parent = nullptr;
 
 	virtual void enable() {}
 	virtual void update() {}

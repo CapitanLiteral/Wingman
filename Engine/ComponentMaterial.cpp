@@ -4,9 +4,9 @@
 
 #include "ModuleTexture.h"
 
-ComponentMaterial::ComponentMaterial(GameObject* parent)
+ComponentMaterial::ComponentMaterial(GameObject* parent) : Component(parent)
 {
-	this->parent = parent;
+	
 }
 
 

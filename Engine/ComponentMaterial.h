@@ -10,7 +10,6 @@ public:
 	ComponentMaterial(GameObject* parent);
 	virtual ~ComponentMaterial();
 
-	GameObject* parent;
 
 	uint loadTexture(const char* path);
 
