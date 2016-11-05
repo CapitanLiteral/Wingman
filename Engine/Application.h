@@ -18,6 +18,7 @@ class ModuleScene;
 class ModuleFBXImporter;
 class ModuleTexture;
 class GameObjectManager;
+class ModuleJson;
 
 class TestScene1;
 class TestScene2;
@@ -41,6 +42,8 @@ public:
 
 	TestScene1* test1 = nullptr;
 	TestScene2* test2 = nullptr;
+
+	ModuleJson* jsonParser = nullptr;
 
 	float ms_frame[EDITOR_FRAME_SAMPLES];
 	float framerate[EDITOR_FRAME_SAMPLES];

@@ -6,6 +6,7 @@
 #include "Imgui/imgui_impl_sdl_gl3.h"
 #include "OpenGL.h"
 
+#include "ModuleJson.h"
 
 WindowMenus::WindowMenus()
 {
@@ -40,6 +41,7 @@ void WindowMenus::draw()
 	if (creditsSelected)
 	{
 		showCredits();
+		//App->jsonParser->print_commits_info("CapitanLiteral", "Wingman");
 	}
 
 	if (ImGui::BeginMainMenuBar())
