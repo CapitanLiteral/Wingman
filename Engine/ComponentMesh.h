@@ -2,6 +2,8 @@
 #include "Globals.h"
 
 #include "Component.h"
+#include "MathGeoLib\include\MathGeoLib.h"
+
 class GameObject;
 class aiMesh;
 class ComponentMaterial;
@@ -28,6 +30,12 @@ public:
 
 	ComponentMaterial* associatedMaterial = nullptr;
 
+	OBB obb;
+	AABB aabb;
+	
+	bool drawOBB = false;
+	bool drawAABB = false;
+
 
 public:
 	ComponentMesh(GameObject* parent);
@@ -36,8 +44,9 @@ public:
 	void Update();
 	void load(const aiMesh* mesh);
 	void draw();
-
-
+	void updateBoundingBoxes();
+	void draw_OBB();
+	void draw_AABB();
 
 };
 

@@ -139,6 +139,17 @@ void GameObject::setPosition(float3 position)
 
 	localTransform = float4x4::FromTRS(position, rot, sca);
 	refreshTransform(globalTransform);
+
+	//This need refactor TODO findComponents
+	for (std::vector<Component*>::iterator iterator = components.begin(); 
+	iterator != components.end(); iterator++)
+	{
+		if ((*iterator)->type == MESH)
+		{
+			ComponentMesh* mesh = (ComponentMesh*)(*iterator);
+			mesh->updateBoundingBoxes();
+		}
+	}
 }
 void GameObject::setRotation(Quat rotation)
 {
@@ -149,6 +160,17 @@ void GameObject::setRotation(Quat rotation)
 
 	localTransform = float4x4::FromTRS(pos, rotation, sca);
 	refreshTransform(globalTransform);
+
+	//This need refactor TODO findComponents
+	for (std::vector<Component*>::iterator iterator = components.begin();
+		 iterator != components.end(); iterator++)
+	{
+		if ((*iterator)->type == MESH)
+		{
+			ComponentMesh* mesh = (ComponentMesh*)(*iterator);
+			mesh->updateBoundingBoxes();
+		}
+	}
 }
 void GameObject::setScale(float3 scale)
 {
@@ -159,6 +181,17 @@ void GameObject::setScale(float3 scale)
 
 	localTransform = float4x4::FromTRS(pos, rot, scale);
 	refreshTransform(globalTransform);
+
+	//This need refactor TODO findComponents
+	for (std::vector<Component*>::iterator iterator = components.begin();
+		 iterator != components.end(); iterator++)
+	{
+		if ((*iterator)->type == MESH)
+		{
+			ComponentMesh* mesh = (ComponentMesh*)(*iterator);
+			mesh->updateBoundingBoxes();
+		}
+	}
 }
 
 void GameObject::setGlobalTransform(float3 pos, Quat rot, float3 scale)

@@ -10,10 +10,15 @@
 #include "Assimp\Assimp\include\cimport.h"
 #include "Assimp\Assimp\include\postprocess.h"
 
+
+
 #pragma comment (lib, "Assimp/Assimp/libx86/assimp.lib")
 
 ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 {
+	obb.SetNegativeInfinity();
+	aabb.SetNegativeInfinity();
+
 }
 
 
@@ -135,11 +140,12 @@ void ComponentMesh::load(const aiMesh* mesh)
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t)*numVertices * 3, UV, GL_STATIC_DRAW);
 	}
 
-
+	updateBoundingBoxes();
 }
 
 void ComponentMesh::draw()
 {
+	//updateBoundingBoxes();
 	glPushMatrix();
 	//glMultMatrixf(parent->getLocalTransform().ptr());
 	glMultMatrixf(parent->getGlobalTransform().Transposed().ptr());
@@ -172,6 +178,9 @@ void ComponentMesh::draw()
 	glColor4f(associatedMaterial->color.r, associatedMaterial->color.g, associatedMaterial->color.b, associatedMaterial->color.a); //I should get fbx color TODO
 
 	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, NULL);
+
+	//DrawWireframe for selected object
+	#pragma region DrawWireframe
 	if (parent->selected)
 	{
 		glDisable(GL_LIGHTING);
@@ -188,9 +197,11 @@ void ComponentMesh::draw()
 			glLineWidth(1.f);
 			glDisable(GL_CULL_FACE);
 		}
-		
+
 		glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, NULL);
 	}
+	#pragma endregion
+
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -203,6 +214,132 @@ void ComponentMesh::draw()
 	glEnable(GL_LIGHTING);
 	glEnable(GL_CULL_FACE);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	if (!drawAABB)
+	{
+		draw_AABB();
+	}
+	if (!drawOBB)
+	{	
+		draw_OBB();
+	}
+	
 }
+
+void ComponentMesh::updateBoundingBoxes()
+{
+	aabb.SetNegativeInfinity();
+	aabb.Enclose((float3*)vertices, numVertices);
+
+	obb = aabb;
+	obb.Transform(parent->globalTransform);
+	aabb.SetFrom(obb);
+}
+void ComponentMesh::draw_OBB()
+{
+	glDisable(GL_LIGHTING);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glDisable(GL_CULL_FACE);
+	glLineWidth(1.f);
+	glColor4f(1.f, 1.f, 1.f, 1.f);
+
+	float3 vertices[8];
+	obb.GetCornerPoints(vertices);
+
+	//glColor4f(color.r, color.g, color.b, color.a);
+
+	glBegin(GL_QUADS);
+
+	glVertex3fv((GLfloat*)&vertices[1]);
+	glVertex3fv((GLfloat*)&vertices[5]);
+	glVertex3fv((GLfloat*)&vertices[7]);
+	glVertex3fv((GLfloat*)&vertices[3]);
+
+	glVertex3fv((GLfloat*)&vertices[4]);
+	glVertex3fv((GLfloat*)&vertices[0]);
+	glVertex3fv((GLfloat*)&vertices[2]);
+	glVertex3fv((GLfloat*)&vertices[6]);
+
+	glVertex3fv((GLfloat*)&vertices[5]);
+	glVertex3fv((GLfloat*)&vertices[4]);
+	glVertex3fv((GLfloat*)&vertices[6]);
+	glVertex3fv((GLfloat*)&vertices[7]);
+
+	glVertex3fv((GLfloat*)&vertices[0]);
+	glVertex3fv((GLfloat*)&vertices[1]);
+	glVertex3fv((GLfloat*)&vertices[3]);
+	glVertex3fv((GLfloat*)&vertices[2]);
+
+	glVertex3fv((GLfloat*)&vertices[3]);
+	glVertex3fv((GLfloat*)&vertices[7]);
+	glVertex3fv((GLfloat*)&vertices[6]);
+	glVertex3fv((GLfloat*)&vertices[2]);
+
+	glVertex3fv((GLfloat*)&vertices[0]);
+	glVertex3fv((GLfloat*)&vertices[4]);
+	glVertex3fv((GLfloat*)&vertices[5]);
+	glVertex3fv((GLfloat*)&vertices[1]);
+
+	glEnd();
+
+	glEnable(GL_CULL_FACE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glEnable(GL_LIGHTING);
+	//glLineWidth(1.f);
+}
+
+void ComponentMesh::draw_AABB()
+{
+	glDisable(GL_LIGHTING);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glDisable(GL_CULL_FACE);
+	glLineWidth(1.f);
+	glColor4f(1.f, 1.f, 1.f, 1.f);
+
+	float3 vertices[8];
+	aabb.GetCornerPoints(vertices);
+
+	//glColor4f(color.r, color.g, color.b, color.a);
+
+	glBegin(GL_QUADS);
+
+	glVertex3fv((GLfloat*)&vertices[1]);
+	glVertex3fv((GLfloat*)&vertices[5]);
+	glVertex3fv((GLfloat*)&vertices[7]);
+	glVertex3fv((GLfloat*)&vertices[3]);
+
+	glVertex3fv((GLfloat*)&vertices[4]);
+	glVertex3fv((GLfloat*)&vertices[0]);
+	glVertex3fv((GLfloat*)&vertices[2]);
+	glVertex3fv((GLfloat*)&vertices[6]);
+
+	glVertex3fv((GLfloat*)&vertices[5]);
+	glVertex3fv((GLfloat*)&vertices[4]);
+	glVertex3fv((GLfloat*)&vertices[6]);
+	glVertex3fv((GLfloat*)&vertices[7]);
+
+	glVertex3fv((GLfloat*)&vertices[0]);
+	glVertex3fv((GLfloat*)&vertices[1]);
+	glVertex3fv((GLfloat*)&vertices[3]);
+	glVertex3fv((GLfloat*)&vertices[2]);
+
+	glVertex3fv((GLfloat*)&vertices[3]);
+	glVertex3fv((GLfloat*)&vertices[7]);
+	glVertex3fv((GLfloat*)&vertices[6]);
+	glVertex3fv((GLfloat*)&vertices[2]);
+
+	glVertex3fv((GLfloat*)&vertices[0]);
+	glVertex3fv((GLfloat*)&vertices[4]);
+	glVertex3fv((GLfloat*)&vertices[5]);
+	glVertex3fv((GLfloat*)&vertices[1]);
+
+	glEnd();
+
+	glEnable(GL_CULL_FACE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glEnable(GL_LIGHTING);
+	//glLineWidth(1.f);
+}
+
 
 
