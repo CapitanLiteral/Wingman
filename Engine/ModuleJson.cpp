@@ -7,6 +7,7 @@
 #include <json\json.h>
 
 #include <sstream>
+#include <vector>
 
 ModuleJson::ModuleJson(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -29,10 +30,16 @@ void ModuleJson::read()
 
 	//SDL_Log("--------------------- CAJUN --------------------- \n%s", stream.str().c_str());
 	Json::Value root;
-	Json::CharReaderBuilder builder;
-	std::string errors;
-	Json::parseFromStream(builder, stream, &root, &errors);
+	Json::Reader reader;
+	if (reader.parse(stream, root))
+	{
+		SDL_Log("--------------------- JsonCPP --------------------\n%s", root.get("Value1", "NoItem").asCString());
 
+		
+	}
+
+	
+	//root.get("Delicious Beers", "NoItem");
 }
 
 bool ModuleJson::Init()
