@@ -60,6 +60,9 @@
     <Filter Include="Sources\Editor\UI\Elements">
       <UniqueIdentifier>{3f401ef5-9a70-47f1-9aeb-07fb44280995}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Json">
+      <UniqueIdentifier>{a58b7c38-42f0-44b7-903d-416627152bc7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -574,6 +577,9 @@
     </ClCompile>
     <ClCompile Include="WindowSettings.cpp">
       <Filter>Sources\Editor\UI\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="jsoncpp\jsoncpp.cpp">
+      <Filter>Sources\Json</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
