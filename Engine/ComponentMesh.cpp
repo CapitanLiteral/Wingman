@@ -18,7 +18,8 @@ ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 {
 	obb.SetNegativeInfinity();
 	aabb.SetNegativeInfinity();
-
+	obb_color.Set(1, 1, 1, 1);
+	aabb_color.Set(1, 1, 1, 1);
 }
 
 
@@ -215,11 +216,11 @@ void ComponentMesh::draw()
 	glEnable(GL_CULL_FACE);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	if (!drawAABB)
+	if (drawAABB)
 	{
 		draw_AABB();
 	}
-	if (!drawOBB)
+	if (drawOBB)
 	{	
 		draw_OBB();
 	}
@@ -235,13 +236,29 @@ void ComponentMesh::updateBoundingBoxes()
 	obb.Transform(parent->globalTransform);
 	aabb.SetFrom(obb);
 }
+OBB ComponentMesh::getOBB() const
+{
+	return obb;
+}
+void ComponentMesh::setOBB(OBB obb)
+{
+	this->obb = obb;
+}
+AABB ComponentMesh::getAABB() const
+{
+	return aabb;
+}
+void ComponentMesh::setAABB(AABB aabb)
+{
+	this->aabb = aabb;
+}
 void ComponentMesh::draw_OBB()
 {
 	glDisable(GL_LIGHTING);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glDisable(GL_CULL_FACE);
 	glLineWidth(1.f);
-	glColor4f(1.f, 1.f, 1.f, 1.f);
+	glColor4f(obb_color.r, obb_color.g, obb_color.b, obb_color.a);
 
 	float3 vertices[8];
 	obb.GetCornerPoints(vertices);
@@ -294,7 +311,7 @@ void ComponentMesh::draw_AABB()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glDisable(GL_CULL_FACE);
 	glLineWidth(1.f);
-	glColor4f(1.f, 1.f, 1.f, 1.f);
+	glColor4f(aabb_color.r, aabb_color.g, aabb_color.b, aabb_color.a);
 
 	float3 vertices[8];
 	aabb.GetCornerPoints(vertices);

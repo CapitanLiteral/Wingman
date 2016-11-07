@@ -3,6 +3,7 @@
 
 #include "Component.h"
 #include "MathGeoLib\include\MathGeoLib.h"
+#include "Color.h"
 
 class GameObject;
 class aiMesh;
@@ -30,11 +31,29 @@ public:
 
 	ComponentMaterial* associatedMaterial = nullptr;
 
-	OBB obb;
-	AABB aabb;
+
+	#pragma region BoundingBoxes
+	private:
+		OBB obb;
+		AABB aabb;
+
+		Color obb_color;
+		Color aabb_color;
+
+	public:
+		bool drawOBB = false;
+		bool drawAABB = false;
+
+		void updateBoundingBoxes();
+
+		OBB getOBB() const;
+		void setOBB(OBB obb);
+
+		AABB getAABB() const;
+		void setAABB(AABB aabb);
+	#pragma endregion
+
 	
-	bool drawOBB = false;
-	bool drawAABB = false;
 
 
 public:
@@ -44,7 +63,7 @@ public:
 	void Update();
 	void load(const aiMesh* mesh);
 	void draw();
-	void updateBoundingBoxes();
+	
 	void draw_OBB();
 	void draw_AABB();
 

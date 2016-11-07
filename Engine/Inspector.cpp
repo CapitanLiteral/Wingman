@@ -107,12 +107,16 @@ void Inspector::mesh()
 {
 	//Active
 	GameObject* go = App->goManager->getFocusGO();
+	int i = 0;
 	for (std::vector<Component*>::iterator iterator = go->components.begin(); 
 		iterator != go->components.end(); iterator++)
 	{
 		if ((*iterator)->type == MESH)
 		{
+			ImGui::PushID(i);
 			ComponentMesh* mesh = (ComponentMesh*)(*iterator);
+			ImGui::Checkbox("AABB", &mesh->drawAABB); ImGui::SameLine();
+			ImGui::Checkbox("OBB", &mesh->drawOBB);
 			ImGui::Text("N vertex: ");
 			ImGui::SameLine();
 			ImGui::TextColored(ImColor(255, 80, 133), "%d", mesh->numVertices);
@@ -134,6 +138,10 @@ void Inspector::mesh()
 			ImGui::TextColored(ImColor(255, 80, 133), "%d", mesh->associatedMaterial->diffuse);
 
 			ImGui::Separator();
+
+			ImGui::PopID();
+
+			i++;
 		}
 	}
 
