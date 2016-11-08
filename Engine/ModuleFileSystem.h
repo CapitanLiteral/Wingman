@@ -19,7 +19,7 @@ public:
 	bool isDirectory(const char* file);
 	bool makeDirectory(const char* dir, const char* mount = NULL);
 	const char* getSaveAppDataDirectory()const { return "saveAppData/"; }
-	const char* getSaveLocalDirectory()const { return "saveLocal/"; }
+	const char* getSaveLocalDirectory()const { return ROOT; }
 
 	const char* getBasePath();
 

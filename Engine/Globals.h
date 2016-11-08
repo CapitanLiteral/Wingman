@@ -64,3 +64,4 @@ enum update_status
 #define MESHES_DIRECTORY "meshes"
 #define MATERIAL_DIRECTORY "material"
 #define ANIMATION_DIRECTORY "animation"
+#define ROOT "root/"
