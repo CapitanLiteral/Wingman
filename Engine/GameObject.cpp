@@ -185,6 +185,119 @@ void GameObject::setRotation(Quat rotation)
 		}
 	}
 }
+
+void GameObject::setRotation(float* rot)
+{
+	float3 r;
+	r.Set(rot);
+
+	while (r.x < 0)
+		r.x += 360;
+	while (r.y < 0)
+		r.y += 360;
+	while (r.z < 0)
+		r.z += 360;
+
+	while (r.x >= 360)
+		r.x -= 360;
+	while (r.y >= 360)
+		r.y -= 360;
+	while (r.z >= 360)
+		r.z -= 360;
+
+	r.x *= DEGTORAD;
+	r.y *= DEGTORAD;
+	r.z *= DEGTORAD;
+
+	setRotation(Quat::FromEulerXYZ(r.x, r.y, r.z));
+}
+
+void GameObject::setRotation(float x, float y, float z)
+{
+	while (x < 0)
+		x += 360;
+	while (y < 0)
+		y += 360;
+	while (z < 0)
+		z += 360;
+
+	while (x >= 360)
+		x -= 360;
+	while (y >= 360)
+		y -= 360;
+	while (z >= 360)
+		z -= 360;
+
+	x *= DEGTORAD;
+	y *= DEGTORAD;
+	z *= DEGTORAD;
+
+	setRotation(Quat::FromEulerXYZ(x, y, z));
+
+}
+float3 GameObject::getRotation() const
+{
+
+	float3 pos;
+	float3 sca;
+	Quat rot;
+	localTransform.Decompose(pos, rot, sca);
+
+	float3 ret = rot.ToEulerXYZ();
+
+	ret.x *= RADTODEG;
+	ret.y *= RADTODEG;
+	ret.z *= RADTODEG;
+
+	while (ret.x < 0)
+		ret.x += 360;
+	while (ret.y < 0)
+		ret.y += 360;
+	while (ret.z < 0)
+		ret.z += 360;
+
+	while (ret.x >= 360)
+		ret.x -= 360;
+	while (ret.y >= 360)
+		ret.y -= 360;
+	while (ret.z >= 360)
+		ret.z -= 360;
+
+	return ret;
+}
+
+
+float* GameObject::getEulerRot() const
+{
+
+	float3 pos;
+	float3 sca;
+	Quat rot;
+	localTransform.Decompose(pos, rot, sca);
+	
+	float3 rotationEuler = rot.ToEulerXYZ();
+
+	rotationEuler.x *= RADTODEG;
+	rotationEuler.y *= RADTODEG;
+	rotationEuler.z *= RADTODEG;
+
+	while (rotationEuler.x < 0)
+		rotationEuler.x += 360;
+	while (rotationEuler.y < 0)
+		rotationEuler.y += 360;
+	while (rotationEuler.z < 0)
+		rotationEuler.z += 360;
+
+	while (rotationEuler.x >= 360)
+		rotationEuler.x -= 360;
+	while (rotationEuler.y >= 360)
+		rotationEuler.y -= 360;
+	while (rotationEuler.z >= 360)
+		rotationEuler.z -= 360;
+
+	return (float*)&rotationEuler;
+}
+
 void GameObject::setScale(float3 scale)
 {
 	float3 pos;

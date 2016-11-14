@@ -25,8 +25,11 @@ public:
 
 	void setPosition(float3 position);
 	void setRotation(Quat rotation);
+	void setRotation(float* rot);
+	void setRotation(float x, float y, float z);
 	void setScale(float3 scale);
-
+	float* getEulerRot() const;
+	float3 getRotation() const;
 
 	//Debug Things...
 	void setGlobalTransform(float3 pos, Quat rot, float3 scale);

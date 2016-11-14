@@ -70,18 +70,17 @@ void Inspector::transform()
 	Quat rot;
 	App->goManager->getFocusGO()->localTransform.Decompose(position, rot, scale);
 
-	float3 localEulerAngles = rot.ToEulerXYZ();
-	localEulerAngles *= RADTODEG;
+	float3 localEulerAngles(App->goManager->getFocusGO()->getRotation());
 
 	if (ImGui::DragFloat3("Position", position.ptr(), 0.01f))
 		App->goManager->getFocusGO()->setPosition(position);
 
 
-	if (ImGui::DragFloat3("Rotation", localEulerAngles.ptr(), 0.01f, 0.f, 360.f))
+	if (ImGui::DragFloat3("Rotation", localEulerAngles.ptr(), 1.f))
 	{
-		localEulerAngles *= DEGTORAD;
-		rot = Quat::FromEulerXYZ(localEulerAngles.x, localEulerAngles.y, localEulerAngles.z);
-		App->goManager->getFocusGO()->setRotation(rot);
+		//localEulerAngles *= DEGTORAD;
+		//rot = Quat::FromEulerXYZ(localEulerAngles.x, localEulerAngles.y, localEulerAngles.z);
+		App->goManager->getFocusGO()->setRotation(localEulerAngles.x, localEulerAngles.y, localEulerAngles.z);
 	}
 
 	if (ImGui::DragFloat3("Scale", scale.ptr(), 0.01f))
