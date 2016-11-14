@@ -378,6 +378,9 @@
     <ClInclude Include="WindowSettings.h">
       <Filter>Sources\Editor\UI\Elements</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentCamera.h">
+      <Filter>Sources\Editor\Decoupling</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -580,6 +583,9 @@
     </ClCompile>
     <ClCompile Include="jsoncpp\jsoncpp.cpp">
       <Filter>Sources\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentCamera.cpp">
+      <Filter>Sources\Editor\Decoupling</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

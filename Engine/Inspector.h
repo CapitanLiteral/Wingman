@@ -13,6 +13,7 @@ public:
 	void transform();
 	void mesh();
 	void material();
+	void camera();
 
 	ImGuiWindowFlags inspectorWindowFlags = 0;
 };

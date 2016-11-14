@@ -5,7 +5,8 @@ class GameObject;
 enum ComponentType
 {
 	MESH,
-	MATERIAL
+	MATERIAL,
+	CAMERA
 };
 
 
@@ -20,8 +21,8 @@ public:
 	ComponentType type;
 	GameObject* parent = nullptr;
 
-	virtual void enable() {}
-	virtual void update() {}
+	void enable() { enabled = true;}
+	void update() { enabled = false;}
 	virtual void disable() {}
 };
 

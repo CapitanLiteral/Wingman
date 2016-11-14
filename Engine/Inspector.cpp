@@ -11,6 +11,7 @@
 #include "GameObject.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
+#include "ComponentCamera.h"
 
 Inspector::Inspector()
 {
@@ -47,6 +48,7 @@ void Inspector::draw()
 		transform();
 		mesh();
 		material();
+		camera();
 	}
 	
 	ImGui::Spacing();
@@ -172,4 +174,19 @@ void Inspector::material()
 	}
 
 	
+}
+
+void Inspector::camera()
+{
+	GameObject* go = App->goManager->getFocusGO();
+	for (std::vector<Component*>::iterator iterator = go->components.begin();
+		 iterator != go->components.end(); iterator++)
+	{
+		if ((*iterator)->type == CAMERA)
+		{
+			ComponentCamera* camera = (ComponentCamera*)(*iterator);
+			ImGui::Checkbox("Debug", &camera->debug);
+			ImGui::Separator();
+		}
+	}
 }

@@ -29,7 +29,6 @@ void ModuleJson::read()
 		std::stringstream stream;
 		stream << buffer;
 
-		//SDL_Log("--------------------- CAJUN --------------------- \n%s", stream.str().c_str());
 		Json::Value root;
 		Json::Reader reader;
 		if (reader.parse(stream, root))

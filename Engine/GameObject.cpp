@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "ComponentMaterial.h"
 #include "ComponentMesh.h"
+#include "ComponentCamera.h"
 #include "MathGeoLib\include\MathGeoLib.h"
 
 
@@ -27,7 +28,7 @@ GameObject::~GameObject()
 	{
 		if ((*iterator) != nullptr)
 		{
-			delete (*iterator);
+			RELEASE(*iterator);
 		}
 	}
 
@@ -36,7 +37,7 @@ GameObject::~GameObject()
 	{
 		if ((*iterator) != nullptr)
 		{
-			delete (*iterator);
+			RELEASE(*iterator);
 		}
 	}
 
@@ -59,6 +60,13 @@ Component* GameObject::createComponent(ComponentType type)
 		components.push_back(material);
 		return material;
 	}
+	else if (type == CAMERA)
+	{
+		ComponentCamera* camera = new ComponentCamera(this);
+		camera->type = type;
+		components.push_back(camera);
+		return camera;
+	}
 
 
 	return ret;
@@ -74,6 +82,11 @@ void GameObject::update()
 		{
 			ComponentMesh* component = (ComponentMesh*)(*it);
 			component->Update();
+		}
+		if ((*it)->type == CAMERA)
+		{
+			ComponentCamera* component = (ComponentCamera*)(*it);
+			component->update();
 		}
 	}
 	for (std::vector<GameObject*>::iterator it = children.begin();

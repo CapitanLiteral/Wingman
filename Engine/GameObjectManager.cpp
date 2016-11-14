@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
+#include "ComponentCamera.h"
 #include "ModuleFileSystem.h"
 
 #include "MathGeoLib\include\MathGeoLib.h"
@@ -31,6 +32,10 @@ bool GameObjectManager::Start()
 	float3 scale(1,1,1);
 	Quat rotation(0,0,0,0);
 	root = new GameObject(NULL, position, scale, rotation, "ROOT");
+	GameObject* camera = new GameObject(root, position, scale, rotation, "Main Camera");
+	//root->addChild(camera);
+	camera->createComponent(CAMERA);
+
 	return true;
 }
 
