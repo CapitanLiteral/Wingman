@@ -98,7 +98,16 @@ void GameObject::update()
 
 Component * GameObject::findComponent(ComponentType)
 {
-	return nullptr;
+	Component* ret = nullptr;
+	for (std::vector<Component*>::iterator it = components.begin();
+		 it != components.end(); it++)
+	{
+		if ((*it)->type == CAMERA)
+		{
+			ret = (*it);
+		}
+	}
+	return ret;
 }
 
 

@@ -33,9 +33,10 @@ bool GameObjectManager::Start()
 	Quat rotation(0,0,0,0);
 	root = new GameObject(NULL, position, scale, rotation, "ROOT");
 	GameObject* camera = new GameObject(root, position, scale, rotation, "Main Camera");
+	camera->setRotation(1, 0, 0);
 	//root->addChild(camera);
 	camera->createComponent(CAMERA);
-
+	currentCamera = camera;
 	return true;
 }
 

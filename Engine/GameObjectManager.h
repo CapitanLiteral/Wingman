@@ -28,10 +28,11 @@ public:
 	void setFocusGO(GameObject* focusGO);
 
 	std::map<std::string, uint> textures;
-
+	GameObject* currentCamera = nullptr;
 private:
 	
 	GameObject* focusGO = nullptr;
+	
 
 };
 

@@ -4,6 +4,9 @@
 #include "GameObject.h"
 #include "ComponentMaterial.h"
 #include "OpenGL.h"
+#include "GameObjectManager.h"
+#include "ComponentCamera.h"
+#include "MathGeoLib\include\MathGeoLib.h"
 
 #include "Assimp\Assimp\include\scene.h"
 #include "Assimp\Assimp\include\cfileio.h"
@@ -71,7 +74,11 @@ void ComponentMesh::Update()
 {
 	if (enabled)
 	{
-		draw();
+		ComponentCamera* camera = (ComponentCamera*)App->goManager->currentCamera->findComponent(CAMERA);
+		if (camera != nullptr && camera->frustum->Intersects(aabb))
+		{
+			draw();
+		}		
 	}
 }
 
