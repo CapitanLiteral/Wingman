@@ -42,6 +42,12 @@ enum update_status
 	UPDATE_ERROR
 };
 
+enum module
+{
+	BEER_TEST,
+	WINDOW	
+};
+
 // Configuration -----------
 #define SCREEN_WIDTH 1920
 #define SCREEN_HEIGHT 1080
@@ -52,12 +58,12 @@ enum update_status
 #define WIN_FULLSCREEN_DESKTOP false
 #define WIN_MAXIMIZED true
 #define VSYNC true
+
 #define TITLE "Wingman game editor"
-#define LIFES 5
-
-
-
 #define ORGANIZATION "UndistinguishedMan"
+
+
+
 #define LOCAL_SAVE_DIRECTORY "data"
 #define ASSETS_DIRECTORY "assets"
 #define CONFIG_DIRECTORY "config"

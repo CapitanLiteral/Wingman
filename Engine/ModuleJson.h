@@ -8,7 +8,7 @@ public:
 	ModuleJson(Application* app, bool start_enabled = true);
 	~ModuleJson();
 
-	void read();
+	void read(module moduleType);
 	bool Init();
 	bool Start();
 	update_status Update();
