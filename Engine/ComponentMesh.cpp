@@ -21,8 +21,8 @@ ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 {
 	obb.SetNegativeInfinity();
 	aabb.SetNegativeInfinity();
-	obb_color.Set(1, 1, 1, 1);
-	aabb_color.Set(1, 1, 1, 1);
+	obb_color.Set(0.2, 1, 0.2, 1);
+	aabb_color.Set(1, 0.2, 0.2, 1);
 }
 
 

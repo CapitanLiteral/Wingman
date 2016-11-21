@@ -4,7 +4,7 @@
 #include "ComponentMesh.h"
 #include "ComponentCamera.h"
 #include "MathGeoLib\include\MathGeoLib.h"
-
+#include "OpenGL.h"
 
 GameObject::GameObject(GameObject* parent, const float3 translation, const float3 scale, const Quat rotation, const char* name)
 {
@@ -19,6 +19,7 @@ GameObject::GameObject(GameObject* parent, const float3 translation, const float
 	{
 		parent->addChild(this);
 	}
+	aabb_color.Set(0, 0, 1, 1);
 }
 
 GameObject::~GameObject()
@@ -334,8 +335,69 @@ void GameObject::setGlobalTransform(float3 pos, Quat rot, float3 scale)
 	globalTransform = float4x4::FromTRS(pos, rot, scale);
 }
 
+AABB GameObject::getAABB() const
+{
+	return aabb;
+}
+void GameObject::setAABB(AABB aabb)
+{
+	this->aabb = aabb;
+}
 
+void GameObject::draw_AABB()
+{
+	glDisable(GL_LIGHTING);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glDisable(GL_CULL_FACE);
+	glLineWidth(1.f);
+	glColor4f(aabb_color.r, aabb_color.g, aabb_color.b, aabb_color.a);
 
+	float3 vertices[8];
+	aabb.GetCornerPoints(vertices);
 
+	//glColor4f(color.r, color.g, color.b, color.a);
 
+	glBegin(GL_QUADS);
 
+	glVertex3fv((GLfloat*)&vertices[1]);
+	glVertex3fv((GLfloat*)&vertices[5]);
+	glVertex3fv((GLfloat*)&vertices[7]);
+	glVertex3fv((GLfloat*)&vertices[3]);
+
+	glVertex3fv((GLfloat*)&vertices[4]);
+	glVertex3fv((GLfloat*)&vertices[0]);
+	glVertex3fv((GLfloat*)&vertices[2]);
+	glVertex3fv((GLfloat*)&vertices[6]);
+
+	glVertex3fv((GLfloat*)&vertices[5]);
+	glVertex3fv((GLfloat*)&vertices[4]);
+	glVertex3fv((GLfloat*)&vertices[6]);
+	glVertex3fv((GLfloat*)&vertices[7]);
+
+	glVertex3fv((GLfloat*)&vertices[0]);
+	glVertex3fv((GLfloat*)&vertices[1]);
+	glVertex3fv((GLfloat*)&vertices[3]);
+	glVertex3fv((GLfloat*)&vertices[2]);
+
+	glVertex3fv((GLfloat*)&vertices[3]);
+	glVertex3fv((GLfloat*)&vertices[7]);
+	glVertex3fv((GLfloat*)&vertices[6]);
+	glVertex3fv((GLfloat*)&vertices[2]);
+
+	glVertex3fv((GLfloat*)&vertices[0]);
+	glVertex3fv((GLfloat*)&vertices[4]);
+	glVertex3fv((GLfloat*)&vertices[5]);
+	glVertex3fv((GLfloat*)&vertices[1]);
+
+	glEnd();
+
+	glEnable(GL_CULL_FACE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glEnable(GL_LIGHTING);
+	//glLineWidth(1.f);
+}
+
+void GameObject::updateBoundingBoxes()
+{
+	aabb.SetNegativeInfinity();
+}

@@ -20,7 +20,7 @@
 
 	"window" :
 	{
-		"vsync" : true,
+		"vsync" : false,
 		"resolution":
 		{
 			"x": 1920,

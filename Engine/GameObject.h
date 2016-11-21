@@ -31,6 +31,11 @@ public:
 	float* getEulerRot() const;
 	float3 getRotation() const;
 
+	AABB getAABB() const;
+	void setAABB(AABB aabb);
+	void draw_AABB();
+	void updateBoundingBoxes();
+	Color aabb_color;
 	//Debug Things...
 	void setGlobalTransform(float3 pos, Quat rot, float3 scale);
 
@@ -53,6 +58,7 @@ public:
 	//global normal base
 	float4x4 globalTransform = float4x4::identity; 	
 	
+	AABB aabb;
 
 	
 };

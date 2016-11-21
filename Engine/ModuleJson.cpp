@@ -19,8 +19,9 @@ ModuleJson::~ModuleJson()
 {
 }
 
-void ModuleJson::read(module moduleType)
+Json::Value ModuleJson::read(module moduleType)
 {
+	Json::Value ret = NULL;
 	char* buffer;
 	if(App->fs->load("root/data/config/config.json", &buffer))
 	{
@@ -39,7 +40,7 @@ void ModuleJson::read(module moduleType)
 				SDL_Log("--------------------- JsonCPP --------------------%s", root.get("Value1", "NoItem").asCString());
 				Json::Value beer = root.get("Beers", "NoBeer");
 				const Json::Value& beers = root["Beers"];
-
+				ret = beers;
 				for (Json::ValueConstIterator it = beers.begin(); it != beers.end(); it++)
 				{
 					SDL_Log("--------------------- JsonCPP --------------------%s", (*it).get("Name", "NoItem").asCString());
@@ -58,11 +59,15 @@ void ModuleJson::read(module moduleType)
 			{
 				Json::Value windowConfig = root.get("window", "ERR_NO_WINDOW_CONFIG");
 				const Json::Value& windowConfigParams = root["window"];
+				ret = windowConfigParams;
 
-				//for (Json::ValueConstIterator it = windowConfigParams.begin(); it != windowConfigParams.end(); it++)
+				//Json::Value value = windowConfigParams["vsync"];
+				//if (value.asBool())
 				//{
-				//	SDL_Log("--------------------- JsonCPP --------------------%s", (*it).asCString());
+				//	SDL_Log("True");
 				//}
+				//value = windowConfigParams["title"];
+				//SDL_Log("%s", value.asCString());
 			}
 		}
 		
@@ -72,7 +77,7 @@ void ModuleJson::read(module moduleType)
 	{
 		SDL_Log("Error loading config.");
 	}
-	
+	return ret;
 	//root.get("Delicious Beers", "NoItem");
 }
 
