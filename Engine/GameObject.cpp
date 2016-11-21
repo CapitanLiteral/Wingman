@@ -95,6 +95,11 @@ void GameObject::update()
 	{
 		(*it)->update();
 	}	
+	updateBoundingBoxes();
+	if (drawAABB)
+	{
+		draw_AABB();
+	}
 }
 
 Component * GameObject::findComponent(ComponentType)
@@ -400,4 +405,21 @@ void GameObject::draw_AABB()
 void GameObject::updateBoundingBoxes()
 {
 	aabb.SetNegativeInfinity();
+	std::vector<AABB> aabbVector;
+
+	for (std::vector<Component*>::iterator iterator = components.begin(); iterator != components.end(); iterator++)
+	{
+		if ((*iterator)->type == MESH)
+		{
+			ComponentMesh* mesh = (ComponentMesh*) (*iterator);
+			aabbVector.push_back(mesh->getAABB());
+		}
+	}
+	for (std::vector<AABB>::iterator iterator = aabbVector.begin(); iterator != aabbVector.end(); iterator++)
+	{
+		aabb.Enclose((*iterator));
+	}
+
+	//aabb.Transform(parent->globalTransform);
+	
 }

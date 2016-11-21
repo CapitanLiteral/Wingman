@@ -112,6 +112,11 @@ void Inspector::mesh()
 	//Active
 	GameObject* go = App->goManager->getFocusGO();
 	int i = 0;
+	if (go->aabb.IsFinite())
+	{
+		ImGui::Checkbox("GameObjectAABB", &go->drawAABB);
+		ImGui::Separator();
+	}	
 	for (std::vector<Component*>::iterator iterator = go->components.begin(); 
 		iterator != go->components.end(); iterator++)
 	{

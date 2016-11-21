@@ -4,6 +4,7 @@
 #include <string>
 #include "Component.h"
 #include "MathGeoLib\include\MathGeoLib.h"
+#include "Color.h"
 
 class GameObject
 {
@@ -49,7 +50,7 @@ public:
 	std::string name;
 
 	bool selected = false;
-
+	bool drawAABB = false;
 	//Local parent base
 	//float3	position = float3::zero;
 	//float3	scale = float3::zero;
