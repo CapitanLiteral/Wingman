@@ -15,6 +15,8 @@ public:
 	Frustum* frustum;
 
 	void draw();
+	bool culling = true;
+	bool attachCamera = false;
 
 #pragma region Debug
 

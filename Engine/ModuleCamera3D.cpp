@@ -3,6 +3,7 @@
 #include "PhysBody3D.h"
 #include "ModuleCamera3D.h"
 #include "ModuleInput.h"
+#include "MathGeoLib\include\MathGeoLib.h"
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -148,7 +149,18 @@ void ModuleCamera3D::LookAt( const vec3 &Spot)
 
 	CalculateViewMatrix();
 }
+void ModuleCamera3D::LookAt(const float3 &Spot)
+{
+	Reference.x = Spot.x;
+	Reference.y = Spot.y;
+	Reference.z = Spot.z;
 
+	Z = normalize(Position - Reference);
+	X = normalize(cross(vec3(0.0f, 1.0f, 0.0f), Z));
+	Y = cross(Z, X);
+
+	CalculateViewMatrix();
+}
 
 // -----------------------------------------------------------------
 void ModuleCamera3D::Move(const vec3 &Movement)

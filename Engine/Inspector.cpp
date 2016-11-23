@@ -190,6 +190,8 @@ void Inspector::camera()
 		{
 			ComponentCamera* camera = (ComponentCamera*)(*iterator);
 			ImGui::Checkbox("Debug", &camera->debug);
+			ImGui::Checkbox("Culling", &camera->culling);
+			ImGui::Checkbox("Attach Camera", &camera->attachCamera);
 			ImGui::Separator();
 		}
 	}

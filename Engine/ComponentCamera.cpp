@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "OpenGL.h"
 #include "Color.h"
+#include "ModuleCamera3D.h"
 
 ComponentCamera::ComponentCamera(GameObject* parent) : Component(parent)
 {	
@@ -17,15 +18,13 @@ ComponentCamera::ComponentCamera(GameObject* parent) : Component(parent)
 	frustum->horizontalFov = 2.f * atan(tan(frustum->verticalFov * 0.5f) * 16/9);
 	frustum->farPlaneDistance = 100.f;
 	frustum->nearPlaneDistance = 10.f;
-	
 
-	
 }
 
 
 ComponentCamera::~ComponentCamera()
 {
-	//RELEASE(frustum);
+	RELEASE(frustum);
 }
 
 void ComponentCamera::update()
@@ -36,12 +35,39 @@ void ComponentCamera::update()
 	parent->globalTransform.Decompose(pos,rot,scale);
 	//http://gamedev.stackexchange.com/questions/28395/rotating-vector3-by-a-quaternion
 	frustum->pos = pos;	
+	frustum->up = rot.WorldY();
+	frustum->front = rot.WorldX();
 	//frustum->front = rot * frustum->front * rot.Conjugated();
 	if (debug)
 	{
 		draw();
 	}
+
+	if (attachCamera)
+	{
+		App->camera->Position.x = pos.x;
+		App->camera->Position.y = pos.y;
+		App->camera->Position.z = pos.z;
+
+		App->camera->LookAt(frustum->CenterPoint());
+
+	}
+
 }
+
+//void rotate_vector_by_quaternion(const float3& v, const Quat& q, float3& vprime)
+//{
+//	// Extract the vector part of the quaternion
+//	float3 u(q.x, q.y, q.z);
+//
+//	// Extract the scalar part of the quaternion
+//	float s = q.w;
+//
+//	// Do the math
+//	vprime = 2.0f * dot(u, v) * u
+//		+ (s*s - dot(u, u)) * v
+//		+ 2.0f * s * cross(u, v);
+//}
 
 void ComponentCamera::draw()
 {

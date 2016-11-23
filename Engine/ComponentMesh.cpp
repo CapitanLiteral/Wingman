@@ -75,10 +75,17 @@ void ComponentMesh::Update()
 	if (enabled)
 	{
 		ComponentCamera* camera = (ComponentCamera*)App->goManager->currentCamera->findComponent(CAMERA);
-		if (camera != nullptr && camera->frustum->Intersects(aabb))
+		if (!camera->culling)
 		{
 			draw();
-		}		
+		}
+		else
+		{
+			if (camera != nullptr && camera->frustum->Intersects(aabb))
+			{
+				draw();
+			}
+		}	
 	}
 }
 
