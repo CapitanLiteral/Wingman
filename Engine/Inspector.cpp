@@ -28,7 +28,7 @@ void Inspector::draw()
 
 	ImGuiWindowFlags outilnerWindowFlags = 0;
 	outilnerWindowFlags |= ImGuiWindowFlags_AlwaysHorizontalScrollbar;
-	outilnerWindowFlags |= ImGuiWindowFlags_NoMove;
+	//outilnerWindowFlags |= ImGuiWindowFlags_NoMove;
 	//outilnerWindowFlags |= ImGuiWindowFlags_NoResize;
 
 	ImGui::SetNextWindowSize(ImVec2(App->window->screen_surface->w / 8 * 7, 600), ImGuiSetCond_FirstUseEver);

@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "ComponentCamera.h"
 #include "MathGeoLib\include\MathGeoLib.h"
+#include "GameObject.h"
 #include "OpenGL.h"
 #include "Color.h"
 
@@ -29,6 +30,13 @@ ComponentCamera::~ComponentCamera()
 
 void ComponentCamera::update()
 {
+	float3 pos;
+	float3 scale;
+	Quat rot;
+	parent->globalTransform.Decompose(pos,rot,scale);
+	//http://gamedev.stackexchange.com/questions/28395/rotating-vector3-by-a-quaternion
+	frustum->pos = pos;	
+	//frustum->front = rot * frustum->front * rot.Conjugated();
 	if (debug)
 	{
 		draw();
