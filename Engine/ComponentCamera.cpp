@@ -5,19 +5,18 @@
 #include "OpenGL.h"
 #include "Color.h"
 #include "ModuleCamera3D.h"
+#include "ModuleFileSystem.h"
+#include "JsonSerializer.h"
 
 ComponentCamera::ComponentCamera(GameObject* parent) : Component(parent)
 {	
 	frustum = new Frustum();
-	frustum->type = PerspectiveFrustum;
-	frustum->up = float3(0,1,0);
-	frustum->front = float3(1, 0, 0);
-	frustum->pos = float3(0,0,0);
-	frustum->verticalFov = 75 * DEGTORAD;
-	//frustum->horizontalFov = 2.f * atan(tan(frustum->verticalFov * 0.5f) * aspectRatio);
-	frustum->horizontalFov = 2.f * atan(tan(frustum->verticalFov * 0.5f) * 16/9);
-	frustum->farPlaneDistance = 100.f;
-	frustum->nearPlaneDistance = 10.f;
+	
+
+	JsonSerializer::Deserialize(this, "root/data/library/cameras/camera.json");
+
+	std::string output;
+	JsonSerializer::Serialize(this, output, "data/library/cameras/camera.json");
 
 }
 
@@ -27,6 +26,60 @@ ComponentCamera::~ComponentCamera()
 	RELEASE(frustum);
 }
 
+void ComponentCamera::Serialize(Json::Value & root)
+{	
+	//Position
+	for (int i = 0; i < 3; i++)
+	{
+		root["pos"].append(*(frustum->pos.ptr()+i));
+	}
+	//Up
+	for (int i = 0; i < 3; i++)
+	{
+		root["up"].append(*(frustum->up.ptr() + i));
+	}
+	//Front
+	for (int i = 0; i < 3; i++)
+	{
+		root["front"].append(*(frustum->front.ptr() + i));
+	}
+	//Fov
+	root["vertical_fov"] = frustum->verticalFov * RADTODEG;
+	//Far plane
+	root["far_plane"] = frustum->farPlaneDistance;
+	//Near plane
+	root["near_plane"] = frustum->nearPlaneDistance;
+
+
+}
+
+void ComponentCamera::Deserialize(Json::Value & root)
+{
+	//Position
+	Json::Value position = root.get("pos", 0);
+	std::vector<Json::Value> results;
+	for (int i = 0; i != position.size(); i++)
+			*(frustum->pos.ptr()+i) = position[i].asFloat();
+	//Type
+	frustum->type = (FrustumType)root.get("type", 2).asInt();
+	//Up
+	Json::Value up = root.get("pos", 0);
+	for (int i = 0; i != up.size(); i++)
+		*(frustum->up.ptr() + i) = up[i].asFloat();
+	//Front
+	Json::Value front = root.get("pos", 0);
+	for (int i = 0; i != front.size(); i++)
+		*(frustum->front.ptr() + i) = front[i].asFloat();
+	//Fov
+	frustum->verticalFov = root.get("vertical_fov", 75).asFloat() * DEGTORAD;
+	frustum->horizontalFov = 2.f * atan(tan(frustum->verticalFov * 0.5f) * 16 / 9);
+	//Far Plane
+	frustum->farPlaneDistance = root.get("far_plane", 100).asFloat();
+	//Near Plane
+	frustum->nearPlaneDistance = root.get("near_plane", 10).asFloat();
+
+}
+
 void ComponentCamera::update()
 {
 	float3 pos;
@@ -34,7 +87,7 @@ void ComponentCamera::update()
 	Quat rot;
 	parent->globalTransform.Decompose(pos,rot,scale);
 	//http://gamedev.stackexchange.com/questions/28395/rotating-vector3-by-a-quaternion
-	frustum->pos = pos;	
+	frustum->pos = pos;
 	frustum->up = rot.WorldY();
 	frustum->front = rot.WorldX();
 	//frustum->front = rot * frustum->front * rot.Conjugated();
@@ -43,6 +96,7 @@ void ComponentCamera::update()
 		draw();
 	}
 
+	//TODO: We need to have more than one camera...
 	if (attachCamera)
 	{
 		App->camera->Position.x = pos.x;

@@ -94,6 +94,7 @@
     </ClInclude>
     <ClInclude Include="glmath.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="IJsonSerializable.h" />
     <ClInclude Include="imGUI\imconfig.h" />
     <ClInclude Include="imGUI\imgui.h" />
     <ClInclude Include="imGUI\imgui_impl_sdl_gl3.h" />
@@ -102,6 +103,7 @@
     <ClInclude Include="imGUI\stb_textedit.h" />
     <ClInclude Include="imGUI\stb_truetype.h" />
     <ClInclude Include="Inspector.h" />
+    <ClInclude Include="JsonSerializer.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="MathGeoLib\include\Algorithm\Random\LCG.h" />
@@ -208,6 +210,7 @@
     <ClCompile Include="imGUI\imgui_impl_sdl_gl3.cpp" />
     <ClCompile Include="Inspector.cpp" />
     <ClCompile Include="jsoncpp\jsoncpp.cpp" />
+    <ClCompile Include="JsonSerializer.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="Main.cpp" />

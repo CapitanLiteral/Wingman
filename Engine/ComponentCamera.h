@@ -1,14 +1,17 @@
 #pragma once
 #include "Component.h"
 #include "MathGeoLib\include\MathGeoLib.h"
+#include "IJsonSerializable.h"
 
 
-class ComponentCamera :	public Component
+class ComponentCamera :	public Component, IJsonSerializable
 {
 
 public:
 	ComponentCamera(GameObject* parent);
-	~ComponentCamera();
+	virtual ~ComponentCamera();
+	virtual void Serialize(Json::Value& root);
+	virtual void Deserialize(Json::Value& root);
 
 	void update();
 

@@ -15,7 +15,6 @@
 #include "GameObjectManager.h"
 #include "TestScene1.h"
 #include "TestScene2.h"
-#include "ModuleJson.h"
 
 Application::Application()
 {
@@ -36,7 +35,6 @@ Application::Application()
 	test1 = new TestScene1(this);
 	test2 = new TestScene2(this);
 
-	jsonParser = new ModuleJson(this);
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
 	// They will CleanUp() in reverse order
@@ -51,7 +49,6 @@ Application::Application()
 	AddModule(goManager);
 	AddModule(audio);
 	AddModule(physics);
-	AddModule(jsonParser);
 	
 	// Scenes
 	AddModule(test1);
