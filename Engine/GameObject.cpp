@@ -380,8 +380,40 @@ void GameObject::Serialize(Json::Value & root)
 		go["parent_UUID"] = 0;
 	
 	std::string uuid_str = std::to_string(UUID);
-	root[uuid_str] = go;
+	//Json::Value jcomponents;
 
+	for (std::vector<Component*>::iterator iterator = components.begin();
+		iterator != components.end(); iterator++)
+	{
+		if ((*iterator) != nullptr && (*iterator)->type == CAMERA)
+		{	
+			Json::Value jcomponents;
+			(*iterator)->Serialize(jcomponents);
+			go["components"].append(jcomponents);
+		}
+	}
+	for (std::vector<Component*>::iterator iterator = components.begin();
+		 iterator != components.end(); iterator++)
+	{
+		if ((*iterator) != nullptr && (*iterator)->type == MATERIAL)
+		{
+			Json::Value jcomponents;
+			(*iterator)->Serialize(jcomponents);
+			go["components"].append(jcomponents);
+		}
+	}
+	for (std::vector<Component*>::iterator iterator = components.begin();
+		 iterator != components.end(); iterator++)
+	{
+		if ((*iterator) != nullptr && (*iterator)->type == MESH)
+		{
+			Json::Value jcomponents;
+			(*iterator)->Serialize(jcomponents);
+			go["components"].append(jcomponents);
+		}
+	}
+	//go["components"] = jcomponents;
+	root[uuid_str] = go;
 
 	//Recursive
 	for (std::vector<GameObject*>::iterator iterator = children.begin();

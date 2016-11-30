@@ -372,5 +372,22 @@ void ComponentMesh::draw_AABB()
 	//glLineWidth(1.f);
 }
 
+void ComponentMesh::Serialize(Json::Value & root)
+{
+	Json::Value mesh;
+	LCG random;
+	UUID = random.Int();
+	std::string uuid_str = std::to_string(UUID);
+	mesh["UUID"] = UUID;
+	mesh["associated_material"] = associatedMaterial->UUID;
+	mesh["component_type"] = "mesh";
+	
+	root[uuid_str] = mesh;
+}
+
+void ComponentMesh::Deserialize(Json::Value & root)
+{
+}
+
 
 

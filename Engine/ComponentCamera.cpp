@@ -15,8 +15,8 @@ ComponentCamera::ComponentCamera(GameObject* parent) : Component(parent)
 
 	JsonSerializer::Deserialize(this, "root/data/library/cameras/camera.json");
 
-	std::string output;
-	JsonSerializer::Serialize(this, output, "data/library/cameras/camera.json");
+	//std::string output;
+	//JsonSerializer::Serialize(this, output, "data/library/cameras/camera.json");
 
 }
 
@@ -28,31 +28,21 @@ ComponentCamera::~ComponentCamera()
 
 void ComponentCamera::Serialize(Json::Value & root)
 {	
-	////Position
-	//for (int i = 0; i < 3; i++)
-	//{
-	//	root["pos"].append(*(frustum->pos.ptr()+i));
-	//}
-	////Up
-	//for (int i = 0; i < 3; i++)
-	//{
-	//	root["up"].append(*(frustum->up.ptr() + i));
-	//}
-	////Front
-	//for (int i = 0; i < 3; i++)
-	//{
-	//	root["front"].append(*(frustum->front.ptr() + i));
-	//}
-
+	LCG random;
+	UUID = random.Int();
+	std::string uuid_str = std::to_string(UUID);	
+	Json::Value camera;
+	camera["UUID"] = UUID;
+	camera["component_type"] = "camera";
 	//Type
-	root["type"] = frustum->type;
+	camera["type"] = frustum->type;
 	//Fov
-	root["vertical_fov"] = frustum->verticalFov * RADTODEG;
+	camera["vertical_fov"] = frustum->verticalFov * RADTODEG;
 	//Far plane
-	root["far_plane"] = frustum->farPlaneDistance;
+	camera["far_plane"] = frustum->farPlaneDistance;
 	//Near plane
-	root["near_plane"] = frustum->nearPlaneDistance;
-
+	camera["near_plane"] = frustum->nearPlaneDistance;
+	root[uuid_str] = camera;
 
 }
 

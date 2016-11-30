@@ -20,7 +20,7 @@ public:
 	void draw();
 	bool culling = true;
 	bool attachCamera = false;
-
+	uint32_t UUID;
 #pragma region Debug
 
 	bool debug = false;

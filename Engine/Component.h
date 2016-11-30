@@ -1,4 +1,5 @@
 #pragma once
+#include "IJsonSerializable.h"
 class GameObject;
 
 
@@ -10,7 +11,7 @@ enum ComponentType
 };
 
 
-class Component
+class Component : public IJsonSerializable
 {
 public:
 	bool enabled = true;
@@ -23,6 +24,8 @@ public:
 
 	void enable() { enabled = true;}
 	void update() { enabled = false;}
+	void Serialize(Json::Value& root){};
+	void Deserialize(Json::Value& root){};
 	virtual void disable() {}
 };
 
