@@ -29,6 +29,9 @@ public:
 
 	std::map<std::string, uint> textures;
 	GameObject* currentCamera = nullptr;
+
+	void saveScene();
+	bool haveToSaveScene = false;
 private:
 	
 	GameObject* focusGO = nullptr;

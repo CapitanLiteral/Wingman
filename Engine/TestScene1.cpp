@@ -39,7 +39,7 @@ bool TestScene1::Start()
 
 
 	App->goManager->LoadFBX("root/data/assets/meshes/Street environment_V01.fbx");
-	//App->goManager->LoadFBX("../DLL/MechaT.FBX");
+	//App->goManager->LoadFBX("root/data/assets/meshes/MechaT.FBX");
 
 	//GameObject* go = App->goManager->root;
 

@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleEditor.h"
+#include "GameObjectManager.h"
 #include "WindowMenus.h"
 #include "Imgui/imgui.h"
 #include "Imgui/imgui_impl_sdl_gl3.h"
@@ -48,6 +49,7 @@ void WindowMenus::draw()
 	{
 		if (ImGui::BeginMenu("File"))
 		{
+			ImGui::MenuItem("Save", NULL, &App->goManager->haveToSaveScene, true);
 			ImGui::MenuItem("Quit", NULL, &quitSelected, true);
 			ImGui::EndMenu();
 		}

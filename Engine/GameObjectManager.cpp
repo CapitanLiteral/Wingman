@@ -7,6 +7,7 @@
 #include "ComponentMaterial.h"
 #include "ComponentCamera.h"
 #include "ModuleFileSystem.h"
+#include "JsonSerializer.h"
 
 #include "MathGeoLib\include\MathGeoLib.h"
 
@@ -45,7 +46,10 @@ update_status GameObjectManager::Update(float dt)
 
 	root->update();
 
-
+	if (haveToSaveScene)
+	{
+		saveScene();
+	}
 	return UPDATE_CONTINUE;
 }
 
@@ -166,4 +170,11 @@ GameObject * GameObjectManager::getFocusGO()
 void GameObjectManager::setFocusGO(GameObject * focusGO)
 {
 	this->focusGO = focusGO;
+}
+
+void GameObjectManager::saveScene()
+{
+	std::string output;
+	JsonSerializer::Serialize(root, output, "data/library/gameObjects/gameObjects.json");
+	haveToSaveScene = false;
 }

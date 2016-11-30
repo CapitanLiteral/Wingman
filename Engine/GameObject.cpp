@@ -6,6 +6,8 @@
 #include "MathGeoLib\include\MathGeoLib.h"
 #include "OpenGL.h"
 
+#include <string>
+
 GameObject::GameObject(GameObject* parent, const float3 translation, const float3 scale, const Quat rotation, const char* name)
 {
 	this->name			= name;
@@ -338,6 +340,78 @@ void GameObject::setScale(float3 scale)
 void GameObject::setGlobalTransform(float3 pos, Quat rot, float3 scale)
 {
 	globalTransform = float4x4::FromTRS(pos, rot, scale);
+}
+
+void GameObject::Serialize(Json::Value & root)
+{
+	Json::Value go;
+	float3 pos;
+	float3 scale;
+	Quat rot;
+	localTransform.Decompose(pos, rot, scale);
+	//Position
+	for (int i = 0; i < 3; i++)
+	{
+		go["pos"].append(*(pos.ptr()+i));
+	}
+	//Rotation
+	float3 euler_rot = rot.ToEulerXYZ();
+	euler_rot *= RADTODEG;	
+
+	for (int i = 0; i < 3; i++)
+	{
+		go["rot"].append(*(euler_rot.ptr() + i));
+	}
+	//Scale
+	for (int i = 0; i < 3; i++)
+	{
+		go["scale"].append(*(scale.ptr() + i));
+	}
+	//name
+	go["name"] = name;
+	//UUID
+	LCG random;
+	UUID = random.Int();
+	go["UUID"] = UUID;
+	//Parent UUID
+	if (parent != nullptr)
+		go["parent_UUID"] = parent->UUID;
+	else
+		go["parent_UUID"] = 0;
+	
+	std::string uuid_str = std::to_string(UUID);
+	root[uuid_str] = go;
+
+
+	//Recursive
+	for (std::vector<GameObject*>::iterator iterator = children.begin();
+		 iterator != children.end(); iterator++)
+	{
+		(*iterator)->Serialize(root);
+	}
+}
+
+void GameObject::Deserialize(Json::Value & root)
+{
+}
+
+GameObject * GameObject::findByUUID(uint32_t UUID)
+{
+	GameObject* ret;
+	if (this->UUID == UUID)
+	{
+		ret = this;
+	}
+	else
+	{
+		for  (std::vector<GameObject*>::iterator iterator = children.begin(); 
+				iterator != children.end(); iterator++)
+		{
+			ret = findByUUID(UUID);
+		}
+	}
+
+	return ret;
 }
 
 AABB GameObject::getAABB() const

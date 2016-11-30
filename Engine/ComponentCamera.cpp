@@ -28,21 +28,24 @@ ComponentCamera::~ComponentCamera()
 
 void ComponentCamera::Serialize(Json::Value & root)
 {	
-	//Position
-	for (int i = 0; i < 3; i++)
-	{
-		root["pos"].append(*(frustum->pos.ptr()+i));
-	}
-	//Up
-	for (int i = 0; i < 3; i++)
-	{
-		root["up"].append(*(frustum->up.ptr() + i));
-	}
-	//Front
-	for (int i = 0; i < 3; i++)
-	{
-		root["front"].append(*(frustum->front.ptr() + i));
-	}
+	////Position
+	//for (int i = 0; i < 3; i++)
+	//{
+	//	root["pos"].append(*(frustum->pos.ptr()+i));
+	//}
+	////Up
+	//for (int i = 0; i < 3; i++)
+	//{
+	//	root["up"].append(*(frustum->up.ptr() + i));
+	//}
+	////Front
+	//for (int i = 0; i < 3; i++)
+	//{
+	//	root["front"].append(*(frustum->front.ptr() + i));
+	//}
+
+	//Type
+	root["type"] = frustum->type;
 	//Fov
 	root["vertical_fov"] = frustum->verticalFov * RADTODEG;
 	//Far plane
@@ -55,21 +58,21 @@ void ComponentCamera::Serialize(Json::Value & root)
 
 void ComponentCamera::Deserialize(Json::Value & root)
 {
-	//Position
-	Json::Value position = root.get("pos", 0);
-	std::vector<Json::Value> results;
-	for (int i = 0; i != position.size(); i++)
-			*(frustum->pos.ptr()+i) = position[i].asFloat();
+	////Position
+	//Json::Value position = root.get("pos", 0);
+	//std::vector<Json::Value> results;
+	//for (int i = 0; i != position.size(); i++)
+	//		*(frustum->pos.ptr()+i) = position[i].asFloat();
 	//Type
 	frustum->type = (FrustumType)root.get("type", 2).asInt();
-	//Up
-	Json::Value up = root.get("pos", 0);
-	for (int i = 0; i != up.size(); i++)
-		*(frustum->up.ptr() + i) = up[i].asFloat();
-	//Front
-	Json::Value front = root.get("pos", 0);
-	for (int i = 0; i != front.size(); i++)
-		*(frustum->front.ptr() + i) = front[i].asFloat();
+	////Up
+	//Json::Value up = root.get("pos", 0);
+	//for (int i = 0; i != up.size(); i++)
+	//	*(frustum->up.ptr() + i) = up[i].asFloat();
+	////Front
+	//Json::Value front = root.get("pos", 0);
+	//for (int i = 0; i != front.size(); i++)
+	//	*(frustum->front.ptr() + i) = front[i].asFloat();
 	//Fov
 	frustum->verticalFov = root.get("vertical_fov", 75).asFloat() * DEGTORAD;
 	frustum->horizontalFov = 2.f * atan(tan(frustum->verticalFov * 0.5f) * 16 / 9);
@@ -106,6 +109,8 @@ void ComponentCamera::update()
 		App->camera->LookAt(frustum->CenterPoint());
 
 	}
+
+	
 
 }
 
