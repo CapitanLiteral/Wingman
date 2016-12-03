@@ -390,8 +390,16 @@ void GameObject::Serialize(Json::Value & root)
 	//name
 	go["name"] = name;
 	//UUID
-	LCG random;
-	UUID = random.Int();
+	if (name == "ROOT")
+	{
+		UUID = 0;
+	}
+	else
+	{
+		LCG random;
+		UUID = random.Int();
+		
+	}
 	go["UUID"] = UUID;
 	//Parent UUID
 	if (parent != nullptr)
@@ -467,8 +475,8 @@ void GameObject::Deserialize(Json::Value & root)
 		Quat rot;
 		Json::Value jgo = gos[i];
 
-		uint32_t nUUID = jgo.get("UUID", -1).asInt64();
-		uint32_t nParentUUID = jgo.get("parent_UUID", -1).asInt64();
+		uint32_t jUUID = jgo.get("UUID", -1).asInt64();
+		uint32_t jparent_UUID = jgo.get("parent_UUID", -1).asInt64();
 
 		//Position
 		Json::Value jpos = jgo.get("pos", 0);
@@ -485,11 +493,13 @@ void GameObject::Deserialize(Json::Value & root)
 		for (int i = 0; i != jeulerRot.size(); i++)
 			*(eulerRot.ptr() + i) = jeulerRot[i].asFloat();
 
-		rot.FromEulerXYZ(eulerRot.x, eulerRot.y, eulerRot.z);
+		rot = rot.FromEulerXYZ(eulerRot.x, eulerRot.y, eulerRot.z);
 
 		std::string name = jgo["name"].asString();
 
 		GameObject* newGo = new GameObject(go_root, pos, scale, rot, name.c_str());
+		newGo->UUID = jUUID;
+		newGo->parent_UUID = jparent_UUID;
 
 		Json::Value jcomponents = jgo.get("components", 0);
 		for (int i = 0; i != jcomponents.size(); i++)
@@ -528,25 +538,21 @@ void GameObject::Deserialize(Json::Value & root)
 			}		
 		}
 	}
-	//Reordering nodes
-
 }
 
 GameObject * GameObject::findByUUID(uint32_t UUID)
 {
-	GameObject* ret;
+	GameObject* ret = nullptr;
+
 	if (this->UUID == UUID)
-	{
 		ret = this;
-	}
 	else
-	{
 		for  (std::vector<GameObject*>::iterator iterator = children.begin(); 
 				iterator != children.end(); iterator++)
-		{
-			ret = findByUUID(UUID);
+		{	
+			if (ret == nullptr)
+			ret = (*iterator)->findByUUID(UUID);
 		}
-	}
 
 	return ret;
 }

@@ -43,10 +43,8 @@ public:
 
 	void Serialize(Json::Value& root);
 	void Deserialize(Json::Value& root);
-
-private:
+	GameObject* findByUUID(uint32_t UUID);	
 	
-	GameObject* findByUUID(uint32_t UUID);
 
 public:
 	//Redundant information for a faster and easier way to find objects on the tree
@@ -71,6 +69,7 @@ public:
 	AABB aabb;
 
 	uint32_t UUID;
+	uint32_t parent_UUID;
 	
 };
 
