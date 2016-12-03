@@ -13,7 +13,7 @@ public:
 	virtual void Serialize(Json::Value& root);
 	virtual void Deserialize(Json::Value& root);
 
-	void update();
+	void Update();
 
 	Frustum* frustum;
 

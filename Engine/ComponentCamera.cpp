@@ -31,18 +31,16 @@ void ComponentCamera::Serialize(Json::Value & root)
 	LCG random;
 	UUID = random.Int();
 	std::string uuid_str = std::to_string(UUID);	
-	Json::Value camera;
-	camera["UUID"] = UUID;
-	camera["component_type"] = "camera";
+	root["UUID"] = UUID;
+	root["component_type"] = "camera";
 	//Type
-	camera["type"] = frustum->type;
+	root["type"] = frustum->type;
 	//Fov
-	camera["vertical_fov"] = frustum->verticalFov * RADTODEG;
+	root["vertical_fov"] = frustum->verticalFov * RADTODEG;
 	//Far plane
-	camera["far_plane"] = frustum->farPlaneDistance;
+	root["far_plane"] = frustum->farPlaneDistance;
 	//Near plane
-	camera["near_plane"] = frustum->nearPlaneDistance;
-	root[uuid_str] = camera;
+	root["near_plane"] = frustum->nearPlaneDistance;
 
 }
 
@@ -73,7 +71,7 @@ void ComponentCamera::Deserialize(Json::Value & root)
 
 }
 
-void ComponentCamera::update()
+void ComponentCamera::Update()
 {
 	float3 pos;
 	float3 scale;

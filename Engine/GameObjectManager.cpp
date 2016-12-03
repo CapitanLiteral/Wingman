@@ -50,6 +50,17 @@ update_status GameObjectManager::Update(float dt)
 	{
 		saveScene();
 	}
+	if (haveToLoadScene)
+	{
+		loadScene();
+	}
+
+	for (std::vector<GameObject*>::iterator iterator = toDelete.begin(); 
+		iterator != toDelete.end(); iterator++)
+	{
+		RELEASE((*iterator));
+	}
+
 	return UPDATE_CONTINUE;
 }
 
@@ -177,4 +188,10 @@ void GameObjectManager::saveScene()
 	std::string output;
 	JsonSerializer::Serialize(root, output, "data/library/gameObjects/gameObjects.json");
 	haveToSaveScene = false;
+}
+
+void GameObjectManager::loadScene()
+{
+	JsonSerializer::Deserialize(root, "root/data/library/gameObjects/gameObjects.json");
+	haveToLoadScene = false;
 }

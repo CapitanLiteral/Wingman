@@ -1,8 +1,12 @@
+#include "Application.h"
+#include "Globals.h"
+#include "GameObjectManager.h"
 #include "SDL\include\SDL.h"
 #include "GameObject.h"
 #include "ComponentMaterial.h"
 #include "ComponentMesh.h"
 #include "ComponentCamera.h"
+#include "Component.h"
 #include "MathGeoLib\include\MathGeoLib.h"
 #include "OpenGL.h"
 
@@ -78,9 +82,16 @@ Component* GameObject::createComponent(ComponentType type)
 
 void GameObject::update()
 {
+
+	for (std::vector<GameObject*>::iterator it = children.begin();
+			it != children.end(); it++)
+	{
+		(*it)->update();
+	}	
 	for (std::vector<Component*>::iterator it = components.begin();
 		 it != components.end(); it++)
 	{
+		//(*it)->Update();
 		if ((*it)->type == MESH)
 		{
 			ComponentMesh* component = (ComponentMesh*)(*it);
@@ -89,32 +100,43 @@ void GameObject::update()
 		if ((*it)->type == CAMERA)
 		{
 			ComponentCamera* component = (ComponentCamera*)(*it);
-			component->update();
+			component->Update();
 		}
 	}
-	for (std::vector<GameObject*>::iterator it = children.begin();
-			it != children.end(); it++)
-	{
-		(*it)->update();
-	}	
 	updateBoundingBoxes();
 	if (drawAABB)
 	{
 		draw_AABB();
 	}
+
+	//for (std::vector<GameObject*>::iterator iterator = children.begin(); iterator != children.end(); iterator++)
+	//{
+	//	if ((*iterator)->mustBeDeleted)
+	//	{
+	//		
+	//		//RELEASE((*iterator));
+	//	}
+	//}
+	
+
 }
 
 Component * GameObject::findComponent(ComponentType)
 {
 	Component* ret = nullptr;
-	for (std::vector<Component*>::iterator it = components.begin();
-		 it != components.end(); it++)
+	if (components.size() > 0)
 	{
-		if ((*it)->type == CAMERA)
+		for (std::vector<Component*>::iterator it = components.begin();
+			 it != components.end(); it++)
 		{
-			ret = (*it);
+			//switch...
+			if ((*it)->type == CAMERA)
+			{
+				ret = (*it);
+			}
 		}
 	}
+	
 	return ret;
 }
 
@@ -134,9 +156,6 @@ void GameObject::addChild(GameObject* child)
 
 const float4x4 GameObject::getLocalTransform()
 {
-	//float4x4 ret;
-	//ret = float4x4::FromTRS(position, rotation, scale);
-	//ret.Transpose();
 	return localTransform;
 }
 
@@ -344,6 +363,7 @@ void GameObject::setGlobalTransform(float3 pos, Quat rot, float3 scale)
 
 void GameObject::Serialize(Json::Value & root)
 {
+	
 	Json::Value go;
 	float3 pos;
 	float3 scale;
@@ -413,7 +433,9 @@ void GameObject::Serialize(Json::Value & root)
 		}
 	}
 	//go["components"] = jcomponents;
-	root[uuid_str] = go;
+	//root[uuid_str] = go;
+	if (name != "ROOT")
+		root["gameObjects"].append(go);
 
 	//Recursive
 	for (std::vector<GameObject*>::iterator iterator = children.begin();
@@ -425,6 +447,89 @@ void GameObject::Serialize(Json::Value & root)
 
 void GameObject::Deserialize(Json::Value & root)
 {
+	App->goManager->setFocusGO(nullptr);
+	GameObject* go_root = App->goManager->root;
+	for (std::vector<GameObject*>::iterator iterator = go_root->children.begin(); iterator != go_root->children.end(); iterator++)
+	{
+		//(*iterator)->mustBeDeleted = true;
+		App->goManager->toDelete.push_back((*iterator));
+		//RELEASE((*iterator));
+	}
+
+	go_root->children.clear();
+
+	Json::Value gos = root.get("gameObjects", 0);
+	for (int i = 0; i != gos.size(); i++)
+	{
+		float3 pos;
+		float3 scale;
+		float3 eulerRot;
+		Quat rot;
+		Json::Value jgo = gos[i];
+
+		uint32_t nUUID = jgo.get("UUID", -1).asInt64();
+		uint32_t nParentUUID = jgo.get("parent_UUID", -1).asInt64();
+
+		//Position
+		Json::Value jpos = jgo.get("pos", 0);
+		for (int i = 0; i != jpos.size(); i++)
+			*(pos.ptr() + i) = jpos[i].asFloat();
+
+		//Scale
+		Json::Value jscale = jgo.get("scale", 0);
+		for (int i = 0; i != jscale.size(); i++)
+			*(scale.ptr() + i) = jscale[i].asFloat();
+
+		//Rotation
+		Json::Value jeulerRot = jgo.get("rot", 0);
+		for (int i = 0; i != jeulerRot.size(); i++)
+			*(eulerRot.ptr() + i) = jeulerRot[i].asFloat();
+
+		rot.FromEulerXYZ(eulerRot.x, eulerRot.y, eulerRot.z);
+
+		std::string name = jgo["name"].asString();
+
+		GameObject* newGo = new GameObject(go_root, pos, scale, rot, name.c_str());
+
+		Json::Value jcomponents = jgo.get("components", 0);
+		for (int i = 0; i != jcomponents.size(); i++)
+		{
+			Json::Value jcomponent = jcomponents[i];
+			Component* component;// = new Component(newGo);
+			std::string jtype = jcomponent.get("component_type", -1).asString();
+			if (jtype == "camera")
+			{
+				component = newGo->createComponent(CAMERA);
+				component->Deserialize(jcomponent);
+			}
+			else if (jtype == "mesh")
+			{
+				component = newGo->createComponent(MESH);
+				component->Deserialize(jcomponent);
+
+				for (std::vector<Component*>::iterator iterator = newGo->components.begin();
+					 iterator != newGo->components.end(); iterator++)
+				{
+					if ((*iterator)->type == MATERIAL)
+					{
+						ComponentMaterial* material = (ComponentMaterial*)(*iterator);
+						ComponentMesh* mesh = (ComponentMesh*)component;
+						if (material->UUID == mesh->associatedUUID)
+						{
+							mesh->associatedMaterial = material;
+						}
+					}
+				}
+			}
+			else if (jtype == "material")
+			{
+				component = newGo->createComponent(MATERIAL);
+				component->Deserialize(jcomponent);				
+			}		
+		}
+	}
+	//Reordering nodes
+
 }
 
 GameObject * GameObject::findByUUID(uint32_t UUID)

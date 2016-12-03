@@ -75,17 +75,25 @@ void ComponentMesh::Update()
 	if (enabled)
 	{
 		ComponentCamera* camera = (ComponentCamera*)App->goManager->currentCamera->findComponent(CAMERA);
-		if (!camera->culling)
+		if (camera != nullptr)
 		{
-			draw();
-		}
-		else
-		{
-			if (camera != nullptr && camera->frustum->Intersects(aabb))
+			if (!camera->culling)
 			{
 				draw();
 			}
-		}	
+			else
+			{
+				if (camera->frustum->Intersects(aabb))
+				{
+					draw();
+				}
+			}
+		}
+		else
+		{
+			draw();
+		}
+			
 	}
 }
 
@@ -374,19 +382,24 @@ void ComponentMesh::draw_AABB()
 
 void ComponentMesh::Serialize(Json::Value & root)
 {
-	Json::Value mesh;
 	LCG random;
 	UUID = random.Int();
-	std::string uuid_str = std::to_string(UUID);
-	mesh["UUID"] = UUID;
-	mesh["associated_material"] = associatedMaterial->UUID;
-	mesh["component_type"] = "mesh";
-	
-	root[uuid_str] = mesh;
+	root["UUID"] = UUID;
+	root["associated_material"] = associatedMaterial->UUID;
+	root["component_type"] = "mesh";
 }
 
 void ComponentMesh::Deserialize(Json::Value & root)
 {
+	UUID = root.get("UUID", -1).asInt64();
+	associatedUUID = root.get("associated_material", -1).asInt64();
+	//Is this really useful??? i dont think so...
+	std::string jtype;
+	jtype = root.get("component_type", -1).asString();
+	if (jtype == "mesh")
+	{
+		type = MESH;
+	}
 }
 
 

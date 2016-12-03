@@ -64,30 +64,33 @@ void Outliner::draw()
 
 void Outliner::treeNodes(GameObject* node)
 {
-	ImGuiTreeNodeFlags nodeFlags = 0;
-	if (node->children.size() > 0)
-	{
-		nodeFlags |= ImGuiTreeNodeFlags_OpenOnDoubleClick;
-		nodeFlags |= ImGuiTreeNodeFlags_OpenOnArrow;
-	}
-	else
-		nodeFlags |= ImGuiTreeNodeFlags_Leaf;
+	if (node != nullptr)
+	{	
+		ImGuiTreeNodeFlags nodeFlags = 0;
+		if (node->children.size() > 0)
+		{
+			nodeFlags |= ImGuiTreeNodeFlags_OpenOnDoubleClick;
+			nodeFlags |= ImGuiTreeNodeFlags_OpenOnArrow;
+		}
+		else
+			nodeFlags |= ImGuiTreeNodeFlags_Leaf;
 
-	if (ImGui::TreeNodeEx(node->name.c_str(), nodeFlags))
-	{
-		if (ImGui::IsItemClicked())
+		if (ImGui::TreeNodeEx(node->name.c_str(), nodeFlags))
 		{
-			if (App->goManager->getFocusGO() != nullptr)
+			if (ImGui::IsItemClicked())
 			{
-				App->goManager->getFocusGO()->selected = false;
+				if (App->goManager->getFocusGO() != nullptr)
+				{
+					App->goManager->getFocusGO()->selected = false;
+				}
+				App->goManager->setFocusGO(node);
+				node->selected = true;
 			}
-			App->goManager->setFocusGO(node);
-			node->selected = true;
+			for (uint i = 0; i < node->children.size(); ++i)
+			{
+				treeNodes(node->children[i]);
+			}
+			ImGui::TreePop();
 		}
-		for (uint i = 0; i < node->children.size(); ++i)
-		{
-			treeNodes(node->children[i]);
-		}
-		ImGui::TreePop();
 	}
 }

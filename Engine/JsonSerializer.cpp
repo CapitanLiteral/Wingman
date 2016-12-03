@@ -44,7 +44,7 @@ bool JsonSerializer::Deserialize(IJsonSerializable * pObj, std::string path)
 	char* buffer;
 	App->fs->load(path.c_str(), &buffer);
 	std::string input(buffer);
-
+	RELEASE_ARRAY(buffer);
 	Json::Value deserializeRoot;
 	Json::Reader reader;
 

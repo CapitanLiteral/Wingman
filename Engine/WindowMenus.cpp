@@ -50,6 +50,7 @@ void WindowMenus::draw()
 		if (ImGui::BeginMenu("File"))
 		{
 			ImGui::MenuItem("Save", NULL, &App->goManager->haveToSaveScene, true);
+			ImGui::MenuItem("Load", NULL, &App->goManager->haveToLoadScene, true);
 			ImGui::MenuItem("Quit", NULL, &quitSelected, true);
 			ImGui::EndMenu();
 		}

@@ -31,10 +31,16 @@ public:
 	GameObject* currentCamera = nullptr;
 
 	void saveScene();
+	void loadScene();
 	bool haveToSaveScene = false;
+	bool haveToLoadScene = false;
+
+	std::vector<GameObject*> toDelete;
+
 private:
 	
 	GameObject* focusGO = nullptr;
+
 	
 
 };

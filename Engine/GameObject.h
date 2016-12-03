@@ -59,6 +59,7 @@ public:
 
 	bool selected = false;
 	bool drawAABB = false;
+	//bool mustBeDeleted = false;
 	//Local parent base
 	//float3	position = float3::zero;
 	//float3	scale = float3::zero;

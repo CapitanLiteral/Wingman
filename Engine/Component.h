@@ -23,7 +23,7 @@ public:
 	GameObject* parent = nullptr;
 
 	void enable() { enabled = true;}
-	void update() { enabled = false;}
+	void Update() { enabled = false;}
 	void Serialize(Json::Value& root){};
 	void Deserialize(Json::Value& root){};
 	virtual void disable() {}
