@@ -20,37 +20,15 @@ ModuleFileSystem::ModuleFileSystem(Application* app, bool start_enabled) : Modul
 
 	addPath(".");
 }
-
-
 ModuleFileSystem::~ModuleFileSystem()
 {
 	SDL_Log("FileSystem: Destroying.");
 	PHYSFS_deinit();
 }
-
-
 bool ModuleFileSystem::Init()
 {
 	SDL_Log("FileSystem: init.");
 	bool ret = true;
-
-	/*for (pugi::xml_node path = config.child("path"); path; path = path.next_sibling("path"))
-	addPath(path.child_value());*/
-
-#pragma region OldWriteDirectory
-	//std::string writeAppDataPath = SDL_GetPrefPath(App->getOrganization(), App->getTitle());
-
-	//if (PHYSFS_setWriteDir(writeAppDataPath.c_str()) == 0)
-	//{
-	//	SDL_Log("File System error while creating write dir: %s\n", PHYSFS_getLastError());
-	//}
-	//else
-	//{
-	//	SDL_Log("Writing directory is %s\n", writeAppDataPath);
-	//	addPath(writeAppDataPath.c_str(), getSaveAppDataDirectory());
-	//}
-#pragma endregion
-
 
 	std::string writeLocalPath = SDL_GetBasePath();
 	writeLocalPath.append("..");
@@ -61,42 +39,79 @@ bool ModuleFileSystem::Init()
 	}
 	else
 	{
-		SDL_Log("Writing directory is %s\n", writeLocalPath);
+		SDL_Log("Writing directory is %s\n", writeLocalPath.c_str());
 		addPath(writeLocalPath.c_str(), getSaveLocalDirectory());
 	}
+
 	std::string path;
 	path.assign(LOCAL_SAVE_DIRECTORY);
-	if (!exist(path.c_str()))
-		makeDirectory(LOCAL_SAVE_DIRECTORY);
+	if (!exist("data"))
+		makeDirectory("data");
 
-	if (!exist(ASSETS_DIRECTORY))
-		makeDirectory(ASSETS_DIRECTORY, path.c_str());
-	if (!exist(CONFIG_DIRECTORY))
-		makeDirectory(CONFIG_DIRECTORY, path.c_str());
+	if (!exist("root/data/assets"))
+		makeDirectory("data/assets");
+	if (!exist("root/data/config"))
+		makeDirectory("data/config");
+	if (!exist("root/data/config/config.json"))
+	{
+		char* buffer;
+		
+#ifdef _DEBUG
+		load("/root/Debug_Wingman/default_config.json", &buffer);
+#else
+		load("/root/Release_Wingman/default_config.json", buffer);
+#endif
+		std::string output(buffer);
+		RELEASE_ARRAY(buffer);
+		save("data/config/config.json", output.c_str(), output.size());
+		
+	}
+	
 
-	path.append("/");
-	path.append(ASSETS_DIRECTORY);
+	if (!exist("root/data/library"))
+		makeDirectory("data/library");
 
-	if (!exist(MESHES_DIRECTORY))
-		makeDirectory(MESHES_DIRECTORY, path.c_str());
+	if (!exist("root/data/assets/scene"))
+		makeDirectory("data/assets/scene");
+	if (!exist("root/data/assets/fbx"))
+		makeDirectory("data/assets/fbx");
+	if (!exist("root/data/assets/textures"))
+		makeDirectory("data/assets/textures");
 
-	if (!exist(MATERIAL_DIRECTORY))
-		makeDirectory(MATERIAL_DIRECTORY, path.c_str());
-
-	if (!exist(ANIMATION_DIRECTORY))
-		makeDirectory(ANIMATION_DIRECTORY, path.c_str());
-
-
+	if (!exist("root/data/library/meshes"))
+		makeDirectory("data/library/meshes");
+	if (!exist("root/data/library/textures"))
+		makeDirectory("data/library/textures");
+	if (!exist("root/data/library/prefabs"))
+		makeDirectory("data/library/prefabs");
 
 	return ret;
 }
-
 bool ModuleFileSystem::CleanUp()
 {
 	SDL_Log("FileSystem: CleanUp.");
 	return true;
 }
-
+bool ModuleFileSystem::loadConfig()
+{
+	char* buffer;
+	load("root/Debug_Wingman/default_config.json", &buffer);
+	std::string input(buffer);
+	RELEASE_ARRAY(buffer);
+	Json::Reader reader;
+	if (!reader.parse(input, directories))
+		return false;
+	
+	directories = directories.get("file_system", 0);
+#pragma region Debug
+	std::string output;
+	Json::StyledWriter writer;
+	output = writer.write(directories);
+	SDL_Log("Directories:\n%s", output.c_str());
+#pragma endregion
+	
+	return true;
+}
 bool ModuleFileSystem::addPath(const char* pathOrZip, const char* mountPoint)
 {
 	bool ret = false;
@@ -110,17 +125,14 @@ bool ModuleFileSystem::addPath(const char* pathOrZip, const char* mountPoint)
 
 	return ret;
 }
-
 bool ModuleFileSystem::exist(const char* file)
 {
 	return PHYSFS_exists(file) != 0;
 }
-
 bool ModuleFileSystem::isDirectory(const char* file)
 {
 	return PHYSFS_isDirectory(file) != 0;
 }
-
 bool ModuleFileSystem::makeDirectory(const char* dir, const char* mount)
 {
 	bool ret = false;
@@ -147,7 +159,6 @@ bool ModuleFileSystem::makeDirectory(const char* dir, const char* mount)
 
 	return ret;
 }
-
 unsigned int ModuleFileSystem::load(const char* file, char** buffer)const
 {
 	unsigned int ret = 0;
@@ -182,14 +193,12 @@ unsigned int ModuleFileSystem::load(const char* file, char** buffer)const
 
 	return ret;
 }
-
 int closeSdlRwops(SDL_RWops *rw)
 {
 	RELEASE(rw->hidden.mem.base);
 	SDL_FreeRW(rw);
 	return 0;
 }
-
 SDL_RWops* ModuleFileSystem::load(const char* file)const
 {
 	char* buffer;
@@ -206,7 +215,6 @@ SDL_RWops* ModuleFileSystem::load(const char* file)const
 	else
 		return NULL;
 }
-
 unsigned int ModuleFileSystem::save(const char* file, const char* buffer, unsigned int size)const
 {
 	unsigned int ret = 0;
@@ -231,8 +239,28 @@ unsigned int ModuleFileSystem::save(const char* file, const char* buffer, unsign
 
 	return ret;
 }
-
+void ModuleFileSystem::Serialize(Json::Value & root)
+{
+}
+void ModuleFileSystem::Deserialize(Json::Value & root)
+{
+}
 const char* ModuleFileSystem::getBasePath()
 {
 	return PHYSFS_getBaseDir();
+}
+uint ModuleFileSystem::getFilesOnDir(const char* dir, std::vector<std::string>& files)
+{
+	uint ret = 0;
+
+	char** rc = PHYSFS_enumerateFiles(dir);
+	for (char** it = rc; *it != NULL; ++it)
+	{
+		files.push_back(*it);
+		++ret;
+	}
+
+	PHYSFS_freeList(rc);
+
+	return ret;
 }

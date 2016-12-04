@@ -17,6 +17,5 @@ public:
 
 	uint diffuse;
 	Color color;
-	uint32_t UUID;
 };
 

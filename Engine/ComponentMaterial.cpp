@@ -8,17 +8,13 @@ ComponentMaterial::ComponentMaterial(GameObject* parent) : Component(parent)
 {
 	
 }
-
-
 ComponentMaterial::~ComponentMaterial()
 {
 }
-
 uint ComponentMaterial::loadTexture(const char* path)
 {
 	return diffuse = App->texture->loadTexture(path);
 }
-
 void ComponentMaterial::Serialize(Json::Value & root)
 {
 	LCG random;
@@ -31,7 +27,6 @@ void ComponentMaterial::Serialize(Json::Value & root)
 		root["color"].append(*(&color + i));
 	} 
 }
-
 void ComponentMaterial::Deserialize(Json::Value & root)
 {
 	UUID = root.get("UUID", -1).asInt64();

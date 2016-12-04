@@ -28,7 +28,6 @@ public:
 	float* UV = nullptr;
 
 	int textureIndex = -1; //I think this will be used on an array of textures and this will be used to bind it
-	uint32_t UUID;
 	uint32_t associatedUUID;
 	ComponentMaterial* associatedMaterial = nullptr;
 

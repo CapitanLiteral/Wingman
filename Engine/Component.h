@@ -15,6 +15,7 @@ class Component : public IJsonSerializable
 {
 public:
 	bool enabled = true;
+	uint32_t UUID;
 
 	Component(GameObject* parent){this->parent = parent;}
 	virtual ~Component(){}

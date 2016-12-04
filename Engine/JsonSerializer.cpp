@@ -19,7 +19,6 @@ bool JsonSerializer::Serialize(IJsonSerializable * pObj, std::string & output, s
 
 	return true;
 }
-
 bool JsonSerializer::Deserialize(IJsonSerializable * pObj, std::string & input)
 {
 	if (pObj == NULL)
@@ -35,7 +34,6 @@ bool JsonSerializer::Deserialize(IJsonSerializable * pObj, std::string & input)
 
 	return true;
 }
-
 bool JsonSerializer::Deserialize(IJsonSerializable * pObj, std::string path)
 {
 	if (pObj == NULL)

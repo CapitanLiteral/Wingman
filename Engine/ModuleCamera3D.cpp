@@ -1,6 +1,5 @@
 #include "Globals.h"
 #include "Application.h"
-#include "PhysBody3D.h"
 #include "ModuleCamera3D.h"
 #include "ModuleInput.h"
 #include "MathGeoLib\include\MathGeoLib.h"
@@ -16,10 +15,8 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 	Position = vec3(10.0f, 20.0f, 10.0f);
 	Reference = vec3(0.0f, 0.0f, 0.0f);
 }
-
 ModuleCamera3D::~ModuleCamera3D()
 {}
-
 // -----------------------------------------------------------------
 bool ModuleCamera3D::Start()
 {
@@ -33,7 +30,6 @@ bool ModuleCamera3D::Start()
 	Reference = vec3(0.0f, 0.0f, 0.0f);
 	return ret;
 }
-
 // -----------------------------------------------------------------
 bool ModuleCamera3D::CleanUp()
 {
@@ -41,7 +37,6 @@ bool ModuleCamera3D::CleanUp()
 
 	return true;
 }
-
 // -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
 {

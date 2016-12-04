@@ -1,8 +1,8 @@
 #pragma once
 
-#include "p2List.h"
 #include "Globals.h"
 #include "Timer.h"
+#include <list>
 
 class Module;
 class ModuleWindow;
@@ -13,14 +13,11 @@ class ModuleRenderer3D;
 class ModuleCamera3D;
 class ModuleEditor;
 class ModuleTests;
-class ModulePhysics3D;
 class ModuleScene;
 class ModuleFBXImporter;
 class ModuleTexture;
 class GameObjectManager;
 
-class TestScene1;
-class TestScene2;
 #include "MathGeoLib\include\MathGeoLibFwd.h"
 
 class Application
@@ -34,13 +31,9 @@ public:
 	ModuleCamera3D* camera = nullptr;
 
 	ModuleEditor* editor = nullptr;
-	ModulePhysics3D* physics = nullptr;
 	ModuleFBXImporter* fbxImporter = nullptr;
 	ModuleTexture* texture = nullptr;
 	GameObjectManager* goManager = nullptr;
-
-	TestScene1* test1 = nullptr;
-	TestScene2* test2 = nullptr;
 
 	float ms_frame[EDITOR_FRAME_SAMPLES];
 	float framerate[EDITOR_FRAME_SAMPLES];
@@ -50,7 +43,7 @@ private:
 
 	Timer	ms_timer;
 	float	dt;
-	p2List<Module*> list_modules;
+	std::list<Module*> list_modules;
 	int frameCount = 0;
 	Timer	FPS_Timer;
 	float FrameTime = -1.0f;

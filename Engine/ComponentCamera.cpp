@@ -13,19 +13,16 @@ ComponentCamera::ComponentCamera(GameObject* parent) : Component(parent)
 	frustum = new Frustum();
 	
 
-	JsonSerializer::Deserialize(this, "root/data/library/cameras/camera.json");
+	//JsonSerializer::Deserialize(this, "root/data/library/cameras/camera.json");
 
 	//std::string output;
 	//JsonSerializer::Serialize(this, output, "data/library/cameras/camera.json");
 
 }
-
-
 ComponentCamera::~ComponentCamera()
 {
 	RELEASE(frustum);
 }
-
 void ComponentCamera::Serialize(Json::Value & root)
 {	
 	LCG random;
@@ -43,7 +40,6 @@ void ComponentCamera::Serialize(Json::Value & root)
 	root["near_plane"] = frustum->nearPlaneDistance;
 
 }
-
 void ComponentCamera::Deserialize(Json::Value & root)
 {
 	////Position
@@ -70,7 +66,6 @@ void ComponentCamera::Deserialize(Json::Value & root)
 	frustum->nearPlaneDistance = root.get("near_plane", 10).asFloat();
 
 }
-
 void ComponentCamera::Update()
 {
 	float3 pos;
@@ -101,7 +96,6 @@ void ComponentCamera::Update()
 	
 
 }
-
 //void rotate_vector_by_quaternion(const float3& v, const Quat& q, float3& vprime)
 //{
 //	// Extract the vector part of the quaternion
@@ -115,7 +109,6 @@ void ComponentCamera::Update()
 //		+ (s*s - dot(u, u)) * v
 //		+ 2.0f * s * cross(u, v);
 //}
-
 void ComponentCamera::draw()
 {
 	glDisable(GL_LIGHTING);

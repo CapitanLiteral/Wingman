@@ -40,14 +40,6 @@
     <Filter Include="Sources\Math\MathGeoLib\Algorithm\Random">
       <UniqueIdentifier>{abfa937e-f724-4ec5-9f40-c941dd8dd3b6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Scenes">
-      <UniqueIdentifier>{cd86892a-2f6a-49fa-a8d8-50beaddca8bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\Scenes\Test">
-      <UniqueIdentifier>{6c182a61-9264-49c8-a6d7-2c082462347f}</UniqueIdentifier>
-      <Extensions>
-      </Extensions>
-    </Filter>
     <Filter Include="Sources\Editor">
       <UniqueIdentifier>{98b83779-af06-4a56-8585-e488f892fdcc}</UniqueIdentifier>
     </Filter>
@@ -83,15 +75,6 @@
     <ClInclude Include="ModuleWindow.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="p2DynArray.h">
-      <Filter>Sources\Containers</Filter>
-    </ClInclude>
-    <ClInclude Include="p2List.h">
-      <Filter>Sources\Containers</Filter>
-    </ClInclude>
-    <ClInclude Include="p2Point.h">
-      <Filter>Sources\Containers</Filter>
-    </ClInclude>
     <ClInclude Include="glmath.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
@@ -112,12 +95,6 @@
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Sources\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="ModulePhysics3D.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysBody3D.h">
-      <Filter>Sources\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="imGUI\imconfig.h">
       <Filter>Sources\imGUI</Filter>
@@ -326,12 +303,6 @@
     <ClInclude Include="Math.h">
       <Filter>Sources\Math</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleFBXImporter.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="TestScene1.h">
-      <Filter>Sources\Scenes\Test</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleEditor.h">
       <Filter>Sources\Editor\UI</Filter>
     </ClInclude>
@@ -346,9 +317,6 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Sources\Editor\Decoupling</Filter>
-    </ClInclude>
-    <ClInclude Include="TestScene2.h">
-      <Filter>Sources\Scenes\Test</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
     <ClInclude Include="ModuleTexture.h">
@@ -370,9 +338,6 @@
       <Filter>Sources\Editor\UI</Filter>
     </ClInclude>
     <ClInclude Include="ModuleFileSystem.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleJson.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="WindowSettings.h">
@@ -426,12 +391,6 @@
       <Filter>Sources\Containers</Filter>
     </ClCompile>
     <ClCompile Include="Light.cpp">
-      <Filter>Sources\Helpers</Filter>
-    </ClCompile>
-    <ClCompile Include="ModulePhysics3D.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="PhysBody3D.cpp">
       <Filter>Sources\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="imGUI\imgui.cpp">
@@ -542,12 +501,6 @@
     <ClCompile Include="MathGeoLib\include\Algorithm\Random\LCG.cpp">
       <Filter>Sources\Math\MathGeoLib\Algorithm\Random</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleFBXImporter.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="TestScene1.cpp">
-      <Filter>Sources\Scenes\Test</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleEditor.cpp">
       <Filter>Sources\Editor\UI</Filter>
     </ClCompile>
@@ -559,9 +512,6 @@
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Sources\Editor\Decoupling</Filter>
-    </ClCompile>
-    <ClCompile Include="TestScene2.cpp">
-      <Filter>Sources\Scenes\Test</Filter>
     </ClCompile>
     <ClCompile Include="ModuleTexture.cpp">
       <Filter>Sources\Modules</Filter>
@@ -579,9 +529,6 @@
       <Filter>Sources\Editor\UI\Elements</Filter>
     </ClCompile>
     <ClCompile Include="ModuleFileSystem.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleJson.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="WindowSettings.cpp">

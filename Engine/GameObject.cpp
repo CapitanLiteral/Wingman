@@ -27,7 +27,6 @@ GameObject::GameObject(GameObject* parent, const float3 translation, const float
 	}
 	aabb_color.Set(0, 0, 1, 1);
 }
-
 GameObject::~GameObject()
 {
 	for (std::vector<Component*>::iterator iterator = components.begin(); 
@@ -49,7 +48,6 @@ GameObject::~GameObject()
 	}
 
 }
-
 Component* GameObject::createComponent(ComponentType type)
 {
 	Component* ret;
@@ -78,8 +76,6 @@ Component* GameObject::createComponent(ComponentType type)
 
 	return ret;
 }
-
-
 void GameObject::update()
 {
 
@@ -120,7 +116,6 @@ void GameObject::update()
 	
 
 }
-
 Component * GameObject::findComponent(ComponentType)
 {
 	Component* ret = nullptr;
@@ -139,8 +134,6 @@ Component * GameObject::findComponent(ComponentType)
 	
 	return ret;
 }
-
-
 void GameObject::addChild(GameObject* child)
 { 
 	if (child != NULL)
@@ -153,17 +146,14 @@ void GameObject::addChild(GameObject* child)
 	}
 	
 }
-
 const float4x4 GameObject::getLocalTransform()
 {
 	return localTransform;
 }
-
 const float4x4 GameObject::getGlobalTransform()
 {
 	return globalTransform;
 }
-
 void GameObject::refreshTransform(float4x4 mat)
 {
 	if (parent != NULL)
@@ -178,7 +168,6 @@ void GameObject::refreshTransform(float4x4 mat)
 	}
 	
 }
-
 void GameObject::setPosition(float3 position)
 {
 	float3 pos;
@@ -221,7 +210,6 @@ void GameObject::setRotation(Quat rotation)
 		}
 	}
 }
-
 void GameObject::setRotation(float* rot)
 {
 	float3 r;
@@ -247,7 +235,6 @@ void GameObject::setRotation(float* rot)
 
 	setRotation(Quat::FromEulerXYZ(r.x, r.y, r.z));
 }
-
 void GameObject::setRotation(float x, float y, float z)
 {
 	while (x < 0)
@@ -301,8 +288,6 @@ float3 GameObject::getRotation() const
 
 	return ret;
 }
-
-
 float* GameObject::getEulerRot() const
 {
 
@@ -333,7 +318,6 @@ float* GameObject::getEulerRot() const
 
 	return (float*)&rotationEuler;
 }
-
 void GameObject::setScale(float3 scale)
 {
 	float3 pos;
@@ -355,12 +339,10 @@ void GameObject::setScale(float3 scale)
 		}
 	}
 }
-
 void GameObject::setGlobalTransform(float3 pos, Quat rot, float3 scale)
 {
 	globalTransform = float4x4::FromTRS(pos, rot, scale);
 }
-
 void GameObject::Serialize(Json::Value & root)
 {
 	
@@ -452,7 +434,6 @@ void GameObject::Serialize(Json::Value & root)
 		(*iterator)->Serialize(root);
 	}
 }
-
 void GameObject::Deserialize(Json::Value & root)
 {
 	App->goManager->setFocusGO(nullptr);
@@ -539,7 +520,6 @@ void GameObject::Deserialize(Json::Value & root)
 		}
 	}
 }
-
 GameObject * GameObject::findByUUID(uint32_t UUID)
 {
 	GameObject* ret = nullptr;
@@ -556,7 +536,6 @@ GameObject * GameObject::findByUUID(uint32_t UUID)
 
 	return ret;
 }
-
 AABB GameObject::getAABB() const
 {
 	return aabb;
@@ -565,7 +544,6 @@ void GameObject::setAABB(AABB aabb)
 {
 	this->aabb = aabb;
 }
-
 void GameObject::draw_AABB()
 {
 	glDisable(GL_LIGHTING);
@@ -618,7 +596,6 @@ void GameObject::draw_AABB()
 	glEnable(GL_LIGHTING);
 	//glLineWidth(1.f);
 }
-
 void GameObject::updateBoundingBoxes()
 {
 	aabb.SetNegativeInfinity();

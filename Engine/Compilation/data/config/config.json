@@ -1,38 +1,7 @@
-{
-    "Value1" : "hahaha",
-    "Beers" : 
-	[
-		{
-			"Name" : "Schlafly American Pale Ale",
-			"Origin" : "St. Louis, MO, USA",
-			"ABV" : 5.9,
-			"BottleConditioned" : true
-		},
-		{
-			"Name" : "John Smith's Extra Smooth",
-			"Origin" : "Tadcaster, Yorkshire, UK",
-			"ABV" : 3.8,
-			"Bottle Conditioned" : false
-		}
-    ],
-	"name" : "Wingman",
-	"organization" : "UndistinguishedMan",
+sadasd
 
-	"window" :
-	{
-		"vsync" : false,
-		"resolution":
-		{
-			"x": 1920,
-			"y": 1080
-		},
-		"fullscreen" : true,
-		"resizable" : true,
-		"borderless" : false,
-		"fullscreen_desktop" : false,
-		"maximized" : true,
-		"title" : "Wingman game editor"
-	}
+bla bla
 
+nou
 
-}
+mes nouýýýý

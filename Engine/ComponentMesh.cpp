@@ -24,8 +24,6 @@ ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 	obb_color.Set(0.2, 1, 0.2, 1);
 	aabb_color.Set(1, 0.2, 0.2, 1);
 }
-
-
 ComponentMesh::~ComponentMesh()
 {
 	//Delete arrays
@@ -69,7 +67,6 @@ ComponentMesh::~ComponentMesh()
 	}
 
 }
-
 void ComponentMesh::Update()
 {
 	if (enabled)
@@ -96,7 +93,6 @@ void ComponentMesh::Update()
 			
 	}
 }
-
 void ComponentMesh::load(const aiMesh* mesh)
 {
 	numVertices = mesh->mNumVertices;
@@ -165,7 +161,6 @@ void ComponentMesh::load(const aiMesh* mesh)
 
 	updateBoundingBoxes();
 }
-
 void ComponentMesh::draw()
 {
 	//updateBoundingBoxes();
@@ -248,7 +243,6 @@ void ComponentMesh::draw()
 	}
 	
 }
-
 void ComponentMesh::updateBoundingBoxes()
 {
 	aabb.SetNegativeInfinity();
@@ -326,7 +320,6 @@ void ComponentMesh::draw_OBB()
 	glEnable(GL_LIGHTING);
 	//glLineWidth(1.f);
 }
-
 void ComponentMesh::draw_AABB()
 {
 	glDisable(GL_LIGHTING);
@@ -379,7 +372,6 @@ void ComponentMesh::draw_AABB()
 	glEnable(GL_LIGHTING);
 	//glLineWidth(1.f);
 }
-
 void ComponentMesh::Serialize(Json::Value & root)
 {
 	LCG random;
@@ -388,7 +380,6 @@ void ComponentMesh::Serialize(Json::Value & root)
 	root["associated_material"] = associatedMaterial->UUID;
 	root["component_type"] = "mesh";
 }
-
 void ComponentMesh::Deserialize(Json::Value & root)
 {
 	UUID = root.get("UUID", -1).asInt64();

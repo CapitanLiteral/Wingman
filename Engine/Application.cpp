@@ -8,13 +8,9 @@
 #include "ModuleFileSystem.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
-#include "ModulePhysics3D.h"
 #include "ModuleEditor.h"
-#include "ModuleFBXImporter.h"
 #include "ModuleTexture.h"
 #include "GameObjectManager.h"
-#include "TestScene1.h"
-#include "TestScene2.h"
 
 Application::Application()
 {
@@ -25,16 +21,11 @@ Application::Application()
 
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
-	physics = new ModulePhysics3D(this);
 	editor = new ModuleEditor(this);
 
-	//fbxImporter = new ModuleFBXImporter(this);
 	texture = new ModuleTexture(this);
 	goManager = new GameObjectManager(this);
-
-	test1 = new TestScene1(this);
-	test2 = new TestScene2(this);
-
+	
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
 	// They will CleanUp() in reverse order
@@ -44,15 +35,10 @@ Application::Application()
 	AddModule(camera);
 	AddModule(input);
 	AddModule(fs);
-	//AddModule(fbxImporter);
 	AddModule(texture);
 	AddModule(goManager);
 	AddModule(audio);
-	AddModule(physics);
 	
-	// Scenes
-	AddModule(test1);
-	//AddModule(test2);
 	AddModule(editor);
 	// Renderer last!
 	AddModule(renderer3D);
@@ -67,12 +53,12 @@ Application::Application()
 
 Application::~Application()
 {
-	p2List_item<Module*>* item = list_modules.getLast();
+	std::list<Module*>::reverse_iterator item = list_modules.rbegin();
 
-	while(item != nullptr)
+	while(item != list_modules.rend())
 	{
-		delete item->data;
-		item = item->prev;
+		RELEASE (*item);
+		item++;
 	}
 }
 
@@ -81,24 +67,24 @@ bool Application::Init()
 	bool ret = true;
 	totalTimer.Start();
 	// Call Init() in all modules
-	p2List_item<Module*>* item = list_modules.getFirst();
+	std::list<Module*>::iterator item = list_modules.begin();
 
-	while(item != nullptr && ret == true)
+	while(item != list_modules.end() && ret == true)
 	{
-		if (item->data->IsEnabled())
-			ret = item->data->Init();
-		item = item->next;
+		if ((*item)->IsEnabled())
+			ret = (*item)->Init();
+		item++;
 	}
 
 	// After all Init calls we call Start() in all modules
 	SDL_Log("Application Start --------------");
-	item = list_modules.getFirst();
+	item = list_modules.begin();
 
-	while(item != nullptr && ret == true)
+	while(item != list_modules.end() && ret == true)
 	{
-		if (item->data->IsEnabled())
-			ret = item->data->Start();
-		item = item->next;
+		if ((*item)->IsEnabled())
+			ret = (*item)->Start();
+		item++;
 	}
 	maxFPS = 0;
 
@@ -158,37 +144,37 @@ update_status Application::Update()
 	update_status ret = UPDATE_CONTINUE;
 	PrepareUpdate();
 	
-	p2List_item<Module*>* item = list_modules.getFirst();
+	std::list<Module*>::iterator item = list_modules.begin();
 	
-	while(item != nullptr && ret == UPDATE_CONTINUE)
+	while(item != list_modules.end() && ret == UPDATE_CONTINUE)
 	{
-		if (item->data->IsEnabled())
+		if ((*item)->IsEnabled())
 		{
-			ret = item->data->PreUpdate(dt);
+			ret = (*item)->PreUpdate(dt);
 		}
-		item = item->next;
+		item++;
 	}
 
-	item = list_modules.getFirst();
+	item = list_modules.begin();
 
-	while(item != nullptr && ret == UPDATE_CONTINUE)
+	while(item != list_modules.end() && ret == UPDATE_CONTINUE)
 	{
-		if (item->data->IsEnabled())
+		if ((*item)->IsEnabled())
 		{
-			ret = item->data->Update(dt);
+			ret = (*item)->Update(dt);
 		}
-		item = item->next;
+		item++;
 	}
 
-	item = list_modules.getFirst();
+	item = list_modules.begin();
 
-	while(item != nullptr && ret == UPDATE_CONTINUE)
+	while(item != list_modules.end() && ret == UPDATE_CONTINUE)
 	{
-		if (item->data->IsEnabled())
+		if ((*item)->IsEnabled())
 		{
-			ret = item->data->PostUpdate(dt);
+			ret = (*item)->PostUpdate(dt);
 		}
-		item = item->next;
+		item++;
 	}
 
 	FinishUpdate();
@@ -206,12 +192,12 @@ update_status Application::Update()
 bool Application::CleanUp()
 {
 	bool ret = true;
-	p2List_item<Module*>* item = list_modules.getLast();
+	std::list<Module*>::reverse_iterator item = list_modules.rbegin();
 
-	while(item != nullptr && ret == true)
+	while(item != list_modules.rend() && ret == true)
 	{
-		ret = item->data->CleanUp();
-		item = item->prev;
+		ret = (*item)->CleanUp();
+		item++;
 	}
 	return ret;
 }
@@ -231,7 +217,7 @@ void Application::Log(char* str)
 
 void Application::AddModule(Module* mod)
 {
-	list_modules.add(mod);
+	list_modules.push_back(mod);
 }
 
 char * Application::getOrganization()
