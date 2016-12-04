@@ -1,0 +1,74 @@
+{
+   "gameObjects" : [
+      {
+         "UUID" : 144747234,
+         "components" : [
+            {
+               "UUID" : 151152366,
+               "component_type" : "camera",
+               "far_plane" : 100.0,
+               "near_plane" : 10.0,
+               "type" : 2,
+               "vertical_fov" : 75.0
+            }
+         ],
+         "name" : "Main Camera",
+         "parent_UUID" : 0,
+         "pos" : [ 0.0, 0.0, 0.0 ],
+         "rot" : [ 1.0, 0.0, -0.0 ],
+         "scale" : [ 1.0, 1.0, 1.0 ]
+      },
+      {
+         "UUID" : 252799026,
+         "name" : "RootNode",
+         "parent_UUID" : 0,
+         "pos" : [ 0.0, 0.0, 0.0 ],
+         "rot" : [ -0.0, 0.0, -0.0 ],
+         "scale" : [ 1.0, 1.0, 1.0 ]
+      },
+      {
+         "UUID" : 316711104,
+         "components" : [
+            {
+               "UUID" : 324647898,
+               "color" : [ 0.80000001192092896, 0.80000001192092896, 0.80000001192092896, 1.0 ],
+               "component_type" : "material"
+            },
+            {
+               "UUID" : 358553325,
+               "associated_material" : 324647898,
+               "associated_material_name" : "Diffuse_Mech.png",
+               "component_type" : "mesh",
+               "meshName" : "m_1787025446.mesh"
+            }
+         ],
+         "name" : "Mech",
+         "parent_UUID" : 252799026,
+         "pos" : [ 0.0, 0.0, 0.0 ],
+         "rot" : [ -0.0, 0.0, -0.0 ],
+         "scale" : [ 1.0, 1.0, 1.0 ]
+      },
+      {
+         "UUID" : 442665753,
+         "components" : [
+            {
+               "UUID" : 453248145,
+               "color" : [ 0.60040003061294556, 0.60831999778747559, 0.047680001705884933, 1.0 ],
+               "component_type" : "material"
+            },
+            {
+               "UUID" : 492444768,
+               "associated_material" : 453248145,
+               "associated_material_name" : "NoTexture",
+               "component_type" : "mesh",
+               "meshName" : "m_96697823.mesh"
+            }
+         ],
+         "name" : "Plane",
+         "parent_UUID" : 252799026,
+         "pos" : [ -1.7119624614715576, 0.0, -0.60170680284500122 ],
+         "rot" : [ -0.0, 0.0, -0.0 ],
+         "scale" : [ 2.3321113586425781, 2.3321113586425781, 2.3321113586425781 ]
+      }
+   ]
+}

@@ -1,21 +1,30 @@
 #include "Application.h"
-
+#include "Globals.h"
 #include "ComponentMesh.h"
 #include "GameObject.h"
 #include "ComponentMaterial.h"
 #include "OpenGL.h"
+#include "GameObjectManager.h"
+#include "ComponentCamera.h"
+#include "MathGeoLib\include\MathGeoLib.h"
+#include "ModuleFileSystem.h"
 
 #include "Assimp\Assimp\include\scene.h"
 #include "Assimp\Assimp\include\cfileio.h"
 #include "Assimp\Assimp\include\cimport.h"
 #include "Assimp\Assimp\include\postprocess.h"
 
-ComponentMesh::ComponentMesh(GameObject* parent)
+
+
+#pragma comment (lib, "Assimp/Assimp/libx86/assimp.lib")
+
+ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 {
-	this->parent = parent;
+	obb.SetNegativeInfinity();
+	aabb.SetNegativeInfinity();
+	obb_color.Set(0.2, 1, 0.2, 1);
+	aabb_color.Set(1, 0.2, 0.2, 1);
 }
-
-
 ComponentMesh::~ComponentMesh()
 {
 	//Delete arrays
@@ -59,15 +68,33 @@ ComponentMesh::~ComponentMesh()
 	}
 
 }
-
 void ComponentMesh::Update()
 {
 	if (enabled)
 	{
-		draw();
+		ComponentCamera* camera = (ComponentCamera*)App->goManager->currentCamera->findComponent(CAMERA);
+		if (camera != nullptr)
+		{
+			if (!camera->culling)
+			{
+				draw();
+			}
+			else
+			{
+				if (camera->frustum->Intersects(aabb))
+				{
+					draw();
+				}
+			}
+		}
+		else
+		{
+			draw();
+		}
+			
 	}
 }
-
+//Load from FBX structure
 void ComponentMesh::load(const aiMesh* mesh)
 {
 	numVertices = mesh->mNumVertices;
@@ -134,11 +161,11 @@ void ComponentMesh::load(const aiMesh* mesh)
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t)*numVertices * 3, UV, GL_STATIC_DRAW);
 	}
 
-
+	updateBoundingBoxes();
 }
-
 void ComponentMesh::draw()
 {
+	//updateBoundingBoxes();
 	glPushMatrix();
 	//glMultMatrixf(parent->getLocalTransform().ptr());
 	glMultMatrixf(parent->getGlobalTransform().Transposed().ptr());
@@ -172,6 +199,30 @@ void ComponentMesh::draw()
 
 	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, NULL);
 
+	//DrawWireframe for selected object
+	#pragma region DrawWireframe
+	if (parent->selected)
+	{
+		glDisable(GL_LIGHTING);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glColor4f(0.f, 0.8f, 0.8f, 1.f);
+
+		if (parent->selected)
+		{
+			glLineWidth(5.f);
+			glColor4f(0.f, 1.f, 0.f, 1.f);
+		}
+		else
+		{
+			glLineWidth(1.f);
+			glDisable(GL_CULL_FACE);
+		}
+
+		glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, NULL);
+	}
+	#pragma endregion
+
+
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	glDisable(GL_TEXTURE_2D);
@@ -179,10 +230,244 @@ void ComponentMesh::draw()
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glPopMatrix();
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_CULL_FACE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	if (drawAABB)
+	{
+		draw_AABB();
+	}
+	if (drawOBB)
+	{	
+		draw_OBB();
+	}
+	
+}
+void ComponentMesh::updateBoundingBoxes()
+{
+	aabb.SetNegativeInfinity();
+	aabb.Enclose((float3*)vertices, numVertices);
+
+	obb = aabb;
+	obb.Transform(parent->globalTransform);
+	aabb.SetFrom(obb);
+}
+OBB ComponentMesh::getOBB() const
+{
+	return obb;
+}
+void ComponentMesh::setOBB(OBB obb)
+{
+	this->obb = obb;
+}
+AABB ComponentMesh::getAABB() const
+{
+	return aabb;
+}
+void ComponentMesh::setAABB(AABB aabb)
+{
+	this->aabb = aabb;
+}
+void ComponentMesh::draw_OBB()
+{
+	glDisable(GL_LIGHTING);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glDisable(GL_CULL_FACE);
+	glLineWidth(1.f);
+	glColor4f(obb_color.r, obb_color.g, obb_color.b, obb_color.a);
+
+	float3 vertices[8];
+	obb.GetCornerPoints(vertices);
+
+	//glColor4f(color.r, color.g, color.b, color.a);
+
+	glBegin(GL_QUADS);
+
+	glVertex3fv((GLfloat*)&vertices[1]);
+	glVertex3fv((GLfloat*)&vertices[5]);
+	glVertex3fv((GLfloat*)&vertices[7]);
+	glVertex3fv((GLfloat*)&vertices[3]);
+
+	glVertex3fv((GLfloat*)&vertices[4]);
+	glVertex3fv((GLfloat*)&vertices[0]);
+	glVertex3fv((GLfloat*)&vertices[2]);
+	glVertex3fv((GLfloat*)&vertices[6]);
+
+	glVertex3fv((GLfloat*)&vertices[5]);
+	glVertex3fv((GLfloat*)&vertices[4]);
+	glVertex3fv((GLfloat*)&vertices[6]);
+	glVertex3fv((GLfloat*)&vertices[7]);
+
+	glVertex3fv((GLfloat*)&vertices[0]);
+	glVertex3fv((GLfloat*)&vertices[1]);
+	glVertex3fv((GLfloat*)&vertices[3]);
+	glVertex3fv((GLfloat*)&vertices[2]);
+
+	glVertex3fv((GLfloat*)&vertices[3]);
+	glVertex3fv((GLfloat*)&vertices[7]);
+	glVertex3fv((GLfloat*)&vertices[6]);
+	glVertex3fv((GLfloat*)&vertices[2]);
+
+	glVertex3fv((GLfloat*)&vertices[0]);
+	glVertex3fv((GLfloat*)&vertices[4]);
+	glVertex3fv((GLfloat*)&vertices[5]);
+	glVertex3fv((GLfloat*)&vertices[1]);
+
+	glEnd();
+
+	glEnable(GL_CULL_FACE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glEnable(GL_LIGHTING);
+	//glLineWidth(1.f);
+}
+void ComponentMesh::draw_AABB()
+{
+	glDisable(GL_LIGHTING);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glDisable(GL_CULL_FACE);
+	glLineWidth(1.f);
+	glColor4f(aabb_color.r, aabb_color.g, aabb_color.b, aabb_color.a);
+
+	float3 vertices[8];
+	aabb.GetCornerPoints(vertices);
+
+	//glColor4f(color.r, color.g, color.b, color.a);
+
+	glBegin(GL_QUADS);
+
+	glVertex3fv((GLfloat*)&vertices[1]);
+	glVertex3fv((GLfloat*)&vertices[5]);
+	glVertex3fv((GLfloat*)&vertices[7]);
+	glVertex3fv((GLfloat*)&vertices[3]);
+
+	glVertex3fv((GLfloat*)&vertices[4]);
+	glVertex3fv((GLfloat*)&vertices[0]);
+	glVertex3fv((GLfloat*)&vertices[2]);
+	glVertex3fv((GLfloat*)&vertices[6]);
+
+	glVertex3fv((GLfloat*)&vertices[5]);
+	glVertex3fv((GLfloat*)&vertices[4]);
+	glVertex3fv((GLfloat*)&vertices[6]);
+	glVertex3fv((GLfloat*)&vertices[7]);
+
+	glVertex3fv((GLfloat*)&vertices[0]);
+	glVertex3fv((GLfloat*)&vertices[1]);
+	glVertex3fv((GLfloat*)&vertices[3]);
+	glVertex3fv((GLfloat*)&vertices[2]);
+
+	glVertex3fv((GLfloat*)&vertices[3]);
+	glVertex3fv((GLfloat*)&vertices[7]);
+	glVertex3fv((GLfloat*)&vertices[6]);
+	glVertex3fv((GLfloat*)&vertices[2]);
+
+	glVertex3fv((GLfloat*)&vertices[0]);
+	glVertex3fv((GLfloat*)&vertices[4]);
+	glVertex3fv((GLfloat*)&vertices[5]);
+	glVertex3fv((GLfloat*)&vertices[1]);
+
+	glEnd();
+
+	glEnable(GL_CULL_FACE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glEnable(GL_LIGHTING);
+	//glLineWidth(1.f);
+}
+void ComponentMesh::Serialize(Json::Value & root)
+{
+	LCG random;
+	UUID = random.Int();
+	root["UUID"] = UUID;
+	root["associated_material"] = associatedMaterial->UUID;
+	if (textureName.at(0) != '\0')
+		root["associated_material_name"] = textureName;
+	else
+		root["associated_material_name"] = "NoTexture";
+	
+	root["component_type"] = "mesh";
+	root["meshName"] = meshName;
+}
+void ComponentMesh::Import(Json::Value & root)
+{
+	LCG random;
+	UUID = random.Int();
+	root["UUID"] = UUID;
+	root["associated_material"] = associatedMaterial->UUID;
+	if (textureName.at(0) != '\0')
+		root["associated_material_name"] = textureName;
+	else
+		root["associated_material_name"] = "NoTexture";
+
+	root["component_type"] = "mesh";
+
+	char* buffer;
+	uint size = sizeof(numVertices);
+	size += sizeof(numIndices);
+	size += sizeof(numNormals);
+	size += sizeof(vertices) * 3 * numVertices;
+	size += sizeof(indices) * 3 * numIndices;
+	size += sizeof(normals) * 3 * numNormals;
+	size += sizeof(UV) * 3 * numVertices;
+
+	buffer = new char[size];
+	char* cursor = buffer;
+
+	uint bytes = sizeof(uint);
+
+	SDL_Log("Buffer: %d", sizeof(buffer));
+	SDL_Log("Size: %d", size);
+
+	memcpy(cursor, &numVertices, bytes);
+	cursor += bytes;
+	memcpy(cursor, &numIndices, bytes);
+	cursor += bytes;
+	memcpy(cursor, &numNormals, bytes);
+	cursor += bytes;
+
+	bytes = sizeof(float) * 3 * numVertices;
+	memcpy(cursor, vertices, bytes);
+	cursor += sizeof(float) * 3 * numVertices;
+
+	bytes = sizeof(uint) * 3 * numIndices;
+	memcpy(cursor, indices, bytes);
+	cursor += sizeof(uint) * 3 * numIndices;
+
+	bytes = sizeof(float) * 3 * numNormals;
+	memcpy(cursor, normals, bytes);
+	cursor += sizeof(float) * 3 * numNormals;
+
+	bytes = sizeof(float) * 3 * numVertices;
+	memcpy(cursor, UV, bytes);
+
+	std::string path("data/library/mesh/");
+	LCG name;
+	meshName.append("m_");
+	meshName.append(std::to_string(name.Int()));
+	meshName.append(".mesh");
+	path.append(meshName);
+	App->fs->save(path.c_str(), (char*)buffer, sizeof(buffer));
+
+	root["meshName"] = meshName;
+
+	RELEASE_ARRAY(buffer);
+
+}
+void ComponentMesh::Deserialize(Json::Value & root)
+{
+	UUID = root.get("UUID", -1).asInt64();
+	associatedUUID = root.get("associated_material", -1).asInt64();
+	//Is this really useful??? i dont think so...
+	std::string jtype;
+	jtype = root.get("component_type", -1).asString();
+
+	meshName = root.get("meshName", "NoMesh").asString();
+
+	if (jtype == "mesh")
+	{
+		type = MESH;
+	}
 }
 
-void ComponentMesh::drawUI()
-{
-	//TODO
-}
+
 

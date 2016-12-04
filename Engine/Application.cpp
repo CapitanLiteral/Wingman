@@ -5,6 +5,7 @@
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
 #include "ModuleAudio.h"
+#include "ModuleFileSystem.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
 #include "ModulePhysics3D.h"
@@ -20,6 +21,7 @@ Application::Application()
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(this, true);
+	fs = new ModuleFileSystem(this, true);
 
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
@@ -32,6 +34,7 @@ Application::Application()
 
 	test1 = new TestScene1(this);
 	test2 = new TestScene2(this);
+
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
 	// They will CleanUp() in reverse order
@@ -40,20 +43,20 @@ Application::Application()
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
+	AddModule(fs);
 	AddModule(fbxImporter);
 	AddModule(texture);
 	AddModule(goManager);
 	AddModule(audio);
 	AddModule(physics);
-	AddModule(editor);
 	
 	// Scenes
 	AddModule(test1);
 	//AddModule(test2);
-
+	AddModule(editor);
 	// Renderer last!
 	AddModule(renderer3D);
-
+	
 	for (int n = 0; n < EDITOR_FRAME_SAMPLES; n++)
 	{
 		ms_frame[n] = 0;
@@ -66,7 +69,7 @@ Application::~Application()
 {
 	p2List_item<Module*>* item = list_modules.getLast();
 
-	while(item != NULL)
+	while(item != nullptr)
 	{
 		delete item->data;
 		item = item->prev;
@@ -80,7 +83,7 @@ bool Application::Init()
 	// Call Init() in all modules
 	p2List_item<Module*>* item = list_modules.getFirst();
 
-	while(item != NULL && ret == true)
+	while(item != nullptr && ret == true)
 	{
 		if (item->data->IsEnabled())
 			ret = item->data->Init();
@@ -91,7 +94,7 @@ bool Application::Init()
 	SDL_Log("Application Start --------------");
 	item = list_modules.getFirst();
 
-	while(item != NULL && ret == true)
+	while(item != nullptr && ret == true)
 	{
 		if (item->data->IsEnabled())
 			ret = item->data->Start();
@@ -157,7 +160,7 @@ update_status Application::Update()
 	
 	p2List_item<Module*>* item = list_modules.getFirst();
 	
-	while(item != NULL && ret == UPDATE_CONTINUE)
+	while(item != nullptr && ret == UPDATE_CONTINUE)
 	{
 		if (item->data->IsEnabled())
 		{
@@ -168,7 +171,7 @@ update_status Application::Update()
 
 	item = list_modules.getFirst();
 
-	while(item != NULL && ret == UPDATE_CONTINUE)
+	while(item != nullptr && ret == UPDATE_CONTINUE)
 	{
 		if (item->data->IsEnabled())
 		{
@@ -179,7 +182,7 @@ update_status Application::Update()
 
 	item = list_modules.getFirst();
 
-	while(item != NULL && ret == UPDATE_CONTINUE)
+	while(item != nullptr && ret == UPDATE_CONTINUE)
 	{
 		if (item->data->IsEnabled())
 		{
@@ -205,7 +208,7 @@ bool Application::CleanUp()
 	bool ret = true;
 	p2List_item<Module*>* item = list_modules.getLast();
 
-	while(item != NULL && ret == true)
+	while(item != nullptr && ret == true)
 	{
 		ret = item->data->CleanUp();
 		item = item->prev;
@@ -229,4 +232,14 @@ void Application::Log(char* str)
 void Application::AddModule(Module* mod)
 {
 	list_modules.add(mod);
+}
+
+char * Application::getOrganization()
+{
+	return ORGANIZATION;
+}
+
+char * Application::getTitle()
+{
+	return TITLE;
 }

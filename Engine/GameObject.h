@@ -4,8 +4,10 @@
 #include <string>
 #include "Component.h"
 #include "MathGeoLib\include\MathGeoLib.h"
+#include "Color.h"
+#include "IJsonSerializable.h"
 
-class GameObject
+class GameObject : public IJsonSerializable
 {
 public:
 	GameObject(GameObject* parent, const float3 translation, const float3 scale, const Quat rotation, const char* name);
@@ -25,11 +27,25 @@ public:
 
 	void setPosition(float3 position);
 	void setRotation(Quat rotation);
+	void setRotation(float* rot);
+	void setRotation(float x, float y, float z);
 	void setScale(float3 scale);
+	float* getEulerRot() const;
+	float3 getRotation() const;
 
-
+	AABB getAABB() const;
+	void setAABB(AABB aabb);
+	void draw_AABB();
+	void updateBoundingBoxes();
+	Color aabb_color;
 	//Debug Things...
 	void setGlobalTransform(float3 pos, Quat rot, float3 scale);
+
+	void Serialize(Json::Value& root);
+	void Import(Json::Value& root);
+	void Deserialize(Json::Value& root);
+	GameObject* findByUUID(uint32_t UUID);	
+	
 
 public:
 	//Redundant information for a faster and easier way to find objects on the tree
@@ -40,6 +56,9 @@ public:
 
 	std::string name;
 
+	bool selected = false;
+	bool drawAABB = false;
+	//bool mustBeDeleted = false;
 	//Local parent base
 	//float3	position = float3::zero;
 	//float3	scale = float3::zero;
@@ -48,7 +67,10 @@ public:
 	//global normal base
 	float4x4 globalTransform = float4x4::identity; 	
 	
+	AABB aabb;
 
+	uint32_t UUID;
+	uint32_t parent_UUID;
 	
 };
 

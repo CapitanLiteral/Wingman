@@ -42,6 +42,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Compilation/$(Configuration)_Wingman/</OutDir>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)Compilation/$(Configuration)_Wingman/</OutDir>
@@ -53,12 +55,11 @@
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>
-      </AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)jsoncpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -84,6 +85,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="ComponentCamera.h" />
     <ClInclude Include="ComponentMaterial.h" />
     <ClInclude Include="ComponentMesh.h" />
     <ClInclude Include="GameObject.h" />
@@ -92,6 +94,7 @@
     </ClInclude>
     <ClInclude Include="glmath.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="IJsonSerializable.h" />
     <ClInclude Include="imGUI\imconfig.h" />
     <ClInclude Include="imGUI\imgui.h" />
     <ClInclude Include="imGUI\imgui_impl_sdl_gl3.h" />
@@ -100,6 +103,7 @@
     <ClInclude Include="imGUI\stb_textedit.h" />
     <ClInclude Include="imGUI\stb_truetype.h" />
     <ClInclude Include="Inspector.h" />
+    <ClInclude Include="JsonSerializer.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="MathGeoLib\include\Algorithm\Random\LCG.h" />
@@ -164,6 +168,8 @@
     <ClInclude Include="MathGeoLib\include\Time\Clock.h" />
     <ClInclude Include="ModuleCamera3D.h" />
     <ClInclude Include="ModuleFBXImporter.h" />
+    <ClInclude Include="ModuleFileSystem.h" />
+    <ClInclude Include="ModuleJson.h" />
     <ClInclude Include="ModulePhysics3D.h" />
     <ClInclude Include="ModuleRenderer3D.h" />
     <ClInclude Include="ModuleEditor.h" />
@@ -185,10 +191,12 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UI_Item.h" />
     <ClInclude Include="WindowMenus.h" />
+    <ClInclude Include="WindowSettings.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="ComponentCamera.cpp" />
     <ClCompile Include="ComponentMaterial.cpp" />
     <ClCompile Include="ComponentMesh.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -201,6 +209,8 @@
     <ClCompile Include="imGUI\imgui_draw.cpp" />
     <ClCompile Include="imGUI\imgui_impl_sdl_gl3.cpp" />
     <ClCompile Include="Inspector.cpp" />
+    <ClCompile Include="jsoncpp\jsoncpp.cpp" />
+    <ClCompile Include="JsonSerializer.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -239,7 +249,9 @@
     <ClCompile Include="ModuleAudio.cpp" />
     <ClCompile Include="ModuleCamera3D.cpp" />
     <ClCompile Include="ModuleFBXImporter.cpp" />
+    <ClCompile Include="ModuleFileSystem.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
+    <ClCompile Include="ModuleJson.cpp" />
     <ClCompile Include="ModulePhysics3D.cpp" />
     <ClCompile Include="ModuleRenderer3D.cpp" />
     <ClCompile Include="ModuleEditor.cpp" />
@@ -252,6 +264,7 @@
     <ClCompile Include="TestScene2.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="WindowMenus.cpp" />
+    <ClCompile Include="WindowSettings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\include\Geometry\KDTree.inl" />

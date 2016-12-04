@@ -5,6 +5,9 @@
 #include "GameObject.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
+#include "ComponentCamera.h"
+#include "ModuleFileSystem.h"
+#include "JsonSerializer.h"
 
 #include "MathGeoLib\include\MathGeoLib.h"
 
@@ -20,6 +23,7 @@ GameObjectManager::GameObjectManager(Application* app, bool start_enabled) : Mod
 
 GameObjectManager::~GameObjectManager()
 {
+	if (root != nullptr) delete root;
 }
 
 
@@ -29,6 +33,11 @@ bool GameObjectManager::Start()
 	float3 scale(1,1,1);
 	Quat rotation(0,0,0,0);
 	root = new GameObject(NULL, position, scale, rotation, "ROOT");
+	GameObject* camera = new GameObject(root, position, scale, rotation, "Main Camera");
+	camera->setRotation(1, 0, 0);
+	//root->addChild(camera);
+	camera->createComponent(CAMERA);
+	currentCamera = camera;
 	return true;
 }
 
@@ -37,6 +46,20 @@ update_status GameObjectManager::Update(float dt)
 
 	root->update();
 
+	if (haveToSaveScene)
+	{
+		saveScene();
+	}
+	if (haveToLoadScene)
+	{
+		loadScene();
+	}
+
+	for (std::vector<GameObject*>::iterator iterator = toDelete.begin(); 
+		iterator != toDelete.end(); iterator++)
+	{
+		RELEASE((*iterator));
+	}
 
 	return UPDATE_CONTINUE;
 }
@@ -49,7 +72,19 @@ GameObject* GameObjectManager::LoadFBX(const char * path)
 		return NULL; //If path is NULL dont do nothing
 	}
 
-	const aiScene* scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
+	char* buffer;
+	uint fileSize = App->fs->load(path, &buffer);
+	const aiScene* scene = NULL;
+
+	if (buffer && fileSize > 0)
+	{
+		scene = aiImportFileFromMemory(buffer, fileSize, aiProcessPreset_TargetRealtime_MaxQuality, "fbx");
+	}
+	else
+	{
+		SDL_Log("Error while loading fbx.");
+		return NULL;
+	}
 
 	if (scene, scene->HasMeshes())
 	{
@@ -97,6 +132,7 @@ void GameObjectManager::LoadScene(const aiScene * scene, const aiNode * node, Ga
 		ComponentMesh* mesh = (ComponentMesh*)gameObject->createComponent(MESH);	
 		
 		mesh->load(ai_mesh);
+		//mesh->meshName = ai_mesh->mName.C_Str();
 		//PNG path && Filename
 		if (scene->HasMaterials())
 		{
@@ -107,7 +143,8 @@ void GameObjectManager::LoadScene(const aiScene * scene, const aiNode * node, Ga
 			aiString ai_path;
 			std::string fileName;
 			scene->mMaterials[scene->mMeshes[node->mMeshes[i]]->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0, &ai_path);
-			int j = 0;
+			//Path & name separation... rude way, but works "good"... (Someday I hope to be a good programmer... XD)
+			int j = 1;
 			for (int i = ai_path.length - 1; i > 0; i--)
 			{
 				if (ai_path.data[i] != '/' && ai_path.data[i] != '\\')
@@ -121,10 +158,11 @@ void GameObjectManager::LoadScene(const aiScene * scene, const aiNode * node, Ga
 							ai_path.C_Str() + ai_path.length);
 			SDL_Log("Texture path: %s", ai_path.C_Str());
 			SDL_Log("Texture name: %s", fileName.c_str());
-			std::string fullPath = "../DLL/Town/";
+			std::string fullPath = "../data/assets/material/";
 			fullPath.append(fileName);
 			material->loadTexture(fullPath.c_str());
 			mesh->associatedMaterial = material;
+			mesh->textureName = fileName;
 		}
 		
 
@@ -146,4 +184,32 @@ GameObject * GameObjectManager::getFocusGO()
 void GameObjectManager::setFocusGO(GameObject * focusGO)
 {
 	this->focusGO = focusGO;
+}
+
+void GameObjectManager::saveScene()
+{
+	std::string output;
+	JsonSerializer::Serialize(root, output, "data/library/gameObjects/gameObjects.json");
+	haveToSaveScene = false;
+}
+
+
+void GameObjectManager::loadScene()
+{
+	JsonSerializer::Deserialize(root, "root/data/library/gameObjects/gameObjects.json");
+	haveToLoadScene = false;
+
+	//Reordering nodes
+	for (std::vector<GameObject*>::iterator iterator_child = root->children.begin(); 
+			iterator_child != root->children.end(); iterator_child++)
+	{
+		if ((*iterator_child)->parent_UUID != 0)
+		{
+			GameObject* go_parent = root->findByUUID((*iterator_child)->parent_UUID);
+			go_parent->addChild((*iterator_child));
+			(*iterator_child)->parent = go_parent;	
+			root->children.erase(iterator_child);
+			iterator_child = root->children.begin();	
+		}
+	}
 }

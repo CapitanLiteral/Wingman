@@ -28,10 +28,20 @@ public:
 	void setFocusGO(GameObject* focusGO);
 
 	std::map<std::string, uint> textures;
+	GameObject* currentCamera = nullptr;
+
+	void saveScene();
+	void loadScene();
+	bool haveToSaveScene = false;
+	bool haveToLoadScene = false;
+
+	std::vector<GameObject*> toDelete;
 
 private:
 	
 	GameObject* focusGO = nullptr;
+
+	
 
 };
 

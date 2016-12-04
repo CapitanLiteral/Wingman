@@ -19,6 +19,7 @@ class GameObject;
 class Outliner;
 class Inspector;
 class WindowMenus;
+class WindowSettings;
 
 class ModuleEditor : public Module
 {
@@ -39,13 +40,15 @@ public:
 	bool CleanUp();
 
 public:
-	WindowMenus* windowMenus = NULL;
-	Outliner* outliner = NULL;
-	Inspector* inspector = NULL;
+	WindowMenus* windowMenus = nullptr;
+	Outliner* outliner = nullptr;
+	Inspector* inspector = nullptr;
+	WindowSettings* settings = nullptr;
 
 	bool show_inspector = true;
 	bool show_Window_Menus = false;
 	bool show_outliner = true;
+	bool show_settings = false;
 
 };
 

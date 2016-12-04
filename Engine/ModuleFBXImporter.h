@@ -7,28 +7,6 @@
 class aiNode;
 class GameObject;
 
-
-struct VramVertex
-{
-	uint idVertices = 0;
-	uint numVertices = 0;
-	float* vertices = nullptr;
-
-	uint idIndices = 0;
-	uint numIndices = 0;
-	uint* indices = nullptr;
-	
-	uint idNormals = 0;
-	uint numNormals = 0;
-	float* normals = nullptr;
-
-	uint idUV = 0;
-	uint numUV = 0;
-	float* UV = nullptr;
-};
-
-
-
 class ModuleFBXImporter :
 	public Module
 {
@@ -38,19 +16,17 @@ public:
 	ModuleFBXImporter(Application* app, bool start_enabled = true);
 	bool Init();
 	bool CleanUp();
+	update_status Update(float dt);
 
 	virtual ~ModuleFBXImporter();
 
 	void loadFBX(const char* full_path);
-	GameObject* loadScene(const char* full_path);
 
 	GameObject* loadNode(const aiNode* node);
 
+	void ImportMecha();
+	void ImportScene();
 
-	uint loadTextures();
-	void drawMeshes(std::vector<VramVertex*>);
-
-
-	std::vector<VramVertex*> meshes;
+	bool bImportMecha = false;
 };
 

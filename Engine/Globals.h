@@ -14,6 +14,24 @@ void log(const char file[], int line, const char* format, ...);
 
 #define EDITOR_FRAME_SAMPLES 50
 
+#define RELEASE( x )\
+    {\
+       if( x != nullptr )\
+       {\
+         delete x;\
+	     x = nullptr;\
+       }\
+    }
+
+// Deletes an array of buffers
+#define RELEASE_ARRAY( x )\
+	{\
+       if( x != nullptr )\
+       {\
+           delete[] x;\
+	       x = nullptr;\
+		 }\
+	 }
 
 typedef unsigned int uint;
 
@@ -24,14 +42,32 @@ enum update_status
 	UPDATE_ERROR
 };
 
+enum module
+{
+	BEER_TEST,
+	WINDOW	
+};
+
 // Configuration -----------
-#define SCREEN_WIDTH 1280
-#define SCREEN_HEIGHT 1024
+#define SCREEN_WIDTH 1920
+#define SCREEN_HEIGHT 1080
 #define SCREEN_SIZE 1
 #define WIN_FULLSCREEN false
 #define WIN_RESIZABLE true
 #define WIN_BORDERLESS false
 #define WIN_FULLSCREEN_DESKTOP false
+#define WIN_MAXIMIZED true
 #define VSYNC true
+
 #define TITLE "Wingman game editor"
-#define LIFES 5
+#define ORGANIZATION "UndistinguishedMan"
+
+
+
+#define LOCAL_SAVE_DIRECTORY "data"
+#define ASSETS_DIRECTORY "assets"
+#define CONFIG_DIRECTORY "config"
+#define MESHES_DIRECTORY "meshes"
+#define MATERIAL_DIRECTORY "material"
+#define ANIMATION_DIRECTORY "animation"
+#define ROOT "root/"

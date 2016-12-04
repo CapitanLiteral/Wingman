@@ -8,6 +8,9 @@
 
 #include "OpenGL.h"
 
+#include "Imgui/imgui.h"
+#include "Imgui/imgui_impl_sdl_gl3.h"
+
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "Glew/libx86/glew32.lib") /* link Microsoft OpenGL lib   */
@@ -154,14 +157,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	//GRID
-	P_Plane grid(0.f, 1.f, 0.f, 0.f);
-	grid.axis = true;
-	//grid.wire = true;
-	grid.color.Set(255, 255, 255);
-	grid.Render();
-
-
+	
 
 
 

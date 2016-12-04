@@ -15,6 +15,7 @@ public:
 
 	void Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference = false);
 	void LookAt(const vec3 &Spot);
+	void LookAt(const float3 &Spot);
 	void Move(const vec3 &Movement);
 	void SetPos(const vec3 &Pos);
 	float* GetViewMatrix();

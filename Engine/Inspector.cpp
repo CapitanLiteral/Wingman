@@ -11,6 +11,7 @@
 #include "GameObject.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
+#include "ComponentCamera.h"
 
 Inspector::Inspector()
 {
@@ -27,6 +28,8 @@ void Inspector::draw()
 
 	ImGuiWindowFlags outilnerWindowFlags = 0;
 	outilnerWindowFlags |= ImGuiWindowFlags_AlwaysHorizontalScrollbar;
+	//outilnerWindowFlags |= ImGuiWindowFlags_NoMove;
+	//outilnerWindowFlags |= ImGuiWindowFlags_NoResize;
 
 	ImGui::SetNextWindowSize(ImVec2(App->window->screen_surface->w / 8 * 7, 600), ImGuiSetCond_FirstUseEver);
 	//ImGui::SetNextWindowPos(ImVec2(App->window->screen_surface->w / 8 * 7, 20));
@@ -38,9 +41,14 @@ void Inspector::draw()
 	}
 	if (App->goManager->getFocusGO() != nullptr)
 	{
+		//ImGuiStyle style = ImGui::GetStyle();
+		//ImVec4 color(0, 0, 0, 255);
+		//ImGui::ColorEdit4("BGCOlor", (float*)&style.Colors[2], true);
+
 		transform();
 		mesh();
 		material();
+		camera();
 	}
 	
 	ImGui::Spacing();
@@ -61,16 +69,18 @@ void Inspector::transform()
 	float3 scale;
 	Quat rot;
 	App->goManager->getFocusGO()->localTransform.Decompose(position, rot, scale);
-	float3 localEulerAngles = rot.ToEulerXYZ();
+
+	float3 localEulerAngles(App->goManager->getFocusGO()->getRotation());
 
 	if (ImGui::DragFloat3("Position", position.ptr(), 0.01f))
 		App->goManager->getFocusGO()->setPosition(position);
 
 
-	if (ImGui::DragFloat3("Rotation", localEulerAngles.ptr(), 0.01f))
+	if (ImGui::DragFloat3("Rotation", localEulerAngles.ptr(), 1.f))
 	{
-		rot = Quat::FromEulerXYZ(localEulerAngles.x, localEulerAngles.y, localEulerAngles.z);
-		App->goManager->getFocusGO()->setRotation(rot);
+		//localEulerAngles *= DEGTORAD;
+		//rot = Quat::FromEulerXYZ(localEulerAngles.x, localEulerAngles.y, localEulerAngles.z);
+		App->goManager->getFocusGO()->setRotation(localEulerAngles.x, localEulerAngles.y, localEulerAngles.z);
 	}
 
 	if (ImGui::DragFloat3("Scale", scale.ptr(), 0.01f))
@@ -101,12 +111,21 @@ void Inspector::mesh()
 {
 	//Active
 	GameObject* go = App->goManager->getFocusGO();
+	int i = 0;
+	if (go->aabb.IsFinite())
+	{
+		ImGui::Checkbox("GameObjectAABB", &go->drawAABB);
+		ImGui::Separator();
+	}	
 	for (std::vector<Component*>::iterator iterator = go->components.begin(); 
 		iterator != go->components.end(); iterator++)
 	{
 		if ((*iterator)->type == MESH)
 		{
+			ImGui::PushID(i);
 			ComponentMesh* mesh = (ComponentMesh*)(*iterator);
+			ImGui::Checkbox("AABB", &mesh->drawAABB); ImGui::SameLine();
+			ImGui::Checkbox("OBB", &mesh->drawOBB);
 			ImGui::Text("N vertex: ");
 			ImGui::SameLine();
 			ImGui::TextColored(ImColor(255, 80, 133), "%d", mesh->numVertices);
@@ -128,6 +147,10 @@ void Inspector::mesh()
 			ImGui::TextColored(ImColor(255, 80, 133), "%d", mesh->associatedMaterial->diffuse);
 
 			ImGui::Separator();
+
+			ImGui::PopID();
+
+			i++;
 		}
 	}
 
@@ -155,4 +178,21 @@ void Inspector::material()
 	}
 
 	
+}
+
+void Inspector::camera()
+{
+	GameObject* go = App->goManager->getFocusGO();
+	for (std::vector<Component*>::iterator iterator = go->components.begin();
+		 iterator != go->components.end(); iterator++)
+	{
+		if ((*iterator)->type == CAMERA)
+		{
+			ComponentCamera* camera = (ComponentCamera*)(*iterator);
+			ImGui::Checkbox("Debug", &camera->debug);
+			ImGui::Checkbox("Culling", &camera->culling);
+			ImGui::Checkbox("Attach Camera", &camera->attachCamera);
+			ImGui::Separator();
+		}
+	}
 }

@@ -60,6 +60,9 @@
     <Filter Include="Sources\Editor\UI\Elements">
       <UniqueIdentifier>{3f401ef5-9a70-47f1-9aeb-07fb44280995}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Json">
+      <UniqueIdentifier>{a58b7c38-42f0-44b7-903d-416627152bc7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -366,6 +369,24 @@
     <ClInclude Include="UI_Item.h">
       <Filter>Sources\Editor\UI</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleFileSystem.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleJson.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowSettings.h">
+      <Filter>Sources\Editor\UI\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentCamera.h">
+      <Filter>Sources\Editor\Decoupling</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonSerializer.h">
+      <Filter>Sources\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="IJsonSerializable.h">
+      <Filter>Sources\Json</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -556,6 +577,24 @@
     </ClCompile>
     <ClCompile Include="Inspector.cpp">
       <Filter>Sources\Editor\UI\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleFileSystem.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleJson.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowSettings.cpp">
+      <Filter>Sources\Editor\UI\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="jsoncpp\jsoncpp.cpp">
+      <Filter>Sources\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentCamera.cpp">
+      <Filter>Sources\Editor\Decoupling</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonSerializer.cpp">
+      <Filter>Sources\Json</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
