@@ -161,12 +161,7 @@ void GameObjectManager::LoadScene(const aiScene * scene, const aiNode * node, Ga
 			material->loadTexture(fullPath.c_str());
 			mesh->associatedMaterial = material;
 		}
-		
-
-		int iii = mesh->idVertices;
 	}
-
-
 
 	for (uint i = 0; i < node->mNumChildren; ++i)
 		LoadScene(scene, node->mChildren[i], gameObject);

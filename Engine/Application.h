@@ -17,6 +17,7 @@ class ModuleScene;
 class ModuleFBXImporter;
 class ModuleTexture;
 class GameObjectManager;
+class ModuleResourceManagement;
 
 #include "MathGeoLib\include\MathGeoLibFwd.h"
 
@@ -34,6 +35,7 @@ public:
 	ModuleFBXImporter* fbxImporter = nullptr;
 	ModuleTexture* texture = nullptr;
 	GameObjectManager* goManager = nullptr;
+	ModuleResourceManagement* resourceManagement = nullptr;
 
 	float ms_frame[EDITOR_FRAME_SAMPLES];
 	float framerate[EDITOR_FRAME_SAMPLES];

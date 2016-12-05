@@ -11,6 +11,7 @@
 #include "ModuleEditor.h"
 #include "ModuleTexture.h"
 #include "GameObjectManager.h"
+#include "ModuleResourceManagement.h"
 
 Application::Application()
 {
@@ -25,6 +26,7 @@ Application::Application()
 
 	texture = new ModuleTexture(this);
 	goManager = new GameObjectManager(this);
+	resourceManagement = new ModuleResourceManagement(this);
 	
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -38,7 +40,8 @@ Application::Application()
 	AddModule(texture);
 	AddModule(goManager);
 	AddModule(audio);
-	
+	AddModule(resourceManagement);
+
 	AddModule(editor);
 	// Renderer last!
 	AddModule(renderer3D);
@@ -50,7 +53,6 @@ Application::Application()
 	}
 	FrameTime = -1.0f;
 }
-
 Application::~Application()
 {
 	std::list<Module*>::reverse_iterator item = list_modules.rbegin();
@@ -61,7 +63,6 @@ Application::~Application()
 		item++;
 	}
 }
-
 bool Application::Init()
 {
 	bool ret = true;
@@ -92,7 +93,6 @@ bool Application::Init()
 	FPS_Timer.Start();
 	return ret;
 }
-
 // ---------------------------------------------
 void Application::PrepareUpdate()
 {
@@ -132,12 +132,10 @@ void Application::PrepareUpdate()
 	}
 
 }
-
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
 }
-
 // Call PreUpdate, Update and PostUpdate on all modules
 update_status Application::Update()
 {
@@ -188,7 +186,6 @@ update_status Application::Update()
 
 	return ret;
 }
-
 bool Application::CleanUp()
 {
 	bool ret = true;
@@ -201,30 +198,24 @@ bool Application::CleanUp()
 	}
 	return ret;
 }
-
-
 bool Application::OpenBrowser(const char* link)
 {
 	ShellExecuteA(0, 0, "chrome.exe", link, 0, SW_SHOWMAXIMIZED);
 
 	return true;
 }
-
 void Application::Log(char* str)
 {
 	
 }
-
 void Application::AddModule(Module* mod)
 {
 	list_modules.push_back(mod);
 }
-
 char * Application::getOrganization()
 {
 	return ORGANIZATION;
 }
-
 char * Application::getTitle()
 {
 	return TITLE;

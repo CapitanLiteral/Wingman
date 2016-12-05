@@ -55,6 +55,9 @@
     <Filter Include="Sources\Json">
       <UniqueIdentifier>{a58b7c38-42f0-44b7-903d-416627152bc7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Editor\Resources">
+      <UniqueIdentifier>{48d054eb-2df9-4560-b96a-81f9d4fa5225}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -352,6 +355,10 @@
     <ClInclude Include="IJsonSerializable.h">
       <Filter>Sources\Json</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleResourceManagement.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceMesh.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -543,6 +550,10 @@
     <ClCompile Include="JsonSerializer.cpp">
       <Filter>Sources\Json</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleResourceManagement.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceMesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\include\Math\Matrix.inl">

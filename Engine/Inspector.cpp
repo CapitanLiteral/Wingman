@@ -128,19 +128,19 @@ void Inspector::mesh()
 			ImGui::Checkbox("OBB", &mesh->drawOBB);
 			ImGui::Text("N vertex: ");
 			ImGui::SameLine();
-			ImGui::TextColored(ImColor(255, 80, 133), "%d", mesh->numVertices);
+			ImGui::TextColored(ImColor(255, 80, 133), "%d", mesh->mesh->numVertices);
 
 			ImGui::Text("N indices: ");
 			ImGui::SameLine();
-			ImGui::TextColored(ImColor(255, 80, 133), "%d", mesh->numIndices);
+			ImGui::TextColored(ImColor(255, 80, 133), "%d", mesh->mesh->numIndices);
 
 			ImGui::Text("N normals: ");
 			ImGui::SameLine();
-			ImGui::TextColored(ImColor(255, 80, 133), "%d", mesh->numNormals / 3);
+			ImGui::TextColored(ImColor(255, 80, 133), "%d", mesh->mesh->numNormals / 3);
 
 			ImGui::Text("N UV: ");
 			ImGui::SameLine();
-			ImGui::TextColored(ImColor(255, 80, 133), "%d", mesh->numVertices);
+			ImGui::TextColored(ImColor(255, 80, 133), "%d", mesh->mesh->numVertices);
 
 			ImGui::Text("Tex ID: ");
 			ImGui::SameLine();

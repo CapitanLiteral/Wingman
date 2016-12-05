@@ -4,6 +4,7 @@
 #include "Component.h"
 #include "MathGeoLib\include\MathGeoLib.h"
 #include "Color.h"
+#include "ResourceMesh.h"
 
 class GameObject;
 class aiMesh;
@@ -11,21 +12,8 @@ class ComponentMaterial;
 class ComponentMesh : public Component
 {
 public:
-	uint idVertices = 0;
-	uint numVertices = 0;
-	float* vertices = nullptr;
-
-	uint idIndices = 0;
-	uint numIndices = 0;
-	uint* indices = nullptr;
-
-	uint idNormals = 0;
-	uint numNormals = 0;
-	float* normals = nullptr;
-
-	uint idUV = 0;
-	uint numUV = 0;
-	float* UV = nullptr;
+	
+	ResourceMesh* mesh = nullptr;
 
 	int textureIndex = -1; //I think this will be used on an array of textures and this will be used to bind it
 	uint32_t associatedUUID;
@@ -34,9 +22,6 @@ public:
 
 	#pragma region BoundingBoxes
 	private:
-		OBB obb;
-		AABB aabb;
-
 		Color obb_color;
 		Color aabb_color;
 

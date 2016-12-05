@@ -21,11 +21,24 @@ GameObject::GameObject(GameObject* parent, const float3 translation, const float
 	this->parent		= parent;
 
 	localTransform = float4x4::FromTRS(translation, rotation, scale);
-	if (parent != NULL)
+	if (parent != nullptr)
 	{
 		parent->addChild(this);
 	}
 	aabb_color.Set(0, 0, 1, 1);
+}
+GameObject::GameObject()
+{
+	this->name = name;
+	//this->position	= translation;
+	//this->scale			= scale;
+	//this->rotation		= rotation;
+	this->parent = nullptr;
+	float3 translation(0,0,0);
+	float3 scale(1,1,1);
+	Quat rotation(float3(0,1,0), 0);
+	std::string name("NoName");
+	localTransform = float4x4::FromTRS(translation, rotation, scale);
 }
 GameObject::~GameObject()
 {

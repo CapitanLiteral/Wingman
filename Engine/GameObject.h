@@ -11,6 +11,7 @@ class GameObject : public IJsonSerializable
 {
 public:
 	GameObject(GameObject* parent, const float3 translation, const float3 scale, const Quat rotation, const char* name);
+	GameObject();
 	virtual ~GameObject();
 
 	void update();

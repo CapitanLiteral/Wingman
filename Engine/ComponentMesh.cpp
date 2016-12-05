@@ -19,53 +19,36 @@
 
 ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent)
 {
-	obb.SetNegativeInfinity();
-	aabb.SetNegativeInfinity();
+	mesh = new ResourceMesh();
+	mesh->obb.SetNegativeInfinity();
+	mesh->aabb.SetNegativeInfinity();
 	obb_color.Set(0.2, 1, 0.2, 1);
 	aabb_color.Set(1, 0.2, 0.2, 1);
 }
 ComponentMesh::~ComponentMesh()
 {
-	//Delete arrays
-	if (vertices != nullptr)
-	{
-		delete vertices;
-	}
-	if (indices != nullptr)
-	{
-		delete indices;
-	}
-	if (normals != nullptr)
-	{
-		delete normals;
-	}
-	if (UV != nullptr)
-	{
-		delete UV;
-	}
-
 	// Delete Buffers and restore de ID's
-	if (idVertices != 0)
+	if (mesh->idVertices != 0)
 	{
-		glDeleteBuffers(1, &idVertices);
-		idVertices = 0;
+		glDeleteBuffers(1, &mesh->idVertices);
+		mesh->idVertices = 0;
 	}
-	if (idIndices != 0)
+	if (mesh->idIndices != 0)
 	{
-		glDeleteBuffers(1, &idIndices);
-		idIndices = 0;
+		glDeleteBuffers(1, &mesh->idIndices);
+		mesh->idIndices = 0;
 	}
-	if (idNormals != 0)
+	if (mesh->idNormals != 0)
 	{
-		glDeleteBuffers(1, &idNormals);
-		idNormals = 0;
+		glDeleteBuffers(1, &mesh->idNormals);
+		mesh->idNormals = 0;
 	}
-	if (idUV != 0)
+	if (mesh->idUV != 0)
 	{
-		glDeleteBuffers(1, &idUV);
-		idUV = 0;
+		glDeleteBuffers(1, &mesh->idUV);
+		mesh->idUV = 0;
 	}
-
+	RELEASE(mesh);
 }
 void ComponentMesh::Update()
 {
@@ -80,7 +63,7 @@ void ComponentMesh::Update()
 			}
 			else
 			{
-				if (camera->frustum->Intersects(aabb))
+				if (camera->frustum->Intersects(mesh->aabb))
 				{
 					draw();
 				}
@@ -95,25 +78,25 @@ void ComponentMesh::Update()
 }
 void ComponentMesh::load(const aiMesh* mesh)
 {
-	numVertices = mesh->mNumVertices;
-	vertices = new float[numVertices * 3];
+	this->mesh->numVertices = mesh->mNumVertices;
+	this->mesh->vertices = new float[this->mesh->numVertices * 3];
 
-	memcpy(vertices, mesh->mVertices, sizeof(float)*  numVertices * 3);
+	memcpy(this->mesh->vertices, mesh->mVertices, sizeof(float)*  this->mesh->numVertices * 3);
 	//Normals
 	if (mesh->HasNormals())
 	{
-		numNormals = mesh->mNumVertices;
-		normals = new float[numNormals * 3];
+		this->mesh->numNormals = mesh->mNumVertices;
+		this->mesh->normals = new float[this->mesh->numNormals * 3];
 
-		memcpy(normals, mesh->mNormals, sizeof(float) * numNormals * 3);
+		memcpy(this->mesh->normals, mesh->mNormals, sizeof(float) * this->mesh->numNormals * 3);
 	}
 	
 	if (mesh->HasFaces())
 	{
-		SDL_Log("New mesh with %d vertices", numVertices);
+		SDL_Log("New mesh with %d vertices", this->mesh->numVertices);
 
-		numIndices = mesh->mNumFaces * 3;
-		indices = new uint[numIndices]; // Asume all are triangles
+		this->mesh->numIndices = mesh->mNumFaces * 3;
+		this->mesh->indices = new uint[this->mesh->numIndices]; // Asume all are triangles
 		for (uint j = 0; j < mesh->mNumFaces; j++)
 		{
 			if (mesh->mFaces[j].mNumIndices != 3)
@@ -122,41 +105,41 @@ void ComponentMesh::load(const aiMesh* mesh)
 			}
 			else
 			{
-				memcpy(&indices[j * 3], mesh->mFaces[j].mIndices, sizeof(uint) * 3);
+				memcpy(&this->mesh->indices[j * 3], mesh->mFaces[j].mIndices, sizeof(uint) * 3);
 			}
 		}
 	}
 	if (mesh->HasTextureCoords(0))
 	{
-		UV = new float[numVertices * 3];
-		memcpy(UV, mesh->mTextureCoords[0], sizeof(float) * numVertices * 3);
+		this->mesh->UV = new float[this->mesh->numVertices * 3];
+		memcpy(this->mesh->UV, mesh->mTextureCoords[0], sizeof(float) * this->mesh->numVertices * 3);
 	}
 
 	//Generating GL Buffers
 
 	//vertices
-	glGenBuffers(1, (GLuint*) &(idVertices));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idVertices);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*numVertices * 3, vertices, GL_STATIC_DRAW);
+	glGenBuffers(1, (GLuint*) &(this->mesh->idVertices));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->mesh->idVertices);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*this->mesh->numVertices * 3, this->mesh->vertices, GL_STATIC_DRAW);
 
 	//normals
-	if (normals != nullptr)
+	if (this->mesh->normals != nullptr)
 	{
-		glGenBuffers(1, (GLuint*) &(idNormals));
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idNormals);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*numNormals * 3, normals, GL_STATIC_DRAW);
+		glGenBuffers(1, (GLuint*) &(this->mesh->idNormals));
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->mesh->idNormals);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*this->mesh->numNormals * 3, this->mesh->normals, GL_STATIC_DRAW);
 	}
 	//indices
-	glGenBuffers(1, (GLuint*) &(idIndices));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIndices);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t)*numIndices, indices, GL_STATIC_DRAW);
+	glGenBuffers(1, (GLuint*) &(this->mesh->idIndices));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->mesh->idIndices);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t)*this->mesh->numIndices, this->mesh->indices, GL_STATIC_DRAW);
 
 	//UV
-	if (UV != nullptr)
+	if (this->mesh->UV != nullptr)
 	{
-		glGenBuffers(1, (GLuint*) &(idUV));
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idUV);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t)*numVertices * 3, UV, GL_STATIC_DRAW);
+		glGenBuffers(1, (GLuint*) &(this->mesh->idUV));
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->mesh->idUV);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t)*this->mesh->numVertices * 3, this->mesh->UV, GL_STATIC_DRAW);
 	}
 
 	updateBoundingBoxes();
@@ -176,26 +159,26 @@ void ComponentMesh::draw()
 	glBindTexture(GL_TEXTURE_2D, associatedMaterial->diffuse);
 
 	//vertices
-	glBindBuffer(GL_ARRAY_BUFFER, idVertices);
+	glBindBuffer(GL_ARRAY_BUFFER, this->mesh->idVertices);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
 	//normals
-	glBindBuffer(GL_ARRAY_BUFFER, idNormals);
+	glBindBuffer(GL_ARRAY_BUFFER, this->mesh->idNormals);
 	glNormalPointer(GL_FLOAT, 0, NULL);
 
 	//indices
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIndices);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->mesh->idIndices);
 
 	//UV
-	glBindBuffer(GL_ARRAY_BUFFER, idUV);
-	if (idUV != 0)
+	glBindBuffer(GL_ARRAY_BUFFER, this->mesh->idUV);
+	if (this->mesh->idUV != 0)
 	{
 		glTexCoordPointer(3, GL_FLOAT, 0, NULL);
 	}
 
 	glColor4f(associatedMaterial->color.r, associatedMaterial->color.g, associatedMaterial->color.b, associatedMaterial->color.a); //I should get fbx color TODO
 
-	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, NULL);
+	glDrawElements(GL_TRIANGLES, this->mesh->numIndices, GL_UNSIGNED_INT, NULL);
 
 	//DrawWireframe for selected object
 	#pragma region DrawWireframe
@@ -216,7 +199,7 @@ void ComponentMesh::draw()
 			glDisable(GL_CULL_FACE);
 		}
 
-		glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, NULL);
+		glDrawElements(GL_TRIANGLES, this->mesh->numIndices, GL_UNSIGNED_INT, NULL);
 	}
 	#pragma endregion
 
@@ -245,28 +228,28 @@ void ComponentMesh::draw()
 }
 void ComponentMesh::updateBoundingBoxes()
 {
-	aabb.SetNegativeInfinity();
-	aabb.Enclose((float3*)vertices, numVertices);
+	this->mesh->aabb.SetNegativeInfinity();
+	this->mesh->aabb.Enclose((float3*)this->mesh->vertices, this->mesh->numVertices);
 
-	obb = aabb;
-	obb.Transform(parent->globalTransform);
-	aabb.SetFrom(obb);
+	this->mesh->obb = this->mesh->aabb;
+	this->mesh->obb.Transform(parent->globalTransform);
+	this->mesh->aabb.SetFrom(this->mesh->obb);
 }
 OBB ComponentMesh::getOBB() const
 {
-	return obb;
+	return this->mesh->obb;
 }
 void ComponentMesh::setOBB(OBB obb)
 {
-	this->obb = obb;
+	this->mesh->obb = obb;
 }
 AABB ComponentMesh::getAABB() const
 {
-	return aabb;
+	return this->mesh->aabb;
 }
 void ComponentMesh::setAABB(AABB aabb)
 {
-	this->aabb = aabb;
+	this->mesh->aabb = aabb;
 }
 void ComponentMesh::draw_OBB()
 {
@@ -277,7 +260,7 @@ void ComponentMesh::draw_OBB()
 	glColor4f(obb_color.r, obb_color.g, obb_color.b, obb_color.a);
 
 	float3 vertices[8];
-	obb.GetCornerPoints(vertices);
+	this->mesh->obb.GetCornerPoints(vertices);
 
 	//glColor4f(color.r, color.g, color.b, color.a);
 
@@ -329,7 +312,7 @@ void ComponentMesh::draw_AABB()
 	glColor4f(aabb_color.r, aabb_color.g, aabb_color.b, aabb_color.a);
 
 	float3 vertices[8];
-	aabb.GetCornerPoints(vertices);
+	this->mesh->aabb.GetCornerPoints(vertices);
 
 	//glColor4f(color.r, color.g, color.b, color.a);
 
