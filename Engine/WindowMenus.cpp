@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleEditor.h"
 #include "GameObjectManager.h"
+#include "ModuleFileSystem.h"
 #include "WindowMenus.h"
 #include "Imgui/imgui.h"
 #include "Imgui/imgui_impl_sdl_gl3.h"
@@ -11,12 +12,9 @@
 WindowMenus::WindowMenus()
 {
 }
-
-
 WindowMenus::~WindowMenus()
 {
 }
-
 void WindowMenus::draw()
 {
 	ImGui::ShowTestWindow();
@@ -43,6 +41,10 @@ void WindowMenus::draw()
 		showCredits();
 		//App->jsonParser->print_commits_info("CapitanLiteral", "Wingman");
 	}
+	if (showImportFBX)
+	{
+		importFBX();
+	}
 
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -51,6 +53,11 @@ void WindowMenus::draw()
 			ImGui::MenuItem("Save", NULL, &App->goManager->haveToSaveScene, true);
 			ImGui::MenuItem("Load", NULL, &App->goManager->haveToLoadScene, true);
 			ImGui::MenuItem("Quit", NULL, &quitSelected, true);
+			if (ImGui::BeginMenu("Import"))
+			{
+				ImGui::MenuItem("FBX", NULL, &showImportFBX, true);
+				ImGui::EndMenu();
+			}
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Windows"))
@@ -83,8 +90,8 @@ void WindowMenus::draw()
 		SDL_Log("Closing aplication from editor");
 		QUIT = true;
 	}
+	
 }
-
 void WindowMenus::showCredits()
 {
 	ImGuiWindowFlags outilnerWindowFlags = 0;
@@ -158,5 +165,30 @@ void WindowMenus::showCredits()
 
 
 
+	ImGui::End();
+}
+void WindowMenus::importFBX()
+{
+	ImGui::SetNextWindowSize(ImVec2(500, 440), ImGuiSetCond_FirstUseEver);
+	if (ImGui::Begin("Example: Layout", NULL, ImGuiWindowFlags_MenuBar))
+	{	
+		// left
+		std::vector<std::string> files;
+		static std::string selected = "";
+		ImGui::BeginChild("left pane", ImVec2(0, 200), true);		
+		App->fs->getFilesOnDir("root/data/assets/fbx", files);
+		for (std::vector<std::string>::iterator iterator = files.begin();
+				iterator != files.end(); iterator++)
+		{
+			if (ImGui::Selectable((*iterator).c_str(), selected == (*iterator)))
+					selected = (*iterator);
+								
+		}
+		ImGui::EndChild();
+		if (ImGui::Button("Import")) 
+		{
+			
+		}
+	}
 	ImGui::End();
 }
