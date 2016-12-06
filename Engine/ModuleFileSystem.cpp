@@ -264,3 +264,37 @@ uint ModuleFileSystem::getFilesOnDir(const char* dir, std::vector<std::string>& 
 
 	return ret;
 }
+uint ModuleFileSystem::getFilesOnDir(const char* dir, std::vector<std::string>& files, std::string extension)
+{
+	uint ret = 0;
+
+	char** rc = PHYSFS_enumerateFiles(dir);
+	for (char** it = rc; *it != NULL; ++it)
+	{
+		if (getFileExtension((*it)) == extension)
+		{
+			files.push_back(*it);
+			++ret;
+		}		
+	}
+
+	PHYSFS_freeList(rc);
+
+	return ret;
+}
+std::string ModuleFileSystem::getFileExtension(std::string file)
+{
+	std::string extension;
+	for (std::string::reverse_iterator iterator = file.rbegin(); 
+			iterator != file.rend(); iterator++)
+	{
+		if ((*iterator) == '.')
+		{
+			break;
+		}
+		extension.push_back((*iterator));
+	}
+	std::reverse(extension.begin(), extension.end());
+	return extension;
+}
+

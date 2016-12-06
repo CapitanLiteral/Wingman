@@ -55,7 +55,7 @@
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)jsoncpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../PersonalLibrary;$(ProjectDir)jsoncpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -265,6 +265,11 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Wingman.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PersonalLibrary\PersonalLibrary.vcxproj">
+      <Project>{5615155f-9f29-4b6e-a7a9-4e4141b8922f}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

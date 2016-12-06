@@ -1,7 +1,9 @@
 #pragma once
 #include "Application.h"
 #include "Globals.h"
+
 #include "MathGeoLib\include\MathGeoLib.h"
+
 class ResourceMesh
 {
 public:
