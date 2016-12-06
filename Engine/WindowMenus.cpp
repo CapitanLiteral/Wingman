@@ -3,6 +3,7 @@
 #include "ModuleEditor.h"
 #include "GameObjectManager.h"
 #include "ModuleFileSystem.h"
+#include "ModuleResourceManagement.h"
 #include "WindowMenus.h"
 #include "Imgui/imgui.h"
 #include "Imgui/imgui_impl_sdl_gl3.h"
@@ -176,7 +177,7 @@ void WindowMenus::importFBX()
 		std::vector<std::string> files;
 		static std::string selected = "";
 		ImGui::BeginChild("left pane", ImVec2(0, 200), true);		
-		App->fs->getFilesOnDir("root/data/assets/fbx", files);
+		App->fs->getFilesOnDir("root/data/assets/fbx", files, "fbx");
 		for (std::vector<std::string>::iterator iterator = files.begin();
 				iterator != files.end(); iterator++)
 		{
@@ -187,7 +188,7 @@ void WindowMenus::importFBX()
 		ImGui::EndChild();
 		if (ImGui::Button("Import")) 
 		{
-			
+			App->resourceManagement->importFBX(selected);
 		}
 	}
 	ImGui::End();
