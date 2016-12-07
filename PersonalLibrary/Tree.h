@@ -25,7 +25,8 @@
 //}
 
 // MathLibrary.h - Contains declaration of Function class  
-#pragma once  
+#pragma once 
+#include <vector> 
 
 #ifdef PERSONALLIBRARY_EXPORTS  
 #define PERSONALLIBRARY_API __declspec(dllexport)   
@@ -36,9 +37,13 @@
 namespace PersonalLibrary
 {
 	// This class is exported from the MathLibrary.dll  
+	template <class type>
 	class Tree
 	{
 	public:
+		std::vector<type*> children;
+
+
 		// Returns a + b  
 		static PERSONALLIBRARY_API double Add(float a, float b);
 

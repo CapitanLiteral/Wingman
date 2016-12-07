@@ -33,7 +33,11 @@ update_status ModuleResourceManagement::PreUpdate(float dt)
 update_status ModuleResourceManagement::Update(float dt)
 {
 	//PersonalLibrary::Tree::Add();
+	PersonalLibrary::Tree tree;
+	SDL_Log("DLL inst: %f", tree.Add(2.0, 5.0));
 	SDL_Log("DLL: %f", PersonalLibrary::Tree::Multiply(5.0,2.0));
+	tree.escobar = 5;
+	SDL_Log("Pablo: %d", tree.escobar);
 	return UPDATE_CONTINUE;
 }
 update_status ModuleResourceManagement::PostUpdate(float dt)
