@@ -1,5 +1,6 @@
 #pragma once
 #include "Globals.h"
+#include "Application.h"
 
 #include "Component.h"
 #include "MathGeoLib\include\MathGeoLib.h"
@@ -46,7 +47,7 @@ public:
 	~ComponentMesh();
 
 	void Update();
-	void load(const aiMesh* mesh);
+	void load();
 	void draw();
 	
 	void draw_OBB();

@@ -1,6 +1,7 @@
 #pragma once
-#include "Application.h"
 #include "Globals.h"
+#include "Application.h"
+
 #include "Module.h"
 #include <vector>;
 

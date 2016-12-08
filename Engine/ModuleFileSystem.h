@@ -33,6 +33,8 @@ public:
 	uint getFilesOnDir(const char* dir, std::vector<std::string>& files);
 	uint getFilesOnDir(const char* dir, std::vector<std::string>& files, std::string extension);
 	std::string getFileExtension(std::string file);
+	std::string removeExtension(const std::string& filename);
+	std::string addExtension(const std::string& filename, const std::string& extension);
 	unsigned int load(const char* file, char** buffer)const;
 	SDL_RWops* load(const char* file)const;
 	unsigned int save(const char* file, const char* buffer, unsigned int size)const;

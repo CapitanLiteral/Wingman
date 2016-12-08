@@ -37,11 +37,11 @@
 namespace PersonalLibrary
 {
 	// This class is exported from the MathLibrary.dll  
-	template <class type>
+	//template <class type>
 	class Tree
 	{
 	public:
-		std::vector<type*> children;
+		//std::vector<type*> children;
 
 
 		// Returns a + b  

@@ -26,13 +26,19 @@ void Inspector::draw()
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////
 
+	ImGuiIO& io = ImGui::GetIO();
+	windowW = io.DisplaySize.x;
+	windowH = io.DisplaySize.y;
+
+
 	ImGuiWindowFlags outilnerWindowFlags = 0;
 	outilnerWindowFlags |= ImGuiWindowFlags_AlwaysHorizontalScrollbar;
 	//outilnerWindowFlags |= ImGuiWindowFlags_NoMove;
 	//outilnerWindowFlags |= ImGuiWindowFlags_NoResize;
 
-	ImGui::SetNextWindowSize(ImVec2(App->window->screen_surface->w / 8 * 7, 600), ImGuiSetCond_FirstUseEver);
-	//ImGui::SetNextWindowPos(ImVec2(App->window->screen_surface->w / 8 * 7, 20));
+	ImGui::SetNextWindowSize(ImVec2(350, windowH - 20));
+	ImGui::SetNextWindowPos(ImVec2(windowW - 350, 20));
+
 	if (!ImGui::Begin("Inspector", &active, outilnerWindowFlags))
 	{
 		// Early out if the window is collapsed, as an optimization.

@@ -16,5 +16,7 @@ public:
 	void camera();
 
 	ImGuiWindowFlags inspectorWindowFlags = 0;
+
+	uint windowW = 1, windowH = 1;
 };
 

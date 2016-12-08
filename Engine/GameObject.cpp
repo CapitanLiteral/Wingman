@@ -358,94 +358,96 @@ void GameObject::setGlobalTransform(float3 pos, Quat rot, float3 scale)
 }
 void GameObject::Serialize(Json::Value & root)
 {
-	
-	Json::Value go;
-	float3 pos;
-	float3 scale;
-	Quat rot;
-	localTransform.Decompose(pos, rot, scale);
-	//Position
-	for (int i = 0; i < 3; i++)
-	{
-		go["pos"].append(*(pos.ptr()+i));
-	}
-	//Rotation
-	float3 euler_rot = rot.ToEulerXYZ();
-	euler_rot *= RADTODEG;	
+	if (selializable)
+	{	
+		Json::Value go;
+		float3 pos;
+		float3 scale;
+		Quat rot;
+		localTransform.Decompose(pos, rot, scale);
+		//Position
+		for (int i = 0; i < 3; i++)
+		{
+			go["pos"].append(*(pos.ptr()+i));
+		}
+		//Rotation
+		float3 euler_rot = rot.ToEulerXYZ();
+		euler_rot *= RADTODEG;	
 
-	for (int i = 0; i < 3; i++)
-	{
-		go["rot"].append(*(euler_rot.ptr() + i));
-	}
-	//Scale
-	for (int i = 0; i < 3; i++)
-	{
-		go["scale"].append(*(scale.ptr() + i));
-	}
-	//name
-	go["name"] = name;
-	//UUID
-	if (name == "ROOT")
-	{
-		UUID = 0;
-	}
-	else
-	{
-		LCG random;
-		UUID = random.Int();
+		for (int i = 0; i < 3; i++)
+		{
+			go["rot"].append(*(euler_rot.ptr() + i));
+		}
+		//Scale
+		for (int i = 0; i < 3; i++)
+		{
+			go["scale"].append(*(scale.ptr() + i));
+		}
+		//name
+		go["name"] = name;
+		//UUID
+		if (name == "ROOT")
+		{
+			UUID = 0;
+		}
+		else
+		{
+			LCG random;
+			UUID = random.Int();
 		
-	}
-	go["UUID"] = UUID;
-	//Parent UUID
-	if (parent != nullptr)
-		go["parent_UUID"] = parent->UUID;
-	else
-		go["parent_UUID"] = 0;
+		}
+		go["UUID"] = UUID;
+		//Parent UUID
+		if (parent != nullptr)
+			go["parent_UUID"] = parent->UUID;
+		else
+			go["parent_UUID"] = 0;
 	
-	std::string uuid_str = std::to_string(UUID);
-	//Json::Value jcomponents;
+		std::string uuid_str = std::to_string(UUID);
+		//Json::Value jcomponents;
 
-	for (std::vector<Component*>::iterator iterator = components.begin();
-		iterator != components.end(); iterator++)
-	{
-		if ((*iterator) != nullptr && (*iterator)->type == CAMERA)
-		{	
-			Json::Value jcomponents;
-			(*iterator)->Serialize(jcomponents);
-			go["components"].append(jcomponents);
-		}
-	}
-	for (std::vector<Component*>::iterator iterator = components.begin();
-		 iterator != components.end(); iterator++)
-	{
-		if ((*iterator) != nullptr && (*iterator)->type == MATERIAL)
+		for (std::vector<Component*>::iterator iterator = components.begin();
+			iterator != components.end(); iterator++)
 		{
-			Json::Value jcomponents;
-			(*iterator)->Serialize(jcomponents);
-			go["components"].append(jcomponents);
+			if ((*iterator) != nullptr && (*iterator)->type == CAMERA)
+			{	
+				Json::Value jcomponents;
+				(*iterator)->Serialize(jcomponents);
+				go["components"].append(jcomponents);
+			}
 		}
-	}
-	for (std::vector<Component*>::iterator iterator = components.begin();
-		 iterator != components.end(); iterator++)
-	{
-		if ((*iterator) != nullptr && (*iterator)->type == MESH)
+		for (std::vector<Component*>::iterator iterator = components.begin();
+			 iterator != components.end(); iterator++)
 		{
-			Json::Value jcomponents;
-			(*iterator)->Serialize(jcomponents);
-			go["components"].append(jcomponents);
+			if ((*iterator) != nullptr && (*iterator)->type == MATERIAL)
+			{
+				Json::Value jcomponents;
+				(*iterator)->Serialize(jcomponents);
+				go["components"].append(jcomponents);
+			}
 		}
+		for (std::vector<Component*>::iterator iterator = components.begin();
+			 iterator != components.end(); iterator++)
+		{
+			if ((*iterator) != nullptr && (*iterator)->type == MESH)
+			{
+				Json::Value jcomponents;
+				(*iterator)->Serialize(jcomponents);
+				go["components"].append(jcomponents);
+			}
+		}
+		//go["components"] = jcomponents;
+		//root[uuid_str] = go;
+		if (name != "ROOT")
+			root["gameObjects"].append(go);
 	}
-	//go["components"] = jcomponents;
-	//root[uuid_str] = go;
-	if (name != "ROOT")
-		root["gameObjects"].append(go);
-
-	//Recursive
-	for (std::vector<GameObject*>::iterator iterator = children.begin();
-		 iterator != children.end(); iterator++)
-	{
-		(*iterator)->Serialize(root);
-	}
+		//Recursive
+		for (std::vector<GameObject*>::iterator iterator = children.begin();
+			 iterator != children.end(); iterator++)
+		{
+			(*iterator)->Serialize(root);
+		}
+	
 }
 void GameObject::Deserialize(Json::Value & root)
 {

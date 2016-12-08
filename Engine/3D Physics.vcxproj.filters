@@ -358,7 +358,9 @@
     <ClInclude Include="ModuleResourceManagement.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceMesh.h" />
+    <ClInclude Include="ResourceMesh.h">
+      <Filter>Sources\Editor\Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -553,7 +555,9 @@
     <ClCompile Include="ModuleResourceManagement.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="ResourceMesh.cpp" />
+    <ClCompile Include="ResourceMesh.cpp">
+      <Filter>Sources\Editor\Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\include\Math\Matrix.inl">

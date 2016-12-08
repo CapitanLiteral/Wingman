@@ -2,6 +2,7 @@
 #include "Globals.h"
 
 #include "GameObjectManager.h"
+#include "ModuleResourceManagement.h"
 #include "GameObject.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
@@ -131,7 +132,7 @@ void GameObjectManager::LoadScene(const aiScene * scene, const aiNode * node, Ga
 
 		ComponentMesh* mesh = (ComponentMesh*)gameObject->createComponent(MESH);	
 		
-		mesh->load(ai_mesh);
+		mesh->mesh->loadMesh(ai_mesh);
 		//PNG path && Filename
 		if (scene->HasMaterials())
 		{

@@ -1,19 +1,15 @@
-#include "Application.h"
-
 #include "ComponentMesh.h"
 #include "GameObject.h"
 #include "ComponentMaterial.h"
-#include "OpenGL.h"
 #include "GameObjectManager.h"
 #include "ComponentCamera.h"
-#include "MathGeoLib\include\MathGeoLib.h"
+
+#include "OpenGL.h"
 
 #include "Assimp\Assimp\include\scene.h"
 #include "Assimp\Assimp\include\cfileio.h"
 #include "Assimp\Assimp\include\cimport.h"
 #include "Assimp\Assimp\include\postprocess.h"
-
-
 
 #pragma comment (lib, "Assimp/Assimp/libx86/assimp.lib")
 
@@ -75,46 +71,12 @@ void ComponentMesh::Update()
 		}
 			
 	}
+	// Temporal shitty code
+	load();
+	draw();
 }
-void ComponentMesh::load(const aiMesh* mesh)
+void ComponentMesh::load()
 {
-	this->mesh->numVertices = mesh->mNumVertices;
-	this->mesh->vertices = new float[this->mesh->numVertices * 3];
-
-	memcpy(this->mesh->vertices, mesh->mVertices, sizeof(float)*  this->mesh->numVertices * 3);
-	//Normals
-	if (mesh->HasNormals())
-	{
-		this->mesh->numNormals = mesh->mNumVertices;
-		this->mesh->normals = new float[this->mesh->numNormals * 3];
-
-		memcpy(this->mesh->normals, mesh->mNormals, sizeof(float) * this->mesh->numNormals * 3);
-	}
-	
-	if (mesh->HasFaces())
-	{
-		SDL_Log("New mesh with %d vertices", this->mesh->numVertices);
-
-		this->mesh->numIndices = mesh->mNumFaces * 3;
-		this->mesh->indices = new uint[this->mesh->numIndices]; // Asume all are triangles
-		for (uint j = 0; j < mesh->mNumFaces; j++)
-		{
-			if (mesh->mFaces[j].mNumIndices != 3)
-			{
-				SDL_Log("WARNING, geometry face with != 3 indices!");
-			}
-			else
-			{
-				memcpy(&this->mesh->indices[j * 3], mesh->mFaces[j].mIndices, sizeof(uint) * 3);
-			}
-		}
-	}
-	if (mesh->HasTextureCoords(0))
-	{
-		this->mesh->UV = new float[this->mesh->numVertices * 3];
-		memcpy(this->mesh->UV, mesh->mTextureCoords[0], sizeof(float) * this->mesh->numVertices * 3);
-	}
-
 	//Generating GL Buffers
 
 	//vertices

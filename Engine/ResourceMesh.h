@@ -4,6 +4,13 @@
 
 #include "MathGeoLib\include\MathGeoLib.h"
 
+#include "Assimp\Assimp\include\scene.h"
+#include "Assimp\Assimp\include\cfileio.h"
+#include "Assimp\Assimp\include\cimport.h"
+#include "Assimp\Assimp\include\postprocess.h"
+
+#pragma comment (lib, "Assimp/Assimp/libx86/assimp.lib")
+
 class ResourceMesh
 {
 public:
@@ -32,5 +39,6 @@ public:
 
 	char* getRawMesh();
 	void loadRawMesh(char* buffer);
+	void loadMesh(const aiMesh* mesh);
 };
 
