@@ -6,6 +6,7 @@
 #include "SDL\include\SDL.h"
 
 #include <string>
+#include <algorithm>
 
 #pragma comment( lib, "PhysFS/libx86/physfs.lib")
 
@@ -271,7 +272,10 @@ uint ModuleFileSystem::getFilesOnDir(const char* dir, std::vector<std::string>& 
 	char** rc = PHYSFS_enumerateFiles(dir);
 	for (char** it = rc; *it != NULL; ++it)
 	{
-		if (getFileExtension((*it)) == extension)
+		std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+		std::string ext = getFileExtension((*it));
+		std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
+		if (ext == extension)
 		{
 			files.push_back(*it);
 			++ret;
@@ -303,7 +307,6 @@ std::string ModuleFileSystem::removeExtension(const std::string& filename)
 	if (lastdot == std::string::npos) return filename;
 	return filename.substr(0, lastdot);
 }
-
 std::string ModuleFileSystem::addExtension(const std::string & filename, const std::string & extension)
 {
 	std::string output;

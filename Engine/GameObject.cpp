@@ -61,7 +61,8 @@ GameObject::~GameObject()
 	}
 
 }
-Component* GameObject::createComponent(ComponentType type)
+
+Component*		GameObject::createComponent(ComponentType type)
 {
 	Component* ret;
 	if (type == MESH)
@@ -89,7 +90,7 @@ Component* GameObject::createComponent(ComponentType type)
 
 	return ret;
 }
-void GameObject::update()
+void			GameObject::update()
 {
 
 	for (std::vector<GameObject*>::iterator it = children.begin();
@@ -129,7 +130,7 @@ void GameObject::update()
 	
 
 }
-Component * GameObject::findComponent(ComponentType)
+Component *		GameObject::findComponent(ComponentType)
 {
 	Component* ret = nullptr;
 	if (components.size() > 0)
@@ -147,7 +148,7 @@ Component * GameObject::findComponent(ComponentType)
 	
 	return ret;
 }
-void GameObject::addChild(GameObject* child)
+void			GameObject::addChild(GameObject* child)
 { 
 	if (child != NULL)
 	{
@@ -159,15 +160,15 @@ void GameObject::addChild(GameObject* child)
 	}
 	
 }
-const float4x4 GameObject::getLocalTransform()
+const float4x4	GameObject::getLocalTransform()
 {
 	return localTransform;
 }
-const float4x4 GameObject::getGlobalTransform()
+const float4x4	GameObject::getGlobalTransform()
 {
 	return globalTransform;
 }
-void GameObject::refreshTransform(float4x4 mat)
+void			GameObject::refreshTransform(float4x4 mat)
 {
 	if (parent != NULL)
 	{
@@ -181,7 +182,7 @@ void GameObject::refreshTransform(float4x4 mat)
 	}
 	
 }
-void GameObject::setPosition(float3 position)
+void			GameObject::setPosition(float3 position)
 {
 	float3 pos;
 	float3 sca;
@@ -202,7 +203,7 @@ void GameObject::setPosition(float3 position)
 		}
 	}
 }
-void GameObject::setRotation(Quat rotation)
+void			GameObject::setRotation(Quat rotation)
 {
 	float3 pos;
 	float3 sca;
@@ -223,7 +224,7 @@ void GameObject::setRotation(Quat rotation)
 		}
 	}
 }
-void GameObject::setRotation(float* rot)
+void			GameObject::setRotation(float* rot)
 {
 	float3 r;
 	r.Set(rot);
@@ -248,7 +249,7 @@ void GameObject::setRotation(float* rot)
 
 	setRotation(Quat::FromEulerXYZ(r.x, r.y, r.z));
 }
-void GameObject::setRotation(float x, float y, float z)
+void			GameObject::setRotation(float x, float y, float z)
 {
 	while (x < 0)
 		x += 360;
@@ -271,7 +272,7 @@ void GameObject::setRotation(float x, float y, float z)
 	setRotation(Quat::FromEulerXYZ(x, y, z));
 
 }
-float3 GameObject::getRotation() const
+float3			GameObject::getRotation() const
 {
 
 	float3 pos;
@@ -301,7 +302,7 @@ float3 GameObject::getRotation() const
 
 	return ret;
 }
-float* GameObject::getEulerRot() const
+float*			GameObject::getEulerRot() const
 {
 
 	float3 pos;
@@ -331,7 +332,7 @@ float* GameObject::getEulerRot() const
 
 	return (float*)&rotationEuler;
 }
-void GameObject::setScale(float3 scale)
+void			GameObject::setScale(float3 scale)
 {
 	float3 pos;
 	float3 sca;
@@ -352,11 +353,11 @@ void GameObject::setScale(float3 scale)
 		}
 	}
 }
-void GameObject::setGlobalTransform(float3 pos, Quat rot, float3 scale)
+void			GameObject::setGlobalTransform(float3 pos, Quat rot, float3 scale)
 {
 	globalTransform = float4x4::FromTRS(pos, rot, scale);
 }
-void GameObject::Serialize(Json::Value & root)
+void			GameObject::Serialize(Json::Value & root)
 {
 	if (selializable)
 	{	
@@ -449,7 +450,7 @@ void GameObject::Serialize(Json::Value & root)
 		}
 	
 }
-void GameObject::Deserialize(Json::Value & root)
+void			GameObject::Deserialize(Json::Value & root)
 {
 	App->goManager->setFocusGO(nullptr);
 	GameObject* go_root = App->goManager->root;
@@ -535,7 +536,7 @@ void GameObject::Deserialize(Json::Value & root)
 		}
 	}
 }
-GameObject * GameObject::findByUUID(uint32_t UUID)
+GameObject *	GameObject::findByUUID(uint32_t UUID)
 {
 	GameObject* ret = nullptr;
 
@@ -551,15 +552,15 @@ GameObject * GameObject::findByUUID(uint32_t UUID)
 
 	return ret;
 }
-AABB GameObject::getAABB() const
+AABB			GameObject::getAABB() const
 {
 	return aabb;
 }
-void GameObject::setAABB(AABB aabb)
+void			GameObject::setAABB(AABB aabb)
 {
 	this->aabb = aabb;
 }
-void GameObject::draw_AABB()
+void			GameObject::draw_AABB()
 {
 	glDisable(GL_LIGHTING);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -611,7 +612,7 @@ void GameObject::draw_AABB()
 	glEnable(GL_LIGHTING);
 	//glLineWidth(1.f);
 }
-void GameObject::updateBoundingBoxes()
+void			GameObject::updateBoundingBoxes()
 {
 	aabb.SetNegativeInfinity();
 	std::vector<AABB> aabbVector;

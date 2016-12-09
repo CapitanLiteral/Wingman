@@ -59,11 +59,7 @@ public:
 	bool selected = false;
 	bool drawAABB = false;
 	bool selializable = true;
-	//bool mustBeDeleted = false;
-	//Local parent base
-	//float3	position = float3::zero;
-	//float3	scale = float3::zero;
-	//Quat	rotation = Quat::identity;
+
 	float4x4 localTransform = float4x4::identity;
 	//global normal base
 	float4x4 globalTransform = float4x4::identity; 	

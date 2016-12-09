@@ -37,7 +37,7 @@ public:
 	ResourceMesh();
 	~ResourceMesh();
 
-	char* getRawMesh();
+	int getRawMesh(char** buffer);
 	void loadRawMesh(char* buffer);
 	void loadMesh(const aiMesh* mesh);
 };

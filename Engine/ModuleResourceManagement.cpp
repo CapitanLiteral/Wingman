@@ -128,6 +128,21 @@ void ModuleResourceManagement::aiSceneToGameObjects(const aiScene * scene, const
 
 
 		mesh->mesh->loadMesh(ai_mesh);
+
+		char* buffer = nullptr;
+		int size = 0;
+		size = mesh->mesh->getRawMesh(&buffer);
+		std::string path("data/library/meshes/");
+		path.append(gameObject->name);
+		path.append(std::to_string(i));
+		path.append(".mesh");
+		App->fs->save(path.c_str(), buffer, size);
+		RELEASE_ARRAY(buffer);
+		path.insert(0, "root/");
+		App->fs->load(path.c_str(), &buffer);
+		mesh->mesh->loadRawMesh(buffer);
+
+
 		//PNG path && Filename
 		if (scene->HasMaterials())
 		{
