@@ -133,8 +133,14 @@ void ModuleResourceManagement::aiSceneToGameObjects(const aiScene * scene, const
 		char* buffer = NULL;
 		char* output = NULL;
 		int size = 0;
-
-		size = mesh->mesh->getRawMesh(&buffer);
+		int returnSize = 0;
+		size = mesh->mesh->getSize();
+		buffer = new char[size];
+		returnSize = mesh->mesh->getRawMesh(&buffer);
+		if (returnSize > size)
+		{
+			SDL_Log("Something could be wrong, allocated memory is less than mesh info...");
+		}
 		std::string buf(buffer);
 		std::string path("data/library/meshes/");
 		path.append(gameObject->name);

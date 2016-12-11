@@ -28,25 +28,6 @@ ResourceMesh::~ResourceMesh()
 int ResourceMesh::getRawMesh(char ** buffer)
 {
 	char* pointer;
-	int size = 0;
-	size += sizeof(char) * 4;
-	size += sizeof(uint);
-	size += sizeof(uint)  * 3 * numIndices;
-			
-	size += sizeof(uint);
-	size += sizeof(float) * numVertices * 3;
-
-	size += sizeof(uint);
-	size += sizeof(float) * numNormals * 3;
-			
-	size += sizeof(uint);
-	size += sizeof(float) * numUV * 3;
-	
-						   
-	//size += sizeof(obb);
-	//size += sizeof(aabb);
-
-	*buffer = new char[size];
 	pointer = *buffer;
 	
 	memcpy(pointer, "aaaa", sizeof(char) * 4);
@@ -63,14 +44,14 @@ int ResourceMesh::getRawMesh(char ** buffer)
 	memcpy(pointer, indices, sizeof(uint) * numIndices);
 	pointer += sizeof(uint) * numIndices;
 	memcpy(pointer, vertices, sizeof(float) * 3 * numVertices);
-	pointer += sizeof(float) * 3 * numIndices;
+	pointer += sizeof(float) * 3 * numVertices;
 	memcpy(pointer, normals, sizeof(float) * 3 * numNormals);
 	pointer += sizeof(float) * 3 * numNormals;
 	memcpy(pointer, UV, sizeof(float) * 3 * numUV);
 	pointer += sizeof(float) * 3 * numUV;
 
 
-	return size;
+	return pointer-(*buffer);
 }
 void ResourceMesh::loadRawMesh(char * buffer)
 {
@@ -139,4 +120,26 @@ void ResourceMesh::loadMesh(const aiMesh * mesh)
 		UV = new float[numVertices * 3];
 		memcpy(UV, mesh->mTextureCoords[0], sizeof(float) * numVertices * 3);
 	}
+}
+
+int ResourceMesh::getSize() const
+{
+	int size = 0;
+	size += sizeof(char) * 4;
+	size += sizeof(uint);
+	size += sizeof(uint) * 3 * numIndices;
+
+	size += sizeof(uint);
+	size += sizeof(float) * numVertices * 3;
+
+	size += sizeof(uint);
+	size += sizeof(float) * numNormals * 3;
+
+	size += sizeof(uint);
+	size += sizeof(float) * numUV * 3;
+
+	size += sizeof(obb);
+	size += sizeof(aabb);
+
+	return size;
 }

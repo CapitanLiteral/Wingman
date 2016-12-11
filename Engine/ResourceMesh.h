@@ -40,5 +40,6 @@ public:
 	int getRawMesh(char** buffer);
 	void loadRawMesh(char* buffer);
 	void loadMesh(const aiMesh* mesh);
+	int getSize() const;
 };
 
