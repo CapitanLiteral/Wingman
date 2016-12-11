@@ -29,18 +29,19 @@ int ResourceMesh::getRawMesh(char ** buffer)
 {
 	char* pointer;
 	int size = 0;
+	size += sizeof(char) * 4;
+	size += sizeof(uint);
+	size += sizeof(uint)  * 3 * numIndices;
 			
-	size += sizeof(numIndices);
-	size += sizeof(indices)  * 3 * numIndices;
-			
-	size += sizeof(numVertices);
-	size += sizeof(vertices) * numVertices * 3;
+	size += sizeof(uint);
+	size += sizeof(float) * numVertices * 3;
 
-	size += sizeof(numNormals);
-	size += sizeof(normals) * numNormals * 3;
+	size += sizeof(uint);
+	size += sizeof(float) * numNormals * 3;
 			
-	size += sizeof(numUV);
-	size += sizeof(UV) * numUV * 3;
+	size += sizeof(uint);
+	size += sizeof(float) * numUV * 3;
+	
 						   
 	//size += sizeof(obb);
 	//size += sizeof(aabb);
@@ -48,6 +49,8 @@ int ResourceMesh::getRawMesh(char ** buffer)
 	*buffer = new char[size];
 	pointer = *buffer;
 	
+	memcpy(pointer, "aaaa", sizeof(char) * 4);
+	pointer += sizeof(char) * 4;
 	memcpy(pointer, &numIndices, sizeof(uint));
 	pointer += sizeof(uint);
 	memcpy(pointer, &numVertices, sizeof(uint));
@@ -64,9 +67,7 @@ int ResourceMesh::getRawMesh(char ** buffer)
 	memcpy(pointer, normals, sizeof(float) * 3 * numNormals);
 	pointer += sizeof(float) * 3 * numNormals;
 	memcpy(pointer, UV, sizeof(float) * 3 * numUV);
-	//pointer += sizeof(UV) * 3 * numUV;
-
-		
+	pointer += sizeof(float) * 3 * numUV;
 
 
 	return size;
@@ -74,13 +75,14 @@ int ResourceMesh::getRawMesh(char ** buffer)
 void ResourceMesh::loadRawMesh(char * buffer)
 {
 	char* pointer = buffer;
+	pointer += 4 * sizeof(char);
 	memcpy(&numIndices, pointer, sizeof(uint));
 	pointer += sizeof(uint);
 	memcpy(&numVertices, pointer, sizeof(uint));
 	pointer += sizeof(uint);
-	memcpy(&numNormals, pointer, sizeof(numNormals));
+	memcpy(&numNormals, pointer, sizeof(uint));
 	pointer += sizeof(uint);
-	memcpy(&numUV, pointer, sizeof(numUV));
+	memcpy(&numUV, pointer, sizeof(uint));
 	pointer += sizeof(uint);
 
 	memcpy(indices, pointer, sizeof(uint) * numIndices);

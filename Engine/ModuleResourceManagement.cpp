@@ -126,21 +126,30 @@ void ModuleResourceManagement::aiSceneToGameObjects(const aiScene * scene, const
 
 		ComponentMesh* mesh = (ComponentMesh*)gameObject->createComponent(MESH);
 
+#pragma region Debugging Import of mesh
 
 		mesh->mesh->loadMesh(ai_mesh);
 
-		char* buffer = nullptr;
+		char* buffer = NULL;
+		char* output = NULL;
 		int size = 0;
+
 		size = mesh->mesh->getRawMesh(&buffer);
+		std::string buf(buffer);
 		std::string path("data/library/meshes/");
 		path.append(gameObject->name);
+		path.append("__");
 		path.append(std::to_string(i));
 		path.append(".mesh");
+
 		App->fs->save(path.c_str(), buffer, size);
 		RELEASE_ARRAY(buffer);
+
 		path.insert(0, "root/");
-		App->fs->load(path.c_str(), &buffer);
-		mesh->mesh->loadRawMesh(buffer);
+		App->fs->load(path.c_str(), &output);
+		mesh->mesh->loadRawMesh(output);
+
+#pragma endregion	
 
 
 		//PNG path && Filename
