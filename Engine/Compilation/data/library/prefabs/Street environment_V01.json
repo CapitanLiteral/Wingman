@@ -1,7 +1,7 @@
 {
    "gameObjects" : [
       {
-         "UUID" : 1266797794,
+         "UUID" : 1706804089,
          "name" : "RootNode",
          "parent_UUID" : 0,
          "pos" : [ 0.0, 0.0, 0.0 ],
@@ -9,856 +9,856 @@
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 1332937744,
+         "UUID" : 1773013660,
          "name" : "Sky001_$AssimpFbx$_Translation",
-         "parent_UUID" : 1266797794,
+         "parent_UUID" : 1706804089,
          "pos" : [ 18.153732299804688, 0.0, 58.960910797119141 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 1395039676,
+         "UUID" : 1836090286,
          "name" : "Sky001_$AssimpFbx$_PreRotation",
-         "parent_UUID" : 1332937744,
+         "parent_UUID" : 1773013660,
          "pos" : [ 0.0, 0.0, 0.0 ],
          "rot" : [ -89.999992370605469, 0.0, 0.0 ],
          "scale" : [ 1.0, 0.99999994039535522, 0.99999994039535522 ]
       },
       {
-         "UUID" : 1458185923,
+         "UUID" : 1898888428,
          "name" : "Sky001_$AssimpFbx$_PostRotation",
-         "parent_UUID" : 1395039676,
+         "parent_UUID" : 1836090286,
          "pos" : [ 0.0, 0.0, 0.0 ],
          "rot" : [ -89.999992370605469, 0.0, 0.0 ],
          "scale" : [ 1.0, 0.99999994039535522, 0.99999994039535522 ]
       },
       {
-         "UUID" : 1520635960,
+         "UUID" : 1968091702,
          "name" : "Sky001",
-         "parent_UUID" : 1458185923,
+         "parent_UUID" : 1898888428,
          "pos" : [ 0.0, 0.0, 0.0 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 1584617659,
+         "UUID" : 2034092410,
          "name" : "Dummy001_$AssimpFbx$_PreRotation",
-         "parent_UUID" : 1266797794,
+         "parent_UUID" : 1706804089,
          "pos" : [ 0.0, 0.0, 0.0 ],
          "rot" : [ -89.999992370605469, 0.0, 0.0 ],
          "scale" : [ 1.0, 0.99999994039535522, 0.99999994039535522 ]
       },
       {
-         "UUID" : 1647415801,
+         "UUID" : 2096820931,
          "name" : "Dummy001_$AssimpFbx$_Rotation",
-         "parent_UUID" : 1584617659,
+         "parent_UUID" : 2034092410,
          "pos" : [ 0.0, 0.0, 0.0 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 1709796217,
+         "UUID" : 11648079,
          "name" : "Dummy001",
-         "parent_UUID" : 1647415801,
+         "parent_UUID" : 2096820931,
          "pos" : [ 0.0, 0.0, 0.0 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 1776701998,
+         "UUID" : 75490536,
          "components" : [
             {
-               "UUID" : 1787005906,
+               "UUID" : 82591878,
                "color" : [ 0.58799999952316284, 0.58799999952316284, 0.58799999952316284, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 1822512616,
-               "associated_material" : 1787005906,
+               "UUID" : 116079579,
+               "associated_material" : 82591878,
                "component_type" : "mesh",
-               "resource" : 1046715594
+               "resource" : 1627503351
             }
          ],
          "name" : "City_building_004",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ -41.47589111328125, 21.01409912109375, 0.0 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 1917197176,
+         "UUID" : 218700933,
          "components" : [
             {
-               "UUID" : 1924228897,
+               "UUID" : 225732654,
                "color" : [ 0.58799999952316284, 0.58799999952316284, 0.58799999952316284, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 1957577356,
-               "associated_material" : 1924228897,
+               "UUID" : 259498839,
+               "associated_material" : 225732654,
                "component_type" : "mesh",
-               "resource" : 149346623
+               "resource" : 347751946
             }
          ],
          "name" : "City_building_001",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ 17.707164764404297, 20.053276062011719, 2.1210729528320371e-07 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 2052192295,
+         "UUID" : 361493604,
          "components" : [
             {
-               "UUID" : 2059084774,
+               "UUID" : 368803809,
                "color" : [ 0.58799999952316284, 0.58799999952316284, 0.58799999952316284, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 2092293991,
-               "associated_material" : 2059084774,
+               "UUID" : 402082647,
+               "associated_material" : 368803809,
                "component_type" : "mesh",
-               "resource" : 33541825
+               "resource" : 1613113621
             }
          ],
          "name" : "City_building_007",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ 16.010492324829102, 37.4932861328125, -1.5106878663573298e-06 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 40260735,
+         "UUID" : 505748316,
          "components" : [
             {
-               "UUID" : 47292456,
+               "UUID" : 512849658,
                "color" : [ 0.58823531866073608, 0.58823531866073608, 0.58823531866073608, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 81058641,
-               "associated_material" : 47292456,
+               "UUID" : 546128496,
+               "associated_material" : 512849658,
                "component_type" : "mesh",
-               "resource" : 919886776
+               "resource" : 590496471
             }
          ],
          "name" : "City_building_008",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ 40.979995727539063, 18.270824432373047, -2.0522466002148576e-06 ],
          "rot" : [ -0.0, 0.0, 90.000007629394531 ],
          "scale" : [ 0.99999994039535522, 0.99999994039535522, 1.0 ]
       },
       {
-         "UUID" : 175186233,
+         "UUID" : 642692823,
          "components" : [
             {
-               "UUID" : 182217954,
+               "UUID" : 649724544,
                "color" : [ 0.27058824896812439, 0.27058824896812439, 0.27058824896812439, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 224477901,
-               "associated_material" : 182217954,
+               "UUID" : 682864140,
+               "associated_material" : 649724544,
                "component_type" : "mesh",
-               "resource" : 1975967725
+               "resource" : 1665932058
             }
          ],
          "name" : "Line002",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ -2.1597719192504883, 1.8538382053375244, 0.0 ],
          "rot" : [ 0.0, 0.0, -90.000007629394531 ],
          "scale" : [ 0.99999994039535522, 0.99999994039535522, 1.0 ]
       },
       {
-         "UUID" : 325080246,
+         "UUID" : 777061353,
          "components" : [
             {
-               "UUID" : 332251209,
+               "UUID" : 784023453,
                "color" : [ 0.30980393290519714, 0.45490199327468872, 0.058823533356189728, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 365599668,
-               "associated_material" : 332251209,
+               "UUID" : 817163049,
+               "associated_material" : 784023453,
                "component_type" : "mesh",
-               "resource" : 812437671
+               "resource" : 747398303
             }
          ],
          "name" : "Plane001",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ -0.02860260009765625, 0.026032090187072754, 0.0 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 0.99663525819778442, 0.97061645984649658, 0.99663525819778442 ]
       },
       {
-         "UUID" : 472189419,
+         "UUID" : 912474198,
          "components" : [
             {
-               "UUID" : 480195834,
+               "UUID" : 920062887,
                "color" : [ 0.58799999952316284, 0.58799999952316284, 0.58799999952316284, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 513474672,
+               "UUID" : 953759451,
                "color" : [ 0.58799999952316284, 0.58799999952316284, 0.58799999952316284, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 545987679,
-               "associated_material" : 480195834,
+               "UUID" : 993443421,
+               "associated_material" : 920062887,
                "component_type" : "mesh",
-               "resource" : 91836419
+               "resource" : 2075627741
             },
             {
-               "UUID" : 564576486,
-               "associated_material" : 513474672,
+               "UUID" : 1012101849,
+               "associated_material" : 953759451,
                "component_type" : "mesh",
-               "resource" : 1339027013
+               "resource" : 1444998638
             }
          ],
          "name" : "City_building_010",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ 25.154010772705078, -39.153720855712891, 8.5538641769744572e-07 ],
          "rot" : [ -0.0, 0.0, 90.000007629394531 ],
          "scale" : [ 0.99999994039535522, 0.99999994039535522, 1.0 ]
       },
       {
-         "UUID" : 674786529,
+         "UUID" : 1123077723,
          "components" : [
             {
-               "UUID" : 681818250,
+               "UUID" : 1130109444,
                "color" : [ 0.58799999952316284, 0.58799999952316284, 0.58799999952316284, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 714957846,
-               "associated_material" : 681818250,
+               "UUID" : 1163318661,
+               "associated_material" : 1130109444,
                "component_type" : "mesh",
-               "resource" : 33541825
+               "resource" : 1613113621
             }
          ],
          "name" : "City_building_011",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ 30.134540557861328, 37.4932861328125, -1.5106878663573298e-06 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 809920890,
+         "UUID" : 1258908294,
          "components" : [
             {
-               "UUID" : 816882990,
+               "UUID" : 1265940015,
                "color" : [ 0.58799999952316284, 0.58799999952316284, 0.58799999952316284, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 850092207,
-               "associated_material" : 816882990,
+               "UUID" : 1299636579,
+               "associated_material" : 1265940015,
                "component_type" : "mesh",
-               "resource" : 617868793
+               "resource" : 838158100
             }
          ],
          "name" : "City_building_013",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ -42.288055419921875, 33.201576232910156, 5.0146070407208754e-07 ],
          "rot" : [ -0.0, 0.0, 90.000007629394531 ],
          "scale" : [ 0.99999994039535522, 0.99999994039535522, 1.0 ]
       },
       {
-         "UUID" : 951808488,
+         "UUID" : 1398428778,
          "components" : [
             {
-               "UUID" : 958840209,
+               "UUID" : 1409220033,
                "color" : [ 0.58799999952316284, 0.58799999952316284, 0.58799999952316284, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 992536773,
-               "associated_material" : 958840209,
+               "UUID" : 1442777355,
+               "associated_material" : 1409220033,
                "component_type" : "mesh",
-               "resource" : 1103172882
+               "resource" : 1530793527
             }
          ],
          "name" : "City_building_014",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ -19.439706802368164, 32.061729431152344, 0.0 ],
          "rot" : [ -0.0, 0.0, -180.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 1087360575,
+         "UUID" : 1546582266,
          "components" : [
             {
-               "UUID" : 1094949264,
+               "UUID" : 1554240576,
                "color" : [ 0.58799999952316284, 0.58799999952316284, 0.58799999952316284, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 1128785070,
+               "UUID" : 1587519414,
                "color" : [ 0.58799999952316284, 0.58799999952316284, 0.58799999952316284, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 1161785424,
-               "associated_material" : 1094949264,
+               "UUID" : 1619196969,
+               "associated_material" : 1554240576,
                "component_type" : "mesh",
-               "resource" : 91836419
+               "resource" : 2075627741
             },
             {
-               "UUID" : 1180374231,
-               "associated_material" : 1128785070,
+               "UUID" : 1638203502,
+               "associated_material" : 1587519414,
                "component_type" : "mesh",
-               "resource" : 1339027013
+               "resource" : 1444998638
             }
          ],
          "name" : "City_building_016",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ 34.270423889160156, -41.972747802734375, 8.5538641769744572e-07 ],
          "rot" : [ -0.0, 0.0, -180.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 1290723516,
+         "UUID" : 1749179376,
          "components" : [
             {
-               "UUID" : 1298312205,
+               "UUID" : 1756907307,
                "color" : [ 0.58799999952316284, 0.58799999952316284, 0.58799999952316284, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 1333679673,
+               "UUID" : 1790325387,
                "color" : [ 0.58799999952316284, 0.58799999952316284, 0.58799999952316284, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 1371623118,
-               "associated_material" : 1298312205,
+               "UUID" : 1822072563,
+               "associated_material" : 1756907307,
                "component_type" : "mesh",
-               "resource" : 91836419
+               "resource" : 2075627741
             },
             {
-               "UUID" : 1390211925,
-               "associated_material" : 1333679673,
+               "UUID" : 1840661370,
+               "associated_material" : 1790325387,
                "component_type" : "mesh",
-               "resource" : 1339027013
+               "resource" : 1444998638
             }
          ],
          "name" : "City_building_017",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ 44.260082244873047, -39.153720855712891, 8.5538641769744572e-07 ],
          "rot" : [ -0.0, 0.0, 90.000007629394531 ],
          "scale" : [ 0.99999994039535522, 0.99999994039535522, 1.0 ]
       },
       {
-         "UUID" : 1501953630,
+         "UUID" : 1961732289,
          "components" : [
             {
-               "UUID" : 1508985351,
+               "UUID" : 1972245060,
                "color" : [ 0.58823531866073608, 0.58823531866073608, 0.58823531866073608, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 1542055326,
-               "associated_material" : 1508985351,
+               "UUID" : 2009213811,
+               "associated_material" : 1972245060,
                "component_type" : "mesh",
-               "resource" : 536688622
+               "resource" : 1053981115
             }
          ],
          "name" : "City_building_022",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ -20.831323623657227, -27.426488876342773, 0.0 ],
          "rot" : [ -0.0, 0.0, 179.99998474121094 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 1635974055,
+         "UUID" : 2110930092,
          "components" : [
             {
-               "UUID" : 1642936155,
+               "UUID" : 2117892192,
                "color" : [ 0.58799999952316284, 0.58799999952316284, 0.58799999952316284, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 1676423856,
-               "associated_material" : 1642936155,
+               "UUID" : 11484935,
+               "associated_material" : 2117892192,
                "component_type" : "mesh",
-               "resource" : 33541825
+               "resource" : 1613113621
             }
          ],
          "name" : "City_building_023",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ 42.130641937255859, 37.4932861328125, -1.5106878663573298e-06 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 1770064101,
+         "UUID" : 117796202,
          "components" : [
             {
-               "UUID" : 1777026201,
+               "UUID" : 128030489,
                "color" : [ 0.58823531866073608, 0.58823531866073608, 0.58823531866073608, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 1810583523,
-               "associated_material" : 1777026201,
+               "UUID" : 161448569,
+               "associated_material" : 128030489,
                "component_type" : "mesh",
-               "resource" : 919886776
+               "resource" : 590496471
             }
          ],
          "name" : "City_building_024",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ -20.572771072387695, 43.060829162597656, -0.069194458425045013 ],
          "rot" : [ -0.0, 0.0, 180.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 1905616188,
+         "UUID" : 255715403,
          "components" : [
             {
-               "UUID" : 1912647909,
+               "UUID" : 262677503,
                "color" : [ 0.58823531866073608, 0.58823531866073608, 0.58823531866073608, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 1945787505,
-               "associated_material" : 1912647909,
+               "UUID" : 303823514,
+               "associated_material" : 262677503,
                "component_type" : "mesh",
-               "resource" : 1700310114
+               "resource" : 1968986016
             }
          ],
          "name" : "City_building_026",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ 31.51188850402832, -16.446016311645508, 0.0 ],
          "rot" : [ -0.0, 0.0, 180.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 2050845594,
+         "UUID" : 399343526,
          "components" : [
             {
-               "UUID" : 2057877315,
+               "UUID" : 406514489,
                "color" : [ 0.58799999952316284, 0.58799999952316284, 0.58799999952316284, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 2091016911,
-               "associated_material" : 2057877315,
+               "UUID" : 439723706,
+               "associated_material" : 406514489,
                "component_type" : "mesh",
-               "resource" : 881543252
+               "resource" : 1227707327
             }
          ],
          "name" : "City_building_028",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ 13.38798999786377, -33.755039215087891, -9.3834518111179932e-07 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 37521614,
+         "UUID" : 533642435,
          "components" : [
             {
-               "UUID" : 44483714,
+               "UUID" : 540674156,
                "color" : [ 0.58823531866073608, 0.58823531866073608, 0.58823531866073608, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 77623310,
-               "associated_material" : 44483714,
+               "UUID" : 579244190,
+               "associated_material" : 540674156,
                "component_type" : "mesh",
-               "resource" : 1789446811
+               "resource" : 1857753475
             }
          ],
          "name" : "Object010",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ -2.5033531188964844, 15.800846099853516, 0.0 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 171959765,
+         "UUID" : 676435106,
          "components" : [
             {
-               "UUID" : 178921865,
+               "UUID" : 683466827,
                "color" : [ 0.58799999952316284, 0.58799999952316284, 0.58799999952316284, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 211991840,
-               "associated_material" : 178921865,
+               "UUID" : 716606423,
+               "associated_material" : 683466827,
                "component_type" : "mesh",
-               "resource" : 881543252
+               "resource" : 1227707327
             }
          ],
          "name" : "City_building_030",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ -42.807239532470703, -41.835563659667969, -9.3834518111179932e-07 ],
          "rot" : [ 0.0, 0.0, -90.000007629394531 ],
          "scale" : [ 0.99999994039535522, 0.99999994039535522, 1.0 ]
       },
       {
-         "UUID" : 305980190,
+         "UUID" : 812335298,
          "components" : [
             {
-               "UUID" : 312942290,
+               "UUID" : 819367019,
                "color" : [ 0.58799999952316284, 0.58799999952316284, 0.58799999952316284, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 346499612,
-               "associated_material" : 312942290,
+               "UUID" : 852506615,
+               "associated_material" : 819367019,
                "component_type" : "mesh",
-               "resource" : 881543252
+               "resource" : 1227707327
             }
          ],
          "name" : "City_building_031",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ -34.679481506347656, -41.835563659667969, -9.3834518111179932e-07 ],
          "rot" : [ 0.0, 0.0, -90.000007629394531 ],
          "scale" : [ 0.99999994039535522, 0.99999994039535522, 1.0 ]
       },
       {
-         "UUID" : 440557583,
+         "UUID" : 948583595,
          "components" : [
             {
-               "UUID" : 449677934,
+               "UUID" : 955545695,
                "color" : [ 0.58799999952316284, 0.58799999952316284, 0.58799999952316284, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 491102429,
-               "associated_material" : 449677934,
+               "UUID" : 989172638,
+               "associated_material" : 955545695,
                "component_type" : "mesh",
-               "resource" : 1046715594
+               "resource" : 1627503351
             }
          ],
          "name" : "City_building_032",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ -29.478403091430664, 21.01409912109375, 0.0 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 586204715,
+         "UUID" : 1098616850,
          "components" : [
             {
-               "UUID" : 593236436,
+               "UUID" : 1105648571,
                "color" : [ 0.58799999952316284, 0.58799999952316284, 0.58799999952316284, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 626376032,
-               "associated_material" : 593236436,
+               "UUID" : 1138788167,
+               "associated_material" : 1105648571,
                "component_type" : "mesh",
-               "resource" : 1121942480
+               "resource" : 1498624455
             }
          ],
          "name" : "City_building_033",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ -32.361495971679688, 42.37042236328125, 5.0146070407208754e-07 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 720434003,
+         "UUID" : 1233055001,
          "components" : [
             {
-               "UUID" : 727396103,
+               "UUID" : 1240086722,
                "color" : [ 0.58823531866073608, 0.58823531866073608, 0.58823531866073608, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 760535699,
-               "associated_material" : 727396103,
+               "UUID" : 1273156697,
+               "associated_material" : 1240086722,
                "component_type" : "mesh",
-               "resource" : 338867289
+               "resource" : 734718941
             }
          ],
          "name" : "City_building_034",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ 16.049516677856445, -16.696884155273438, 0.0 ],
          "rot" : [ 0.0, 0.0, -90.000007629394531 ],
          "scale" : [ 0.99999994039535522, 0.99999994039535522, 1.0 ]
       },
       {
-         "UUID" : 854524049,
+         "UUID" : 1375499567,
          "components" : [
             {
-               "UUID" : 861625391,
+               "UUID" : 1382531288,
                "color" : [ 0.58799999952316284, 0.58799999952316284, 0.58799999952316284, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 894764987,
-               "associated_material" : 861625391,
+               "UUID" : 1415740505,
+               "associated_material" : 1382531288,
                "component_type" : "mesh",
-               "resource" : 881543252
+               "resource" : 1227707327
             }
          ],
          "name" : "City_building_035",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ 13.38798999786377, -40.802516937255859, -9.3834518111179932e-07 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 989031821,
+         "UUID" : 1518222617,
          "components" : [
             {
-               "UUID" : 995993921,
+               "UUID" : 1525254338,
                "color" : [ 0.58799999952316284, 0.58799999952316284, 0.58799999952316284, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 1029620864,
-               "associated_material" : 995993921,
+               "UUID" : 1558950902,
+               "associated_material" : 1525254338,
                "component_type" : "mesh",
-               "resource" : 617868793
+               "resource" : 838158100
             }
          ],
          "name" : "City_building_036",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ -31.216331481933594, 33.201576232910156, 5.0146070407208754e-07 ],
          "rot" : [ 0.0, 0.0, -90.000007629394531 ],
          "scale" : [ 0.99999994039535522, 0.99999994039535522, 1.0 ]
       },
       {
-         "UUID" : 1134470090,
+         "UUID" : 1654610156,
          "components" : [
             {
-               "UUID" : 1141501811,
+               "UUID" : 1661989982,
                "color" : [ 0.58823531866073608, 0.58823531866073608, 0.58823531866073608, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 1174780649,
-               "associated_material" : 1141501811,
+               "UUID" : 1695199199,
+               "associated_material" : 1661989982,
                "component_type" : "mesh",
-               "resource" : 2031353799
+               "resource" : 1905093670
             }
          ],
          "name" : "City_building_037",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ -20.317693710327148, -16.163608551025391, 0.0 ],
          "rot" : [ -0.0, 0.0, 179.99998474121094 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 1270439903,
+         "UUID" : 1789605275,
          "components" : [
             {
-               "UUID" : 1277471624,
+               "UUID" : 1796636996,
                "color" : [ 0.58823531866073608, 0.58823531866073608, 0.58823531866073608, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 1310611220,
-               "associated_material" : 1277471624,
+               "UUID" : 1829776592,
+               "associated_material" : 1796636996,
                "component_type" : "mesh",
-               "resource" : 1090262840
+               "resource" : 880318269
             }
          ],
          "name" : "City_building_038",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ -41.649002075195313, -16.495393753051758, 0.0 ],
          "rot" : [ 0.0, 0.0, -90.000007629394531 ],
          "scale" : [ 0.99999994039535522, 0.99999994039535522, 1.0 ]
       },
       {
-         "UUID" : 1404599570,
+         "UUID" : 1939847393,
          "components" : [
             {
-               "UUID" : 1411561670,
+               "UUID" : 1946809493,
                "color" : [ 0.58799999952316284, 0.58799999952316284, 0.58799999952316284, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 1444631645,
-               "associated_material" : 1411561670,
+               "UUID" : 1980088331,
+               "associated_material" : 1946809493,
                "component_type" : "mesh",
-               "resource" : 881543252
+               "resource" : 1227707327
             }
          ],
          "name" : "City_building_039",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ -42.807239532470703, -30.643888473510742, -9.3834518111179932e-07 ],
          "rot" : [ 0.0, 0.0, -90.000007629394531 ],
          "scale" : [ 0.99999994039535522, 0.99999994039535522, 1.0 ]
       },
       {
-         "UUID" : 1539942794,
+         "UUID" : 2074564028,
          "components" : [
             {
-               "UUID" : 1546974515,
+               "UUID" : 2081595749,
                "color" : [ 0.58799999952316284, 0.58799999952316284, 0.58799999952316284, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 1587772421,
-               "associated_material" : 1546974515,
+               "UUID" : 2115013829,
+               "associated_material" : 2081595749,
                "component_type" : "mesh",
-               "resource" : 881543252
+               "resource" : 1227707327
             }
          ],
          "name" : "City_building_040",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ -34.679481506347656, -30.643888473510742, -9.3834518111179932e-07 ],
          "rot" : [ 0.0, 0.0, -90.000007629394531 ],
          "scale" : [ 0.99999994039535522, 0.99999994039535522, 1.0 ]
       },
       {
-         "UUID" : 1682526602,
+         "UUID" : 70569262,
          "components" : [
             {
-               "UUID" : 1689488702,
+               "UUID" : 77600983,
                "color" : [ 0.58799999952316284, 0.58799999952316284, 0.58799999952316284, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 1725273896,
-               "associated_material" : 1689488702,
+               "UUID" : 111436789,
+               "associated_material" : 77600983,
                "component_type" : "mesh",
-               "resource" : 149346623
+               "resource" : 347751946
             }
          ],
          "name" : "City_building_041",
-         "parent_UUID" : 1709796217,
+         "parent_UUID" : 11648079,
          "pos" : [ 30.695278167724609, 21.612646102905273, 2.1210729528320371e-07 ],
          "rot" : [ -0.0, 0.0, 90.000007629394531 ],
          "scale" : [ 0.99999994039535522, 0.99999994039535522, 1.0 ]
       },
       {
-         "UUID" : 1829426912,
+         "UUID" : 207304906,
          "name" : "Camera001_$AssimpFbx$_Translation",
-         "parent_UUID" : 1266797794,
+         "parent_UUID" : 1706804089,
          "pos" : [ -78.312431335449219, 45.251216888427734, -97.031112670898438 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 1892225054,
+         "UUID" : 270172669,
          "name" : "Camera001_$AssimpFbx$_PreRotation",
-         "parent_UUID" : 1829426912,
+         "parent_UUID" : 207304906,
          "pos" : [ 0.0, 0.0, 0.0 ],
          "rot" : [ -89.999992370605469, 0.0, 0.0 ],
          "scale" : [ 1.0, 0.99999994039535522, 0.99999994039535522 ]
       },
       {
-         "UUID" : 1958713109,
+         "UUID" : 334780957,
          "name" : "Camera001_$AssimpFbx$_Rotation",
-         "parent_UUID" : 1892225054,
+         "parent_UUID" : 270172669,
          "pos" : [ 0.0, 0.0, 0.0 ],
          "rot" : [ -68.525260925292969, -37.000534057617188, -166.68003845214844 ],
          "scale" : [ 0.99999988079071045, 0.99999988079071045, 0.99999988079071045 ]
       },
       {
-         "UUID" : 2021580872,
+         "UUID" : 397439857,
          "name" : "Camera001",
-         "parent_UUID" : 1958713109,
+         "parent_UUID" : 334780957,
          "pos" : [ 0.0, 0.0, 0.0 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 2086189160,
+         "UUID" : 461978524,
          "name" : "Camera001.Target_$AssimpFbx$_Translation",
-         "parent_UUID" : 1266797794,
+         "parent_UUID" : 1706804089,
          "pos" : [ -28.132621765136719, 20.873329162597656, -35.064212799072266 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 9370828,
+         "UUID" : 524498182,
          "name" : "Camera001.Target_$AssimpFbx$_PreRotation",
-         "parent_UUID" : 2086189160,
+         "parent_UUID" : 461978524,
          "pos" : [ 0.0, 0.0, 0.0 ],
          "rot" : [ -89.999992370605469, 0.0, 0.0 ],
          "scale" : [ 1.0, 0.99999994039535522, 0.99999994039535522 ]
       },
       {
-         "UUID" : 72586696,
+         "UUID" : 587644429,
          "name" : "Camera001.Target_$AssimpFbx$_Rotation",
-         "parent_UUID" : 9370828,
+         "parent_UUID" : 524498182,
          "pos" : [ 0.0, 0.0, 0.0 ],
          "rot" : [ -68.525245666503906, -37.000530242919922, -166.68003845214844 ],
          "scale" : [ 1.0, 0.99999994039535522, 1.0 ]
       },
       {
-         "UUID" : 137682331,
+         "UUID" : 650164087,
          "name" : "Camera001.Target",
-         "parent_UUID" : 72586696,
+         "parent_UUID" : 587644429,
          "pos" : [ 0.0, 0.0, 0.0 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 207512194,
+         "UUID" : 714633133,
          "name" : "Spot001_$AssimpFbx$_Translation",
-         "parent_UUID" : 1266797794,
+         "parent_UUID" : 1706804089,
          "pos" : [ -66.721267700195313, 141.93412780761719, 6.2041376622801181e-06 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 270519199,
+         "UUID" : 777709759,
          "name" : "Spot001_$AssimpFbx$_PreRotation",
-         "parent_UUID" : 207512194,
+         "parent_UUID" : 714633133,
          "pos" : [ 0.0, 0.0, 0.0 ],
          "rot" : [ -89.999992370605469, 0.0, 0.0 ],
          "scale" : [ 1.0, 0.99999994039535522, 0.99999994039535522 ]
       },
       {
-         "UUID" : 341393377,
+         "UUID" : 848444695,
          "name" : "Spot001_$AssimpFbx$_Rotation",
-         "parent_UUID" : 270519199,
+         "parent_UUID" : 777709759,
          "pos" : [ 0.0, 0.0, 0.0 ],
          "rot" : [ 2.8314593691902701e-06, -25.231357574462891, -90.000007629394531 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 404470003,
+         "UUID" : 911869426,
          "name" : "Spot001_$AssimpFbx$_PostRotation",
-         "parent_UUID" : 341393377,
+         "parent_UUID" : 848444695,
          "pos" : [ 0.0, 0.0, 0.0 ],
          "rot" : [ -89.999992370605469, 0.0, 0.0 ],
          "scale" : [ 1.0, 0.99999994039535522, 0.99999994039535522 ]
       },
       {
-         "UUID" : 481540450,
+         "UUID" : 974946052,
          "name" : "Spot001",
-         "parent_UUID" : 404470003,
+         "parent_UUID" : 911869426,
          "pos" : [ 0.0, 0.0, 0.0 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 552275386,
+         "UUID" : 1039554340,
          "name" : "Spot001.Target_$AssimpFbx$_Translation",
-         "parent_UUID" : 1266797794,
+         "parent_UUID" : 1706804089,
          "pos" : [ 28.890945434570313, -60.963882446289063, -2.6648158382158726e-06 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 619320409,
+         "UUID" : 1103187934,
          "name" : "Spot001.Target_$AssimpFbx$_PreRotation",
-         "parent_UUID" : 552275386,
+         "parent_UUID" : 1039554340,
          "pos" : [ 0.0, 0.0, 0.0 ],
          "rot" : [ -89.999992370605469, 0.0, 0.0 ],
          "scale" : [ 1.0, 0.99999994039535522, 0.99999994039535522 ]
       },
       {
-         "UUID" : 692700943,
+         "UUID" : 1166473423,
          "name" : "Spot001.Target_$AssimpFbx$_Rotation",
-         "parent_UUID" : 619320409,
+         "parent_UUID" : 1103187934,
          "pos" : [ 0.0, 0.0, 0.0 ],
          "rot" : [ 90.000007629394531, 0.0, -0.0 ],
          "scale" : [ 1.0, 0.99999994039535522, 0.99999994039535522 ]
       },
       {
-         "UUID" : 771999262,
+         "UUID" : 1232543752,
          "name" : "Spot001.Target",
-         "parent_UUID" : 692700943,
+         "parent_UUID" : 1166473423,
          "pos" : [ 0.0, 0.0, 0.0 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
