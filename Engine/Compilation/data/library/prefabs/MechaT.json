@@ -1,7 +1,7 @@
 {
    "gameObjects" : [
       {
-         "UUID" : 1305255,
+         "UUID" : 1690435754,
          "name" : "RootNode",
          "parent_UUID" : 3452816845,
          "pos" : [ 0.0, 0.0, 0.0 ],
@@ -9,41 +9,41 @@
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 67793310,
+         "UUID" : 1763607425,
          "components" : [
             {
-               "UUID" : 74964273,
+               "UUID" : 1770917630,
                "color" : [ 0.80000001192092896, 0.80000001192092896, 0.80000001192092896, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 111097572,
-               "associated_material" : 74964273,
+               "UUID" : 1805310404,
+               "associated_material" : 1770917630,
                "component_type" : "mesh"
             }
          ],
          "name" : "Mech",
-         "parent_UUID" : 1305255,
+         "parent_UUID" : 1690435754,
          "pos" : [ 0.0, 0.0, 0.0 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 1.0, 1.0, 1.0 ]
       },
       {
-         "UUID" : 202858050,
+         "UUID" : 1898115197,
          "components" : [
             {
-               "UUID" : 209889771,
+               "UUID" : 1905216539,
                "color" : [ 0.60040003061294556, 0.60831999778747559, 0.047680001705884933, 1.0 ],
                "component_type" : "material"
             },
             {
-               "UUID" : 243725577,
-               "associated_material" : 209889771,
+               "UUID" : 1938634619,
+               "associated_material" : 1905216539,
                "component_type" : "mesh"
             }
          ],
          "name" : "Plane",
-         "parent_UUID" : 1305255,
+         "parent_UUID" : 1690435754,
          "pos" : [ -1.7119624614715576, 0.0, -0.60170680284500122 ],
          "rot" : [ -0.0, 0.0, -0.0 ],
          "scale" : [ 2.3321113586425781, 2.3321113586425781, 2.3321113586425781 ]

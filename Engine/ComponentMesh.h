@@ -15,6 +15,8 @@ class ComponentMesh : public Component
 public:
 	
 	ResourceMesh* mesh = nullptr;
+	//uint32_t resourceMeshUUID = 0;
+
 
 	int textureIndex = -1; //I think this will be used on an array of textures and this will be used to bind it
 	uint32_t associatedUUID;

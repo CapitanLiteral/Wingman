@@ -16,7 +16,7 @@ class ResourceMesh;
 class ModuleResourceManagement : public Module
 {
 public:
-	std::vector<ResourceMesh*> resourceMeshes;
+	std::map<uint32_t, Resource*> resources;
 
 	ModuleResourceManagement(Application* app, bool start_enabled = true);
 	virtual ~ModuleResourceManagement();
@@ -31,5 +31,7 @@ public:
 	void importFBX(std::string fileName);
 	GameObject* loadFBX(const char* path, GameObject* root);
 	void aiSceneToGameObjects(const aiScene * scene, const aiNode * node, GameObject * parent);
+
+
 };
 

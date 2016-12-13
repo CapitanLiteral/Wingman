@@ -3,6 +3,7 @@
 #include "ComponentMaterial.h"
 #include "GameObjectManager.h"
 #include "ComponentCamera.h"
+#include "ModuleResourceManagement.h"
 
 #include "OpenGL.h"
 
@@ -324,6 +325,14 @@ void ComponentMesh::Serialize(Json::Value & root)
 	root["UUID"] = UUID;
 	root["associated_material"] = associatedMaterial->UUID;
 	root["component_type"] = "mesh";
+	if (mesh != nullptr)
+	{
+		root["resource"] = mesh->UUID;
+	}
+	else
+	{
+		root["resource"] = -1;
+	}	
 }
 void ComponentMesh::Deserialize(Json::Value & root)
 {
@@ -335,6 +344,11 @@ void ComponentMesh::Deserialize(Json::Value & root)
 	if (jtype == "mesh")
 	{
 		type = MESH;
+	}
+	uint32_t resourceUUID;
+	if (root.get("resource", -1).asInt64 != -1)
+	{
+		
 	}
 }
 

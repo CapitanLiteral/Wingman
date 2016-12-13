@@ -321,7 +321,6 @@
     <ClInclude Include="GameObject.h">
       <Filter>Sources\Editor\Decoupling</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
     <ClInclude Include="ModuleTexture.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
@@ -360,6 +359,9 @@
     </ClInclude>
     <ClInclude Include="ResourceMesh.h">
       <Filter>Sources\Editor\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Sources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

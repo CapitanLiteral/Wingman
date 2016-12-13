@@ -121,7 +121,6 @@ void ResourceMesh::loadMesh(const aiMesh * mesh)
 		memcpy(UV, mesh->mTextureCoords[0], sizeof(float) * numVertices * 3);
 	}
 }
-
 int ResourceMesh::getSize() const
 {
 	int size = 0;

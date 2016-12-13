@@ -34,6 +34,8 @@ public:
 	OBB obb;
 	AABB aabb;
 
+	uint32_t UUID;
+	std::string resourceMeshName;
 	ResourceMesh();
 	~ResourceMesh();
 
