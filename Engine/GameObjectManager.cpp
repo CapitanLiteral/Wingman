@@ -205,3 +205,25 @@ void GameObjectManager::loadScene()
 		}
 	}
 }
+void GameObjectManager::loadPrefab(std::string name)
+{
+	std::string path("root/data/library/prefabs/");
+	path.append(name);
+	//path.append(".json");
+	JsonSerializer::Deserialize(root, path.c_str());
+	haveToLoadScene = false;
+
+	//Reordering nodes
+	for (std::vector<GameObject*>::iterator iterator_child = root->children.begin();
+		 iterator_child != root->children.end(); iterator_child++)
+	{
+		if ((*iterator_child)->parent_UUID != 0)
+		{
+			GameObject* go_parent = root->findByUUID((*iterator_child)->parent_UUID);
+			go_parent->addChild((*iterator_child));
+			(*iterator_child)->parent = go_parent;
+			root->children.erase(iterator_child);
+			iterator_child = root->children.begin();
+		}
+	}
+}

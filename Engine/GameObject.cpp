@@ -130,7 +130,7 @@ void			GameObject::update()
 	
 
 }
-Component *		GameObject::findComponent(ComponentType)
+Component *		GameObject::findComponent(ComponentType type)
 {
 	Component* ret = nullptr;
 	if (components.size() > 0)
@@ -394,8 +394,7 @@ void			GameObject::Serialize(Json::Value & root)
 		else
 		{
 			LCG random;
-			UUID = random.Int();
-		
+			UUID = random.Int();		
 		}
 		go["UUID"] = UUID;
 		//Parent UUID

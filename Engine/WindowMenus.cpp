@@ -46,7 +46,10 @@ void WindowMenus::draw()
 	{
 		importFBX();
 	}
-
+	if (showLoadPrefab)
+	{
+		loadPrefab();
+	}
 	if (ImGui::BeginMainMenuBar())
 	{
 		if (ImGui::BeginMenu("File"))
@@ -57,6 +60,11 @@ void WindowMenus::draw()
 			if (ImGui::BeginMenu("Import"))
 			{
 				ImGui::MenuItem("FBX", NULL, &showImportFBX, true);
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("Prefabs"))
+			{
+				ImGui::MenuItem("Prefabs", NULL, &showLoadPrefab, true);
 				ImGui::EndMenu();
 			}
 			ImGui::EndMenu();
@@ -171,7 +179,7 @@ void WindowMenus::showCredits()
 void WindowMenus::importFBX()
 {
 	ImGui::SetNextWindowSize(ImVec2(500, 440), ImGuiSetCond_FirstUseEver);
-	if (ImGui::Begin("Example: Layout", NULL, ImGuiWindowFlags_MenuBar))
+	if (ImGui::Begin("Import FBX", NULL, ImGuiWindowFlags_MenuBar))
 	{	
 		// left
 		std::vector<std::string> files;
@@ -189,6 +197,32 @@ void WindowMenus::importFBX()
 		if (ImGui::Button("Import")) 
 		{
 			App->resourceManagement->importFBX(selected);
+		}
+	}
+	ImGui::End();
+}
+
+void WindowMenus::loadPrefab()
+{
+	ImGui::SetNextWindowSize(ImVec2(500, 440), ImGuiSetCond_FirstUseEver);
+	if (ImGui::Begin("Prefabs", NULL, ImGuiWindowFlags_MenuBar))
+	{
+		// left
+		std::vector<std::string> files;
+		static std::string selected = "";
+		ImGui::BeginChild("left pane", ImVec2(0, 200), true);
+		App->fs->getFilesOnDir("root/data/library/prefabs", files, "json");
+		for (std::vector<std::string>::iterator iterator = files.begin();
+			 iterator != files.end(); iterator++)
+		{
+			if (ImGui::Selectable((*iterator).c_str(), selected == (*iterator)))
+				selected = (*iterator);
+
+		}
+		ImGui::EndChild();
+		if (ImGui::Button("Load"))
+		{
+			App->goManager->loadPrefab(selected);
 		}
 	}
 	ImGui::End();

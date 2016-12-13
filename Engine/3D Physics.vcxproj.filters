@@ -360,8 +360,8 @@
     <ClInclude Include="ResourceMesh.h">
       <Filter>Sources\Editor\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Sources</Filter>
+    <ClInclude Include="GameResource.h">
+      <Filter>Sources\Editor\Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

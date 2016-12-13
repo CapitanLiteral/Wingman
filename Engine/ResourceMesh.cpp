@@ -1,5 +1,5 @@
 #include "ResourceMesh.h"
-
+#include "OpenGL.h"
 
 
 ResourceMesh::ResourceMesh()
@@ -66,6 +66,10 @@ void ResourceMesh::loadRawMesh(char * buffer)
 	memcpy(&numUV, pointer, sizeof(uint));
 	pointer += sizeof(uint);
 
+	indices = new uint[numIndices];
+	vertices = new float[numVertices *3];
+	normals = new float[numNormals * 3];
+	UV = new float[numUV * 3];
 	memcpy(indices, pointer, sizeof(uint) * numIndices);
 	pointer += sizeof(uint) * numIndices;
 	memcpy(vertices, pointer, sizeof(float) * 3 * numVertices);
@@ -75,11 +79,11 @@ void ResourceMesh::loadRawMesh(char * buffer)
 	memcpy(UV, pointer, sizeof(float) * 3 * numUV);
 	pointer += sizeof(float) * 3 * numUV;
 
-	SDL_Log("Num indices loaded: %d", numIndices);
-	SDL_Log("Num vertices loaded: %d", numVertices);
-	SDL_Log("Num Normals loaded: %d", numNormals);
-	SDL_Log("Num UV loaded: %d", numUV);
-	SDL_Log("First vertex: (%f, %f, %f)", *indices, *(indices + 1), *(indices + 2));
+	//SDL_Log("Num indices loaded: %d", numIndices);
+	//SDL_Log("Num vertices loaded: %d", numVertices);
+	//SDL_Log("Num Normals loaded: %d", numNormals);
+	//SDL_Log("Num UV loaded: %d", numUV);
+	//SDL_Log("First vertex: (%f, %f, %f)", *indices, *(indices + 1), *(indices + 2));
 }
 void ResourceMesh::loadMesh(const aiMesh * mesh)
 {
@@ -120,6 +124,37 @@ void ResourceMesh::loadMesh(const aiMesh * mesh)
 		UV = new float[numVertices * 3];
 		memcpy(UV, mesh->mTextureCoords[0], sizeof(float) * numVertices * 3);
 	}
+}
+void ResourceMesh::loadToVram()
+{
+	//Generating GL Buffers
+
+	//vertices
+	glGenBuffers(1, (GLuint*) &(idVertices));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idVertices);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*numVertices * 3, vertices, GL_STATIC_DRAW);
+
+	//normals
+	if (normals != nullptr)
+	{
+		glGenBuffers(1, (GLuint*) &(idNormals));
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idNormals);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*numNormals * 3, normals, GL_STATIC_DRAW);
+	}
+	//indices
+	glGenBuffers(1, (GLuint*) &(idIndices));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIndices);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t)*numIndices, indices, GL_STATIC_DRAW);
+
+	//UV
+	if (UV != nullptr)
+	{
+		glGenBuffers(1, (GLuint*) &(idUV));
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idUV);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t)*numVertices * 3,UV, GL_STATIC_DRAW);
+	}
+
+	//updateBoundingBoxes();
 }
 int ResourceMesh::getSize() const
 {

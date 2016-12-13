@@ -40,16 +40,17 @@ bool JsonSerializer::Deserialize(IJsonSerializable * pObj, std::string path)
 		return false;
 
 	char* buffer;
-	App->fs->load(path.c_str(), &buffer);
-	std::string input(buffer);
-	RELEASE_ARRAY(buffer);
-	Json::Value deserializeRoot;
-	Json::Reader reader;
+	if (App->fs->load(path.c_str(), &buffer) > 0)
+	{
+		std::string input(buffer);
+		RELEASE_ARRAY(buffer);
+		Json::Value deserializeRoot;
+		Json::Reader reader;
 
-	if (!reader.parse(input, deserializeRoot))
-		return false;
+		if (!reader.parse(input, deserializeRoot))
+			return false;
 
-	pObj->Deserialize(deserializeRoot);
-
+		pObj->Deserialize(deserializeRoot);
+	}
 	return true;
 }

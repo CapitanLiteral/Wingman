@@ -9,6 +9,7 @@ public:
 	void draw();
 	void showCredits();
 	void importFBX();
+	void loadPrefab();
 
 	bool quitSelected = false;
 	bool aboutSelected = false;
@@ -17,6 +18,7 @@ public:
 	bool openRepoDirectory = false;
 	bool showfpsInfo = false;
 	bool showImportFBX = false;
+	bool showLoadPrefab = false;
 
 	bool QUIT = false;
 

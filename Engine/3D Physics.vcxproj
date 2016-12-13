@@ -92,6 +92,7 @@
     <ClInclude Include="GameObjectManager.h">
       <FileType>CppHeader</FileType>
     </ClInclude>
+    <ClInclude Include="GameResource.h" />
     <ClInclude Include="glmath.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="IJsonSerializable.h" />
@@ -179,7 +180,6 @@
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="Primitive.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceMesh.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UI_Item.h" />

@@ -3,7 +3,9 @@
 #include "Application.h"
 
 #include "Module.h"
+#include "GameResource.h"
 #include <vector>;
+#include <map>
 
 #include "Assimp\Assimp\include\scene.h"
 #include "Assimp\Assimp\include\cfileio.h"
@@ -16,7 +18,7 @@ class ResourceMesh;
 class ModuleResourceManagement : public Module
 {
 public:
-	//std::map<uint32_t, Resource*> resources;
+	std::map<uint32_t, GameResource*> resources;
 
 	ModuleResourceManagement(Application* app, bool start_enabled = true);
 	virtual ~ModuleResourceManagement();
@@ -31,7 +33,7 @@ public:
 	void importFBX(std::string fileName);
 	GameObject* loadFBX(const char* path, GameObject* root);
 	void aiSceneToGameObjects(const aiScene * scene, const aiNode * node, GameObject * parent);
-
+	GameResource* addGameResource(game_resource_type type, uint32_t UUID);
 
 };
 

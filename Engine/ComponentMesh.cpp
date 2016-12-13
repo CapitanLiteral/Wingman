@@ -49,63 +49,31 @@ ComponentMesh::~ComponentMesh()
 }
 void ComponentMesh::Update()
 {
-	if (enabled)
-	{
-		ComponentCamera* camera = (ComponentCamera*)App->goManager->currentCamera->findComponent(CAMERA);
-		if (camera != nullptr)
-		{
-			if (!camera->culling)
-			{
-				draw();
-			}
-			else
-			{
-				if (camera->frustum->Intersects(mesh->aabb))
-				{
-					draw();
-				}
-			}
-		}
-		else
-		{
-			draw();
-		}
-			
-	}
+	//if (enabled)
+	//{
+	//	ComponentCamera* camera = (ComponentCamera*)App->goManager->currentCamera->findComponent(CAMERA);
+	//	if (camera != nullptr)
+	//	{
+	//		if (!camera->culling)
+	//		{
+	//			draw();
+	//		}
+	//		else
+	//		{
+	//			if (camera->frustum->Intersects(mesh->aabb))
+	//			{
+	//				draw();
+	//			}
+	//		}
+	//	}
+	//	else
+	//	{
+	//		draw();
+	//	}
+	//		
+	//}
 	// Temporal shitty code
-	load();
 	draw();
-}
-void ComponentMesh::load()
-{
-	//Generating GL Buffers
-
-	//vertices
-	glGenBuffers(1, (GLuint*) &(this->mesh->idVertices));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->mesh->idVertices);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*this->mesh->numVertices * 3, this->mesh->vertices, GL_STATIC_DRAW);
-
-	//normals
-	if (this->mesh->normals != nullptr)
-	{
-		glGenBuffers(1, (GLuint*) &(this->mesh->idNormals));
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->mesh->idNormals);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float)*this->mesh->numNormals * 3, this->mesh->normals, GL_STATIC_DRAW);
-	}
-	//indices
-	glGenBuffers(1, (GLuint*) &(this->mesh->idIndices));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->mesh->idIndices);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t)*this->mesh->numIndices, this->mesh->indices, GL_STATIC_DRAW);
-
-	//UV
-	if (this->mesh->UV != nullptr)
-	{
-		glGenBuffers(1, (GLuint*) &(this->mesh->idUV));
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->mesh->idUV);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t)*this->mesh->numVertices * 3, this->mesh->UV, GL_STATIC_DRAW);
-	}
-
-	updateBoundingBoxes();
 }
 void ComponentMesh::draw()
 {
@@ -348,7 +316,7 @@ void ComponentMesh::Deserialize(Json::Value & root)
 	uint32_t resourceUUID;
 	if (root.get("resource", -1).asInt64() != -1)
 	{
-		
+		mesh = (ResourceMesh*)App->resourceManagement->addGameResource(RESOURCE_MESH, root.get("resource", -1).asInt64());
 	}
 }
 

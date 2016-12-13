@@ -10,6 +10,7 @@
 #include "ModuleFileSystem.h"
 #include "JsonSerializer.h"
 #include <vector>
+#include "ResourceMesh.h"
 
 ModuleResourceManagement::ModuleResourceManagement(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -56,6 +57,7 @@ void ModuleResourceManagement::importFBX(std::string fileName)
 	GameObject* temporalRoot = new GameObject();
 	temporalRoot->name = "TemporalRoot";
 	temporalRoot->selializable = false;
+	temporalRoot->UUID = 0;
 	
 	loadFBX(path.c_str(), temporalRoot);
 
@@ -230,4 +232,44 @@ void ModuleResourceManagement::aiSceneToGameObjects(const aiScene * scene, const
 	for (uint i = 0; i < node->mNumChildren; ++i)
 		aiSceneToGameObjects(scene, node->mChildren[i], gameObject);
 
+}
+
+GameResource * ModuleResourceManagement::addGameResource(game_resource_type type, uint32_t UUID)
+{
+	GameResource* ret = nullptr;
+	switch (type)
+	{
+		case RESOURCE_MESH:
+		{
+			//exists
+			std::map<uint32_t, GameResource*>::iterator iterator;
+			iterator = resources.find(UUID);			
+			if (iterator != resources.end())
+			{
+				ret = (*iterator).second;
+			}
+			//dont exists
+			else
+			{ 
+				char* buffer = nullptr;
+				std::string path("root/data/library/meshes/");
+				path.append(std::to_string(UUID));
+				path.append(".mesh");
+				App->fs->load(path.c_str(), &buffer);
+				ResourceMesh* mesh = new ResourceMesh();
+				mesh->loadRawMesh(buffer);
+				resources.insert(std::pair<uint32_t, GameResource*>(UUID, mesh));
+				RELEASE_ARRAY(buffer);
+				ret = mesh;
+				mesh->loadToVram();
+			}
+			
+			break;
+		}
+		case RESOURCE_TEXTURE:
+			break;
+		default:
+			break;
+	}
+	return ret;
 }

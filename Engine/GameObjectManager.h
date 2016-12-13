@@ -32,6 +32,7 @@ public:
 
 	void saveScene();
 	void loadScene();
+	void loadPrefab(std::string name);
 	bool haveToSaveScene = false;
 	bool haveToLoadScene = false;
 
