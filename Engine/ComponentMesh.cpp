@@ -346,7 +346,7 @@ void ComponentMesh::Deserialize(Json::Value & root)
 		type = MESH;
 	}
 	uint32_t resourceUUID;
-	if (root.get("resource", -1).asInt64 != -1)
+	if (root.get("resource", -1).asInt64() != -1)
 	{
 		
 	}

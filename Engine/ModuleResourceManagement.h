@@ -16,7 +16,7 @@ class ResourceMesh;
 class ModuleResourceManagement : public Module
 {
 public:
-	std::map<uint32_t, Resource*> resources;
+	//std::map<uint32_t, Resource*> resources;
 
 	ModuleResourceManagement(Application* app, bool start_enabled = true);
 	virtual ~ModuleResourceManagement();
